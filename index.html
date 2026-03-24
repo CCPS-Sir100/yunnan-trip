@@ -70,11 +70,12 @@ body{font-family:'Noto Serif TC',serif;background:var(--parchment);color:var(--t
 .tab-nav-wrap{background:var(--parchment-dark);border-bottom:2px solid var(--border);position:sticky;top:0;z-index:50;}
 .tab-nav{max-width:1100px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none;padding:0 1rem;}
 .tab-nav::-webkit-scrollbar{display:none;}
-.tab-btn{flex-shrink:0;padding:0.65rem 0.95rem;border:none;background:transparent;font-family:'Noto Serif TC',serif;font-size:0.78rem;color:var(--text-muted);cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;white-space:nowrap;}
+.tab-btn{flex-shrink:0;padding:0.5rem 0.9rem;border:none;background:transparent;font-family:'Noto Serif TC',serif;font-size:0.78rem;color:var(--text-muted);cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;white-space:nowrap;}
 .tab-btn:hover{color:var(--terracotta);}
 .tab-btn.active{color:var(--terracotta);border-bottom-color:var(--terracotta);font-weight:600;}
-.tab-btn .day-num{display:block;font-size:1rem;font-weight:700;font-family:'Ma Shan Zheng',cursive;line-height:1.2;}
-.tab-btn .day-date{display:block;font-size:0.6rem;opacity:0.7;}
+.tab-btn .day-num{display:block;font-size:2rem;font-weight:700;font-family:'Ma Shan Zheng',cursive;line-height:1.1;}
+.tab-btn .day-date{display:block;font-size:0.62rem;opacity:0.75;letter-spacing:0.02em;}
+.tab-btn .day-week{display:block;font-size:0.6rem;opacity:0.6;font-family:'Noto Sans TC',sans-serif;}
 
 /* MAIN */
 .main{max-width:1100px;margin:0 auto;padding:1.4rem 1.4rem 6rem;}
@@ -131,6 +132,20 @@ body.view-mode .edit-only{display:none!important;}
 .tl-del-btn{width:22px;height:22px;border-radius:50%;border:1px solid #ddd;background:transparent;color:#bbb;cursor:pointer;font-size:0.7rem;display:flex;align-items:center;justify-content:center;padding:0;transition:all 0.2s;flex-shrink:0;}
 .tl-del-btn:hover{border-color:var(--crimson);color:var(--crimson);}
 .tl-empty-msg{font-family:'Noto Sans TC',sans-serif;font-size:0.76rem;color:var(--border);padding:0.2rem 0;}
+/* Departure block */
+.departure-block{background:#fff;border-radius:12px;border:1px solid var(--border);padding:0.9rem 1.1rem;margin-bottom:1.1rem;box-shadow:0 2px 8px var(--shadow);display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;}
+.departure-block .dep-label{font-family:'Noto Serif TC',serif;font-size:0.88rem;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:0.5rem;white-space:nowrap;}
+.departure-block .dep-icon{width:32px;height:32px;border-radius:7px;background:#e8f5e9;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.dep-time-wrap{display:flex;align-items:center;gap:0.6rem;flex:1;min-width:160px;}
+.dep-time-input{padding:0.4rem 0.7rem;border:1.5px solid var(--border);border-radius:8px;font-family:'Ma Shan Zheng',cursive;font-size:1.5rem;color:var(--terracotta);width:100px;text-align:center;background:var(--parchment);transition:border-color 0.2s;}
+.dep-time-input:focus{outline:none;border-color:var(--terracotta);background:#fff;}
+.dep-time-input::placeholder{color:var(--border);font-size:1rem;}
+body.view-mode .dep-time-input{pointer-events:none;border-color:transparent;background:transparent;}
+.dep-note{font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;color:var(--text-muted);}
+/* Departure marker on timeline bar */
+.tl-dep-marker{position:absolute;top:0;bottom:0;width:3px;background:#e74c3c;z-index:5;cursor:default;}
+.tl-dep-marker::before{content:'出門';position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-family:'Noto Sans TC',sans-serif;font-size:0.6rem;color:#e74c3c;white-space:nowrap;font-weight:600;}
+.tl-dep-marker::after{content:'▼';position:absolute;top:0;left:50%;transform:translateX(-50%);font-size:0.55rem;color:#e74c3c;}
 
 /* CARDS */
 .cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1rem;}
@@ -365,10 +380,10 @@ function showTripSettings(){
     <div class="trip-preview" id="tripPreview"></div>
     <div class="trip-warn">⚠️ 變更天數後，超出範圍的資料將遺失，請確認後再套用。</div>
     <hr style="border:none;border-top:1px solid var(--border);margin:0.8rem 0;">
-    <label class="modal-field-label">✨ Gemini API Key（用於航班 AI 解析）</label>
-    <input class="modal-input" type="password" id="geminiKeyInput" placeholder="貼上 AIza... 開頭的 API Key" value="${localStorage.getItem('yunnan_gemini_key')||''}">
+    <label class="modal-field-label">🤖 Claude API Key（用於航班 AI 解析）</label>
+    <input class="modal-input" type="password" id="claudeKeyInput" placeholder="貼上 sk-ant-... 開頭的 API Key" value="${localStorage.getItem('yunnan_claude_key')||''}">
     <div style="font-family:'Noto Sans TC',sans-serif;font-size:0.74rem;color:var(--text-muted);margin-top:-0.5rem;margin-bottom:0.6rem;">
-      至 <a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--jade);">Google AI Studio</a> 免費取得 → 複製貼上即可
+      至 <a href="https://console.anthropic.com/settings/keys" target="_blank" style="color:var(--jade);">console.anthropic.com</a> 取得 → 複製貼上即可（需先加值）
     </div>
     <div class="modal-btns">
       <button class="modal-cancel" onclick="closeMod()">取消</button>
@@ -394,11 +409,11 @@ function applyTripSettings(){
   tripConfig={startYear:s.getFullYear(),startMonth:s.getMonth()+1,startDay:s.getDate(),totalDays:dv};
   saveTripConfig();
   // Save Gemini key if provided
-  const gk=(document.getElementById('geminiKeyInput')||{}).value?.trim();
-  if(gk) localStorage.setItem('yunnan_gemini_key', gk);
+  const gk=(document.getElementById('claudeKeyInput')||{}).value?.trim();
+  if(gk) localStorage.setItem('yunnan_claude_key', gk);
   closeMod();
   rebuildUI(oldData);
-  const keyMsg = gk ? '，Gemini API Key 已儲存' : '';
+  const keyMsg = gk ? '，Claude API Key 已儲存' : '';
   toast(`✅ 行程已更新為 ${dv} 天${keyMsg}`);
 }
 
@@ -428,7 +443,7 @@ function parseTime(str){
 function renderTimeline(i){
   const bar=document.getElementById(`tl-bar-${i}`);
   if(!bar) return;
-  bar.querySelectorAll('.tl-segment').forEach(e=>e.remove());
+  bar.querySelectorAll('.tl-segment,.tl-dep-marker').forEach(e=>e.remove());
   getTimelineEntries(i).forEach((ent,ci)=>{
     const t1=parseTime(ent.from),t2=parseTime(ent.to);
     if(!t1||!t2) return;
@@ -441,6 +456,16 @@ function renderTimeline(i){
     if((p2-p1)>4) seg.textContent=ent.label.length>8?ent.label.slice(0,7)+'…':ent.label;
     bar.appendChild(seg);
   });
+  // Draw departure marker
+  const depVal=(document.getElementById(`dep-${i}`)?.value||'').trim();
+  const dt=parseTime(depVal);
+  if(dt){
+    const marker=document.createElement('div');
+    marker.className='tl-dep-marker';
+    marker.style.left=pct(dt.h,dt.m)+'%';
+    marker.title=`出門時間 ${depVal}`;
+    bar.appendChild(marker);
+  }
 }
 function getTimelineEntries(i){
   const n=+(document.getElementById(`tl-count-${i}`)?.value||0);
@@ -496,7 +521,7 @@ function buildUI(oldData){
     const btn=document.createElement('button');
     btn.className='tab-btn'+(i===0?' active':'');
     btn.id=`tab-btn-${i}`; btn.onclick=()=>switchTab(i);
-    btn.innerHTML=`<span class="day-num">D${dn}</span><span class="day-date">${fmtShort(d)}</span>`;
+    btn.innerHTML=`<span class="day-num">${dn}</span><span class="day-date">${fmtShort(d)}</span><span class="day-week">（${WEEKDAYS[d.getDay()]}）</span>`;
     tabNav.appendChild(btn);
 
     let gridHtml='';
@@ -508,12 +533,21 @@ function buildUI(oldData){
     panel.id=`panel-${i}`;
     panel.innerHTML=`
       <div class="day-header">
-        <div class="day-num-big">D${dn}</div>
+        <div class="day-num-big">${dn}</div>
         <div class="day-info">
           <h2>第 ${dn} 天</h2>
           <div class="day-date-full">${fmtDate(d)}</div>
         </div>
         <input class="day-title-input" type="text" id="title-${i}" placeholder="今天的主題（例：大理古城漫遊）" oninput="markDirty()">
+      </div>
+      <div class="departure-block">
+        <div class="dep-icon">🚶</div>
+        <span class="dep-label">出門時間</span>
+        <div class="dep-time-wrap">
+          <input class="dep-time-input" type="text" id="dep-${i}" maxlength="5"
+            placeholder="07:00" oninput="renderTimeline(${i});markDirty()">
+          <span class="dep-note">輸入24小時制時間，將顯示在時間軸上</span>
+        </div>
       </div>
       <div class="timeline-section">
         <div class="timeline-section-header">
@@ -596,6 +630,7 @@ function getData(){
     transport: document.getElementById(`transport-${i}`)?.value||'',
     hotel:     document.getElementById(`hotel-${i}`)?.value||'',
     notes:     document.getElementById(`notes-${i}`)?.value||'',
+    departure: document.getElementById(`dep-${i}`)?.value||'',
     timeline:  getTimelineEntries(i),
   }));
 }
@@ -612,7 +647,9 @@ function setData(arr){
     set(`transport-${i}`,row.transport);
     set(`hotel-${i}`,row.hotel);
     set(`notes-${i}`,row.notes);
+    set(`dep-${i}`,row.departure||'');
     if(row.timeline?.length) setTimelineEntries(i,row.timeline);
+    renderTimeline(i);
   });
 }
 
@@ -643,6 +680,7 @@ async function syncToSheets(){
       title:row.title,breakfast:row.breakfast,lunch:row.lunch,
       dinner:row.dinner,sights:row.sights,transport:row.transport,
       hotel:row.hotel,notes:row.notes,
+      departure:row.departure||'',
       timeline:JSON.stringify(row.timeline||[]),
     }));
     const res=await fetch(scriptUrl,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'write',rows,config:tripConfig})});
@@ -682,6 +720,7 @@ async function loadFromSheets(){
       title:r.title||'',breakfast:r.breakfast||'',lunch:r.lunch||'',
       dinner:r.dinner||'',sights:r.sights||'',transport:r.transport||'',
       hotel:r.hotel||'',notes:r.notes||'',
+      departure:r.departure||'',
       timeline:(()=>{ try{ return JSON.parse(r.timeline||'[]'); }catch{ return []; } })(),
     }));
     setData(parsed);
@@ -837,8 +876,8 @@ function showSyncError(type,err,raw){
 function showSetupGuide(){
   const code=`const SHEET_ID = '你的試算表ID';
 const SHEET_NAME = '雲南行程';
-const COLS=['天數','日期','今日主題','早餐','午餐','晚餐','主要景點','交通','住宿','備注','時間軸'];
-const KEYS=['day','date','title','breakfast','lunch','dinner','sights','transport','hotel','notes','timeline'];
+const COLS=['天數','日期','今日主題','早餐','午餐','晚餐','主要景點','交通','住宿','備注','出門時間','時間軸'];
+const KEYS=['day','date','title','breakfast','lunch','dinner','sights','transport','hotel','notes','departure','timeline'];
 function doGet(e){
   if((e?.parameter?.action||'read')==='read') return readData();
   return ok({rows:[]});
@@ -846,6 +885,7 @@ function doGet(e){
 function doPost(e){
   const b=JSON.parse(e.postData.contents);
   if(b.action==='write') return writeData(b.rows,b.config);
+  if(b.action==='parseAI') return proxyClaudeAI(b.apiKey, b.system, b.content);
   return ok({error:'未知操作'});
 }
 function readData(){
@@ -866,6 +906,32 @@ function writeData(rows,config){
   rows.forEach(r=>sh.appendRow(KEYS.map(k=>r[k]||'')));
   if(config){let cs=ss.getSheetByName('_config');if(!cs)cs=ss.insertSheet('_config');cs.getRange(1,1).setValue(JSON.stringify(config));}
   return ok({ok:true});
+}
+function proxyClaudeAI(apiKey, system, content) {
+  try {
+    const body = {
+      model: 'claude-sonnet-4-6',
+      max_tokens: 1024,
+      system: system,
+      messages: [{ role: 'user', content: content }]
+    };
+    const resp = UrlFetchApp.fetch('https://api.anthropic.com/v1/messages', {
+      method: 'post',
+      contentType: 'application/json',
+      headers: {
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01'
+      },
+      payload: JSON.stringify(body),
+      muteHttpExceptions: true
+    });
+    const json = JSON.parse(resp.getContentText());
+    if(json.error) return ok({ error: 'Claude API 錯誤：' + json.error.message });
+    const text = (json.content||[]).map(b => b.text||'').join('');
+    return ok({ result: text });
+  } catch(e) {
+    return ok({ error: 'Apps Script 錯誤：' + e.message });
+  }
 }
 function ok(obj){return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);}`;
 
@@ -1052,40 +1118,28 @@ inRange 為 true 表示此日期在行程範圍內。若日期不在行程內，
   parseBtn.style.display = 'none';
 
   try{
-    const geminiKey = localStorage.getItem('yunnan_gemini_key');
-    if(!geminiKey) throw new Error('請先設定 Gemini API Key（點右上角「⚙️ 行程設定」→「Gemini API Key」）');
+    const claudeKey = localStorage.getItem('yunnan_claude_key');
+    if(!claudeKey) throw new Error('請先設定 Claude API Key（進入編輯模式 → ⚙️ 行程設定 → Claude API Key）');
+    if(!scriptUrl)  throw new Error('請先連接 Apps Script 試算表（航班解析需透過 Apps Script 中繼）');
 
-    // Build Gemini request — merge system + user into single prompt
-    const geminiParts = [];
-    if(Array.isArray(userContent)){
-      userContent.forEach(part => {
-        if(part.type==='text') geminiParts.push({text: part.text});
-        else if(part.type==='image') geminiParts.push({
-          inlineData:{ mimeType: part.source.media_type, data: part.source.data }
-        });
-        else if(part.type==='document') geminiParts.push({
-          inlineData:{ mimeType: 'application/pdf', data: part.source.data }
-        });
-      });
-    } else {
-      geminiParts.push({text: userContent});
-    }
-    // Prepend system prompt as text part
-    geminiParts.unshift({text: systemPrompt + '\n\n---\n\n'});
+    // Build Claude messages content
+    const claudeContent = Array.isArray(userContent) ? userContent : [{type:'text',text:userContent}];
 
-    const geminiBody = {
-      contents:[{ role:'user', parts: geminiParts }],
-      generationConfig:{ temperature:0, maxOutputTokens:1500 }
-    };
-
-    const resp = await fetch(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
-      { method:'POST', headers:{'Content-Type':'application/json','x-goog-api-key': geminiKey}, body:JSON.stringify(geminiBody) }
-    );
+    // Call Claude via Apps Script proxy (avoids CORS from GitHub Pages)
+    const resp = await fetch(scriptUrl, {
+      method: 'POST',
+      headers: {'Content-Type': 'text/plain'},
+      body: JSON.stringify({
+        action:  'parseAI',
+        apiKey:  claudeKey,
+        system:  systemPrompt,
+        content: claudeContent
+      })
+    });
     const data = await resp.json();
-    if(data.error) throw new Error(`Gemini 錯誤：${data.error.message||JSON.stringify(data.error)}`);
+    if(data.error) throw new Error(data.error);
 
-    const raw = (data.candidates?.[0]?.content?.parts||[]).map(p=>p.text||'').join('').trim();
+    const raw = (data.result||'').trim();
     const clean = raw.replace(/^```[a-z]*\n?/,'').replace(/```$/,'').trim();
     parsedFlights = JSON.parse(clean);
 
