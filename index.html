@@ -1,0 +1,1186 @@
+<!--
+  雲南旅遊計劃 2026
+  ==================
+  GitHub Pages 部署步驟：
+  1. 在 GitHub 建立新 repository（Public）
+  2. 上傳此檔案，改名為 index.html
+  3. Settings → Pages → Branch: main → Save
+  4. 用 https://你的帳號.github.io/倉庫名/ 開啟
+
+  Google Apps Script 設定：
+  - 點網頁內「📋 設定教學」按鈕查看完整說明
+  - 部署時存取權限必須選「任何人」
+
+  編輯密碼：CCcc7379403!
+-->
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="雲南旅遊計劃 2026 — 團隊行程規劃">
+<meta name="theme-color" content="#1a3a2a">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>雲南旅遊計劃 2026 ✈️</title>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+TC:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#1a1209; --parchment:#f5efe3; --parchment-dark:#e8dcc8;
+  --terracotta:#c4622d; --jade:#3a7d5e; --jade-light:#5aaa80;
+  --gold:#c9962a; --gold-light:#e8b84b; --crimson:#9b2335;
+  --text:#2c1f0e; --text-muted:#7a6040; --border:#c8b090;
+  --shadow:rgba(44,31,14,0.15);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Serif TC',serif;background:var(--parchment);color:var(--text);min-height:100vh;}
+
+/* HEADER */
+.site-header{background:linear-gradient(160deg,#1a3a2a 0%,#2d5a3d 40%,#1e4060 100%);padding:1.6rem 2rem 0;position:relative;overflow:hidden;}
+.site-header::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M60 10 Q70 30 90 30 Q70 35 80 55 Q60 40 40 55 Q50 35 30 30 Q50 30 60 10Z' fill='%23ffffff08'/%3E%3C/svg%3E") repeat;opacity:0.4;}
+.header-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1;}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:2rem;}
+.header-badge{font-family:'Noto Sans TC',sans-serif;font-size:0.7rem;letter-spacing:0.2em;color:var(--gold-light);margin-bottom:0.35rem;}
+.header-title{font-family:'Ma Shan Zheng',cursive;font-size:clamp(2.2rem,5vw,4rem);color:#fff;line-height:1.1;text-shadow:2px 3px 12px rgba(0,0,0,0.4);}
+.header-title span{color:var(--gold-light);}
+.header-subtitle{font-size:0.88rem;color:rgba(255,255,255,0.65);margin-top:0.3rem;letter-spacing:0.05em;}
+.header-dates{font-family:'Noto Sans TC',sans-serif;font-size:0.8rem;color:rgba(255,255,255,0.5);margin-top:0.2rem;}
+.header-right{display:flex;flex-direction:column;align-items:flex-end;gap:0.5rem;flex-shrink:0;}
+.header-mountain{opacity:0.1;font-size:4.5rem;line-height:1;color:#fff;user-select:none;}
+.header-admin-btns{display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:flex-end;}
+.btn-header{padding:0.38rem 0.95rem;border-radius:20px;font-family:'Noto Sans TC',sans-serif;font-size:0.76rem;cursor:pointer;transition:all 0.2s;border:1px solid;white-space:nowrap;}
+.btn-lock{border-color:rgba(255,255,255,0.3);background:transparent;color:rgba(255,255,255,0.7);}
+.btn-lock:hover{background:rgba(255,255,255,0.12);}
+.btn-unlock{border-color:var(--gold-light);background:rgba(201,150,42,0.2);color:var(--gold-light);}
+.btn-unlock:hover{background:rgba(201,150,42,0.35);}
+.btn-trip-settings{border-color:rgba(110,255,160,0.5);background:rgba(58,125,94,0.2);color:#6effa0;}
+.btn-trip-settings:hover{background:rgba(58,125,94,0.35);}
+
+/* SETTINGS BAR */
+.settings-bar{display:flex;align-items:center;gap:0.7rem;margin-top:1.1rem;padding:0.75rem 1.1rem;background:rgba(0,0,0,0.2);border-radius:8px 8px 0 0;flex-wrap:wrap;}
+.settings-bar label{font-family:'Noto Sans TC',sans-serif;font-size:0.76rem;color:rgba(255,255,255,0.65);white-space:nowrap;}
+.settings-bar input{flex:1;min-width:160px;padding:0.38rem 0.65rem;border-radius:5px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:#fff;font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;}
+.settings-bar input::placeholder{color:rgba(255,255,255,0.3);}
+.settings-bar input:focus{outline:none;border-color:var(--gold-light);}
+.btn-connect{padding:0.38rem 0.9rem;border-radius:5px;border:1px solid var(--gold-light);background:transparent;color:var(--gold-light);font-family:'Noto Sans TC',sans-serif;font-size:0.76rem;cursor:pointer;white-space:nowrap;transition:all 0.2s;}
+.btn-connect:hover{background:var(--gold-light);color:#1a3a2a;}
+.sync-status{font-family:'Noto Sans TC',sans-serif;font-size:0.7rem;color:rgba(255,255,255,0.45);white-space:nowrap;}
+.sync-status.ok{color:#6effa0;} .sync-status.err{color:#ff8080;}
+
+/* TABS */
+.tab-nav-wrap{background:var(--parchment-dark);border-bottom:2px solid var(--border);position:sticky;top:0;z-index:50;}
+.tab-nav{max-width:1100px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none;padding:0 1rem;}
+.tab-nav::-webkit-scrollbar{display:none;}
+.tab-btn{flex-shrink:0;padding:0.65rem 0.95rem;border:none;background:transparent;font-family:'Noto Serif TC',serif;font-size:0.78rem;color:var(--text-muted);cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;white-space:nowrap;}
+.tab-btn:hover{color:var(--terracotta);}
+.tab-btn.active{color:var(--terracotta);border-bottom-color:var(--terracotta);font-weight:600;}
+.tab-btn .day-num{display:block;font-size:1rem;font-weight:700;font-family:'Ma Shan Zheng',cursive;line-height:1.2;}
+.tab-btn .day-date{display:block;font-size:0.6rem;opacity:0.7;}
+
+/* MAIN */
+.main{max-width:1100px;margin:0 auto;padding:1.4rem 1.4rem 6rem;}
+.day-panel{display:none;}
+.day-panel.active{display:block;animation:fadeIn 0.3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+.day-header{display:flex;align-items:center;gap:1.1rem;margin-bottom:1.1rem;padding-bottom:0.9rem;border-bottom:2px solid var(--parchment-dark);}
+.day-num-big{font-family:'Ma Shan Zheng',cursive;font-size:4rem;color:var(--terracotta);line-height:1;flex-shrink:0;text-shadow:2px 3px 0 rgba(196,98,45,0.15);}
+.day-info h2{font-family:'Noto Serif TC',serif;font-size:1.2rem;font-weight:700;color:var(--ink);}
+.day-info .day-date-full{font-size:0.82rem;color:var(--text-muted);margin-top:0.15rem;}
+.day-title-input{flex:1;padding:0.45rem 0.75rem;border:1px dashed var(--border);border-radius:6px;background:transparent;font-family:'Noto Serif TC',serif;font-size:0.95rem;color:var(--ink);transition:border-color 0.2s;}
+.day-title-input:focus{outline:none;border-color:var(--terracotta);border-style:solid;}
+.day-title-input::placeholder{color:var(--border);}
+
+/* VIEW MODE */
+body.view-mode .day-title-input{pointer-events:none;border-color:transparent;background:transparent;}
+body.view-mode .card textarea{pointer-events:none;background:var(--parchment);resize:none;}
+body.view-mode .notes-row textarea{pointer-events:none;background:var(--parchment);resize:none;}
+body.view-mode .timeline-input{pointer-events:none;}
+body.view-mode .tl-add-btn{display:none;}
+body.view-mode .tl-del-btn{display:none;}
+body.view-mode .edit-only{display:none!important;}
+
+/* TIMELINE */
+.timeline-section{background:#fff;border-radius:12px;border:1px solid var(--border);padding:0.95rem 1.1rem 1.1rem;margin-bottom:1.1rem;box-shadow:0 2px 8px var(--shadow);}
+.timeline-section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;}
+.tl-title{font-family:'Noto Serif TC',serif;font-size:0.86rem;font-weight:600;color:var(--ink);}
+.tl-add-btn{padding:0.28rem 0.85rem;border-radius:20px;border:1px solid var(--jade);background:transparent;color:var(--jade);font-size:0.72rem;font-family:'Noto Sans TC',sans-serif;cursor:pointer;transition:all 0.2s;}
+.tl-add-btn:hover{background:var(--jade);color:#fff;}
+
+.tl-axis{display:flex;justify-content:space-between;font-family:'Noto Sans TC',sans-serif;font-size:0.58rem;color:var(--text-muted);margin-bottom:3px;user-select:none;}
+.tl-bar{position:relative;height:38px;background:#f0ebe0;border-radius:6px;overflow:hidden;border:1px solid var(--border);}
+.tl-grid-line{position:absolute;top:0;bottom:0;width:1px;background:rgba(0,0,0,0.06);}
+.tl-segment{position:absolute;top:5px;bottom:5px;border-radius:4px;cursor:default;display:flex;align-items:center;justify-content:center;overflow:hidden;white-space:nowrap;font-family:'Noto Sans TC',sans-serif;font-size:0.65rem;font-weight:500;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.35);transition:opacity 0.15s;min-width:4px;}
+.tl-segment:hover{opacity:0.82;}
+.tl-c0{background:linear-gradient(90deg,#e74c3c,#c0392b);}
+.tl-c1{background:linear-gradient(90deg,#3498db,#2980b9);}
+.tl-c2{background:linear-gradient(90deg,#27ae60,#229954);}
+.tl-c3{background:linear-gradient(90deg,#8e44ad,#7d3c98);}
+.tl-c4{background:linear-gradient(90deg,#e67e22,#ca6f1e);}
+.tl-c5{background:linear-gradient(90deg,#16a085,#138d75);}
+.tl-c6{background:linear-gradient(90deg,#d35400,#ba4a00);}
+.tl-c7{background:linear-gradient(90deg,#2c3e50,#1a252f);}
+.tl-c8{background:linear-gradient(90deg,#c0392b,#96281b);}
+.tl-c9{background:linear-gradient(90deg,#1abc9c,#17a589);}
+
+.tl-entries{display:flex;flex-direction:column;gap:0.45rem;margin-top:0.65rem;}
+.tl-entry-header{display:grid;grid-template-columns:72px 72px 1fr 26px;gap:0.4rem;}
+.tl-entry-header span{font-family:'Noto Sans TC',sans-serif;font-size:0.66rem;color:var(--text-muted);padding:0 0.15rem;}
+.tl-entry{display:grid;grid-template-columns:72px 72px 1fr 26px;gap:0.4rem;align-items:center;}
+.timeline-input{padding:0.28rem 0.45rem;border:1px solid var(--border);border-radius:5px;font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;color:var(--ink);background:var(--parchment);width:100%;}
+.timeline-input:focus{outline:none;border-color:var(--jade);background:#fff;}
+.tl-del-btn{width:22px;height:22px;border-radius:50%;border:1px solid #ddd;background:transparent;color:#bbb;cursor:pointer;font-size:0.7rem;display:flex;align-items:center;justify-content:center;padding:0;transition:all 0.2s;flex-shrink:0;}
+.tl-del-btn:hover{border-color:var(--crimson);color:var(--crimson);}
+.tl-empty-msg{font-family:'Noto Sans TC',sans-serif;font-size:0.76rem;color:var(--border);padding:0.2rem 0;}
+
+/* CARDS */
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1rem;}
+@media(max-width:768px){.cards-grid{grid-template-columns:1fr;}}
+@media(min-width:769px) and (max-width:1000px){.cards-grid{grid-template-columns:repeat(2,1fr);}}
+.card{background:#fff;border-radius:12px;border:1px solid var(--border);padding:1rem;box-shadow:0 2px 8px var(--shadow);transition:box-shadow 0.2s;}
+.card:hover{box-shadow:0 4px 16px var(--shadow);}
+.card-header{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.65rem;}
+.card-icon{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:0.95rem;flex-shrink:0;}
+.card-label{font-family:'Noto Serif TC',serif;font-size:0.85rem;font-weight:600;color:var(--ink);}
+.card textarea{width:100%;border:none;background:var(--parchment);border-radius:6px;padding:0.55rem;font-family:'Noto Sans TC',sans-serif;font-size:0.81rem;color:var(--text);resize:vertical;min-height:90px;line-height:1.7;transition:background 0.2s;}
+.card textarea:focus{outline:none;background:#fff;box-shadow:inset 0 0 0 1.5px var(--jade-light);}
+.card textarea::placeholder{color:var(--border);}
+.meal-breakfast .card-icon{background:#fff5e0;}
+.meal-lunch .card-icon{background:#e8f5e9;}
+.meal-dinner .card-icon{background:#fce4ec;}
+.card-sights .card-icon{background:#e3f2fd;}
+.card-transport .card-icon{background:#f3e5f5;}
+.card-hotel .card-icon{background:#e8f5e9;}
+.notes-row{background:#fff;border-radius:12px;border:1px solid var(--border);padding:1rem;box-shadow:0 2px 8px var(--shadow);margin-bottom:1rem;}
+.notes-row textarea{width:100%;border:none;background:var(--parchment);border-radius:6px;padding:0.55rem;font-family:'Noto Sans TC',sans-serif;font-size:0.81rem;color:var(--text);resize:vertical;min-height:65px;line-height:1.7;}
+.notes-row textarea:focus{outline:none;background:#fff;box-shadow:inset 0 0 0 1.5px var(--gold);}
+
+/* ACTIONS BAR */
+.actions-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(245,239,227,0.96);backdrop-filter:blur(10px);border-top:2px solid var(--border);padding:0.65rem 2rem;display:flex;align-items:center;justify-content:center;gap:0.7rem;z-index:100;flex-wrap:wrap;}
+.btn{padding:0.55rem 1.3rem;border-radius:8px;font-family:'Noto Serif TC',serif;font-size:0.86rem;cursor:pointer;transition:all 0.2s;border:2px solid transparent;display:flex;align-items:center;gap:0.4rem;}
+.btn-jade{background:var(--jade);color:#fff;border-color:var(--jade);box-shadow:0 3px 10px rgba(58,125,94,0.3);}
+.btn-jade:hover{background:#2d6349;transform:translateY(-1px);}
+.btn-gold{background:var(--gold);color:#fff;border-color:var(--gold);box-shadow:0 3px 10px rgba(201,150,42,0.3);}
+.btn-gold:hover{background:#a97d20;transform:translateY(-1px);}
+.btn-primary{background:var(--terracotta);color:#fff;border-color:var(--terracotta);box-shadow:0 3px 10px rgba(196,98,45,0.3);}
+.btn-primary:hover{background:#a84f22;transform:translateY(-1px);}
+.btn-sky{background:#2471a3;color:#fff;border-color:#2471a3;box-shadow:0 3px 10px rgba(36,113,163,0.3);}
+.btn-sky:hover{background:#1a5276;transform:translateY(-1px);}
+/* FLIGHT MODAL */
+.flight-modal{max-width:600px!important;}
+.flight-tabs{display:flex;gap:0;margin-bottom:1rem;border-bottom:2px solid var(--border);}
+.flight-tab{padding:0.5rem 1.2rem;border:none;background:transparent;font-family:'Noto Sans TC',sans-serif;font-size:0.85rem;color:var(--text-muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all 0.2s;}
+.flight-tab.active{color:var(--sky,#2471a3);border-bottom-color:var(--sky,#2471a3);font-weight:600;}
+.flight-drop-zone{border:2px dashed var(--border);border-radius:10px;padding:2rem 1rem;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--parchment);margin-bottom:0.8rem;}
+.flight-drop-zone:hover,.flight-drop-zone.drag-over{border-color:var(--jade);background:#f0f9f5;}
+.flight-drop-zone .dz-icon{font-size:2rem;display:block;margin-bottom:0.5rem;}
+.flight-drop-zone p{font-family:'Noto Sans TC',sans-serif;font-size:0.83rem;color:var(--text-muted);}
+.flight-textarea{width:100%;height:140px;padding:0.7rem;border:1.5px solid var(--border);border-radius:8px;font-family:'Noto Sans TC',sans-serif;font-size:0.82rem;color:var(--text);background:var(--parchment);resize:vertical;line-height:1.6;margin-bottom:0.8rem;}
+.flight-textarea:focus{outline:none;border-color:var(--jade);background:#fff;}
+.flight-result{background:#f0f9f5;border:1px solid #b2dfcc;border-radius:8px;padding:0.9rem;margin-bottom:0.8rem;display:none;}
+.flight-result h4{font-family:'Noto Serif TC',serif;font-size:0.9rem;font-weight:700;color:var(--jade);margin-bottom:0.6rem;}
+.flight-item{display:flex;align-items:flex-start;gap:0.6rem;padding:0.5rem 0;border-bottom:1px solid #d4eedf;font-family:'Noto Sans TC',sans-serif;font-size:0.82rem;}
+.flight-item:last-child{border-bottom:none;}
+.flight-item-dot{width:10px;height:10px;border-radius:50%;background:var(--jade);flex-shrink:0;margin-top:3px;}
+.flight-item-body{flex:1;}
+.flight-item-body strong{display:block;color:var(--ink);margin-bottom:2px;}
+.flight-item-body span{color:var(--text-muted);}
+.flight-item-warn{color:var(--crimson)!important;}
+.flight-loading{text-align:center;padding:1.5rem;font-family:'Noto Sans TC',sans-serif;font-size:0.85rem;color:var(--text-muted);display:none;}
+.flight-loading .spin{display:inline-block;animation:spin 1s linear infinite;margin-right:0.5rem;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+
+/* TOAST */
+.toast{position:fixed;top:1.1rem;right:1.4rem;background:var(--jade);color:#fff;padding:0.55rem 1rem;border-radius:8px;font-family:'Noto Sans TC',sans-serif;font-size:0.81rem;opacity:0;transform:translateY(-10px);transition:all 0.3s;z-index:9999;pointer-events:none;}
+.toast.show{opacity:1;transform:translateY(0);}
+.toast.err{background:var(--crimson);}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9990;display:flex;align-items:center;justify-content:center;padding:1rem;}
+.modal-box{background:#fff;border-radius:14px;padding:1.8rem;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.3);font-family:'Noto Serif TC',serif;}
+.modal-box h3{font-size:1.15rem;font-weight:700;margin-bottom:1.1rem;color:var(--ink);}
+.modal-field-label{font-family:'Noto Sans TC',sans-serif;font-size:0.8rem;color:var(--text-muted);display:block;margin-bottom:0.28rem;}
+.modal-input{width:100%;padding:0.55rem 0.85rem;border:1.5px solid var(--border);border-radius:7px;font-family:'Noto Sans TC',sans-serif;font-size:0.88rem;color:var(--ink);background:var(--parchment);margin-bottom:0.75rem;}
+.modal-input:focus{outline:none;border-color:var(--terracotta);background:#fff;}
+.modal-err{color:var(--crimson);font-family:'Noto Sans TC',sans-serif;font-size:0.79rem;margin-top:-0.4rem;margin-bottom:0.5rem;min-height:1.1em;}
+.modal-btns{display:flex;gap:0.6rem;margin-top:0.9rem;justify-content:flex-end;}
+.modal-btns button{padding:0.5rem 1.3rem;border-radius:7px;font-family:'Noto Serif TC',serif;font-size:0.88rem;cursor:pointer;border:2px solid transparent;transition:all 0.18s;}
+.modal-confirm{background:var(--terracotta);color:#fff;border-color:var(--terracotta);}
+.modal-confirm:hover{background:#a84f22;}
+.modal-cancel{background:transparent;color:var(--text-muted);border-color:var(--border);}
+.modal-cancel:hover{border-color:var(--text-muted);}
+.trip-preview{font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;color:var(--jade);margin-bottom:0.4rem;margin-top:-0.3rem;min-height:1.2em;}
+.trip-warn{font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;color:var(--crimson);background:#fff5f5;border-radius:6px;padding:0.5rem 0.7rem;margin-bottom:0.5rem;}
+
+/* PRINT */
+.print-cover{display:none;}
+@media print{
+  body{background:#fff;}
+  .site-header,.tab-nav-wrap,.actions-bar,.day-panel:not(.print-include){display:none!important;}
+  .day-panel.print-include{display:block!important;page-break-after:always;}
+  .main{max-width:100%;padding:0;}
+  .print-cover{display:flex!important;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;text-align:center;page-break-after:always;}
+  .print-cover h1{font-family:'Ma Shan Zheng',cursive;font-size:4rem;color:var(--terracotta);margin-bottom:1rem;}
+  .card{break-inside:avoid;box-shadow:none;border:1px solid #ddd;}
+  .card textarea,.notes-row textarea{background:transparent;min-height:unset;resize:none;}
+  .tl-entries{display:none;}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
+</style>
+</head>
+<body class="view-mode">
+
+<div class="print-cover" id="printCover">
+  <h1>雲南旅遊計劃</h1>
+  <p id="printRange"></p>
+  <p style="margin-top:3rem;color:#aaa;font-size:0.85rem;">製作日期：<span id="printDate"></span></p>
+</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-top">
+      <div class="header-title-area">
+        <div class="header-badge">✦ 旅遊行程規劃 ✦</div>
+        <h1 class="header-title">雲南<span>之旅</span></h1>
+        <p class="header-subtitle">山水詩情，歲月靜好</p>
+        <p class="header-dates" id="headerDates">載入中...</p>
+      </div>
+      <div class="header-right">
+        <div class="header-mountain">⛰️</div>
+        <div class="header-admin-btns">
+          <button class="btn-header btn-lock" id="editBtn" onclick="showLoginModal()">🔒 編輯模式</button>
+          <button class="btn-header btn-unlock" id="logoutBtn" onclick="exitEdit()" style="display:none">🔓 結束編輯</button>
+          <button class="btn-header btn-trip-settings" id="tripSettingsBtn" onclick="showTripSettings()" style="display:none">⚙️ 行程設定</button>
+        </div>
+      </div>
+    </div>
+    <div class="settings-bar" id="settingsBar" style="display:none">
+      <label>🔗 Apps Script URL</label>
+      <input type="text" id="scriptUrl" placeholder="貼上 Google Apps Script 網址...">
+      <button class="btn-connect" onclick="connectSheets()">連接試算表</button>
+      <button class="btn-connect" style="border-color:#adf;color:#adf" onclick="showSetupGuide()">📋 設定教學</button>
+      <button class="btn-connect" style="border-color:#f96;color:#f96" onclick="runDiagnostic()">🔬 診斷連線</button>
+      <span class="sync-status" id="syncStatus">尚未連接</span>
+    </div>
+  </div>
+</header>
+
+<div class="tab-nav-wrap">
+  <nav class="tab-nav" id="tabNav"></nav>
+</div>
+
+<main class="main" id="mainContent"></main>
+
+<div class="actions-bar">
+  <div class="edit-only" style="display:flex;gap:0.7rem;flex-wrap:wrap;align-items:center;">
+    <button class="btn btn-jade" onclick="saveToLocal()">💾 儲存本地</button>
+    <button class="btn btn-jade" onclick="syncToSheets()">☁️ 同步試算表</button>
+    <button class="btn btn-gold" onclick="loadFromSheets()">🔄 從試算表載入</button>
+    <button class="btn btn-sky" onclick="showFlightImport()">✈️ 匯入航班</button>
+  </div>
+  <button class="btn btn-primary" onclick="printPDF()">🖨️ 列印 / 轉存 PDF</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── CONFIG ───
+const DEFAULT_CONFIG = {startYear:2026,startMonth:7,startDay:28,totalDays:12};
+let tripConfig = {...DEFAULT_CONFIG};
+const PASS = 'CCcc7379403!';
+const WEEKDAYS = ['日','一','二','三','四','五','六'];
+let DAYS = [];
+let currentTab = 0;
+let isEditMode = false;
+let dirty = false;
+let scriptUrl = '';
+
+function loadTripConfig(){
+  const r=localStorage.getItem('yunnan_config');
+  if(r) try{ tripConfig={...DEFAULT_CONFIG,...JSON.parse(r)}; }catch(e){}
+}
+function saveTripConfig(){ localStorage.setItem('yunnan_config',JSON.stringify(tripConfig)); }
+function buildDays(){
+  const s=new Date(tripConfig.startYear,tripConfig.startMonth-1,tripConfig.startDay);
+  return Array.from({length:tripConfig.totalDays},(_,i)=>{ const d=new Date(s); d.setDate(s.getDate()+i); return d; });
+}
+function fmtDate(d){ return `${d.getMonth()+1}月${d.getDate()}日（週${WEEKDAYS[d.getDay()]}）`; }
+function fmtShort(d){ return `${d.getMonth()+1}/${d.getDate()}`; }
+function nowTime(){ return new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}); }
+
+// ─── AUTH ───
+function showLoginModal(){
+  const ov=mkModal(`
+    <h3>🔐 進入編輯模式</h3>
+    <label class="modal-field-label">管理員密碼</label>
+    <input class="modal-input" type="password" id="pwInput" placeholder="密碼" onkeydown="if(event.key==='Enter')doLogin()">
+    <div class="modal-err" id="pwErr"></div>
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closeMod()">取消</button>
+      <button class="modal-confirm" onclick="doLogin()">確認登入</button>
+    </div>`);
+  setTimeout(()=>ov.querySelector('#pwInput').focus(),50);
+}
+function doLogin(){
+  const pw=(document.getElementById('pwInput')?.value)||'';
+  if(pw===PASS){ closeMod(); enterEdit(); }
+  else{
+    const e=document.getElementById('pwErr');
+    if(e) e.textContent='密碼錯誤，請再試一次';
+    const i=document.getElementById('pwInput');
+    if(i){ i.value=''; i.focus(); i.style.borderColor='var(--crimson)'; }
+  }
+}
+function enterEdit(){
+  isEditMode=true;
+  document.body.classList.remove('view-mode');
+  document.getElementById('editBtn').style.display='none';
+  document.getElementById('logoutBtn').style.display='';
+  document.getElementById('tripSettingsBtn').style.display='';
+  document.getElementById('settingsBar').style.display='';
+  document.querySelectorAll('.edit-only').forEach(el=>el.style.display='flex');
+  toast('✅ 已進入編輯模式');
+}
+function exitEdit(){
+  isEditMode=false;
+  document.body.classList.add('view-mode');
+  document.getElementById('editBtn').style.display='';
+  document.getElementById('logoutBtn').style.display='none';
+  document.getElementById('tripSettingsBtn').style.display='none';
+  document.getElementById('settingsBar').style.display='none';
+  document.querySelectorAll('.edit-only').forEach(el=>el.style.display='none');
+  toast('已切換為瀏覽模式');
+}
+
+// ─── TRIP SETTINGS ───
+function showTripSettings(){
+  const s=new Date(tripConfig.startYear,tripConfig.startMonth-1,tripConfig.startDay);
+  const sv=s.toISOString().split('T')[0];
+  const ov=mkModal(`
+    <h3>⚙️ 行程設定</h3>
+    <label class="modal-field-label">出發日期</label>
+    <input class="modal-input" type="date" id="tsStart" value="${sv}" oninput="updateTripPreview()">
+    <label class="modal-field-label">總天數</label>
+    <input class="modal-input" type="number" id="tsDays" value="${tripConfig.totalDays}" min="1" max="60" oninput="updateTripPreview()">
+    <div class="trip-preview" id="tripPreview"></div>
+    <div class="trip-warn">⚠️ 變更天數後，超出範圍的資料將遺失，請確認後再套用。</div>
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closeMod()">取消</button>
+      <button class="modal-confirm" onclick="applyTripSettings()">套用設定</button>
+    </div>`);
+  updateTripPreview();
+}
+function updateTripPreview(){
+  const sv=(document.getElementById('tsStart')||{}).value;
+  const dv=parseInt((document.getElementById('tsDays')||{}).value)||0;
+  const el=document.getElementById('tripPreview');
+  if(!el||!sv||dv<1) return;
+  const s=new Date(sv+'T00:00:00');
+  const e=new Date(s); e.setDate(s.getDate()+dv-1);
+  el.textContent=`${s.getMonth()+1}月${s.getDate()}日 ─ ${e.getMonth()+1}月${e.getDate()}日，共 ${dv} 天`;
+}
+function applyTripSettings(){
+  const sv=(document.getElementById('tsStart')||{}).value;
+  const dv=parseInt((document.getElementById('tsDays')||{}).value);
+  if(!sv||isNaN(dv)||dv<1){ toast('請填入正確的日期和天數',true); return; }
+  const oldData=getData();
+  const s=new Date(sv+'T00:00:00');
+  tripConfig={startYear:s.getFullYear(),startMonth:s.getMonth()+1,startDay:s.getDate(),totalDays:dv};
+  saveTripConfig();
+  closeMod();
+  rebuildUI(oldData);
+  toast(`✅ 行程已更新為 ${dv} 天`);
+}
+
+// ─── MODAL HELPERS ───
+function mkModal(inner){
+  closeMod();
+  const ov=document.createElement('div');
+  ov.className='modal-overlay'; ov.id='activeModal';
+  ov.innerHTML=`<div class="modal-box">${inner}</div>`;
+  document.body.appendChild(ov);
+  ov.addEventListener('click',e=>{ if(e.target===ov) closeMod(); });
+  return ov;
+}
+function closeMod(){ document.getElementById('activeModal')?.remove(); }
+
+// ─── TIMELINE ───
+const TL_COLORS=['tl-c0','tl-c1','tl-c2','tl-c3','tl-c4','tl-c5','tl-c6','tl-c7','tl-c8','tl-c9'];
+function pct(h,m=0){ return ((h*60+m)/(24*60))*100; }
+function parseTime(str){
+  const s=(str||'').trim().replace('：',':');
+  let m=s.match(/^(\d{1,2}):(\d{2})$/);
+  if(m) return {h:+m[1],m:+m[2]};
+  m=s.match(/^(\d{1,2})$/);
+  if(m) return {h:+m[1],m:0};
+  return null;
+}
+function renderTimeline(i){
+  const bar=document.getElementById(`tl-bar-${i}`);
+  if(!bar) return;
+  bar.querySelectorAll('.tl-segment').forEach(e=>e.remove());
+  getTimelineEntries(i).forEach((ent,ci)=>{
+    const t1=parseTime(ent.from),t2=parseTime(ent.to);
+    if(!t1||!t2) return;
+    let p1=pct(t1.h,t1.m),p2=pct(t2.h,t2.m);
+    if(p2<=p1) p2=Math.min(100,p1+2);
+    const seg=document.createElement('div');
+    seg.className='tl-segment '+TL_COLORS[ci%TL_COLORS.length];
+    seg.style.left=p1+'%'; seg.style.width=(p2-p1)+'%';
+    seg.title=`${ent.from}─${ent.to} ${ent.label}`;
+    if((p2-p1)>4) seg.textContent=ent.label.length>8?ent.label.slice(0,7)+'…':ent.label;
+    bar.appendChild(seg);
+  });
+}
+function getTimelineEntries(i){
+  const n=+(document.getElementById(`tl-count-${i}`)?.value||0);
+  return Array.from({length:n},(_,k)=>({
+    from: document.getElementById(`tl-from-${i}-${k}`)?.value||'',
+    to:   document.getElementById(`tl-to-${i}-${k}`)?.value||'',
+    label:document.getElementById(`tl-label-${i}-${k}`)?.value||'',
+  }));
+}
+function setTimelineEntries(i,entries){
+  const el=document.getElementById(`tl-entries-${i}`);
+  const cnt=document.getElementById(`tl-count-${i}`);
+  if(!el||!cnt) return;
+  cnt.value=entries.length;
+  el.innerHTML=buildTLRows(i,entries);
+  renderTimeline(i);
+}
+function buildTLRows(i,entries){
+  if(!entries.length) return '<div class="tl-empty-msg">尚無交通資料，點「新增移動」加入</div>';
+  let h=`<div class="tl-entry-header"><span>出發</span><span>抵達</span><span>交通說明</span><span></span></div>`;
+  entries.forEach((ent,k)=>{
+    h+=`<div class="tl-entry">
+      <input class="timeline-input" type="text" id="tl-from-${i}-${k}" value="${ent.from||''}" placeholder="08:00" maxlength="5" oninput="renderTimeline(${i});markDirty()">
+      <input class="timeline-input" type="text" id="tl-to-${i}-${k}"   value="${ent.to||''}"   placeholder="12:30" maxlength="5" oninput="renderTimeline(${i});markDirty()">
+      <input class="timeline-input" type="text" id="tl-label-${i}-${k}" value="${ent.label||''}" placeholder="高鐵 昆明→大理 G6004" oninput="renderTimeline(${i});markDirty()">
+      <button class="tl-del-btn" onclick="delTLEntry(${i},${k})">✕</button>
+    </div>`;
+  });
+  return h;
+}
+function addTLEntry(i){
+  const entries=getTimelineEntries(i);
+  entries.push({from:'',to:'',label:''});
+  setTimelineEntries(i,entries);
+  markDirty();
+}
+function delTLEntry(i,k){
+  const entries=getTimelineEntries(i);
+  entries.splice(k,1);
+  setTimelineEntries(i,entries);
+  markDirty();
+}
+
+// ─── BUILD UI ───
+function buildUI(oldData){
+  DAYS=buildDays();
+  updateHeaderDates();
+  const tabNav=document.getElementById('tabNav');
+  const mc=document.getElementById('mainContent');
+  tabNav.innerHTML=''; mc.innerHTML='';
+  DAYS.forEach((d,i)=>{
+    const dn=i+1;
+    const btn=document.createElement('button');
+    btn.className='tab-btn'+(i===0?' active':'');
+    btn.id=`tab-btn-${i}`; btn.onclick=()=>switchTab(i);
+    btn.innerHTML=`<span class="day-num">D${dn}</span><span class="day-date">${fmtShort(d)}</span>`;
+    tabNav.appendChild(btn);
+
+    let gridHtml='';
+    for(let h=0;h<=24;h+=3) gridHtml+=`<div class="tl-grid-line" style="left:${pct(h)}%"></div>`;
+    const axisHtml=[0,3,6,9,12,15,18,21,24].map(h=>`<span>${String(h).padStart(2,'0')}:00</span>`).join('');
+
+    const panel=document.createElement('div');
+    panel.className='day-panel'+(i===0?' active':'');
+    panel.id=`panel-${i}`;
+    panel.innerHTML=`
+      <div class="day-header">
+        <div class="day-num-big">D${dn}</div>
+        <div class="day-info">
+          <h2>第 ${dn} 天</h2>
+          <div class="day-date-full">${fmtDate(d)}</div>
+        </div>
+        <input class="day-title-input" type="text" id="title-${i}" placeholder="今天的主題（例：大理古城漫遊）" oninput="markDirty()">
+      </div>
+      <div class="timeline-section">
+        <div class="timeline-section-header">
+          <span class="tl-title">🚌 今日交通時間軸（24小時）</span>
+          <button class="tl-add-btn" onclick="addTLEntry(${i})">＋ 新增移動</button>
+        </div>
+        <div class="tl-axis">${axisHtml}</div>
+        <div class="tl-bar" id="tl-bar-${i}">${gridHtml}</div>
+        <input type="hidden" id="tl-count-${i}" value="0">
+        <div class="tl-entries" id="tl-entries-${i}">
+          <div class="tl-empty-msg">尚無交通資料，點「新增移動」加入</div>
+        </div>
+      </div>
+      <div class="cards-grid">
+        <div class="card meal-breakfast">
+          <div class="card-header"><div class="card-icon">🌅</div><span class="card-label">早餐</span></div>
+          <textarea id="breakfast-${i}" placeholder="餐廳、料理...&#10;例：過橋米線、餌塊" oninput="markDirty()"></textarea>
+        </div>
+        <div class="card meal-lunch">
+          <div class="card-header"><div class="card-icon">☀️</div><span class="card-label">午餐</span></div>
+          <textarea id="lunch-${i}" placeholder="餐廳、料理...&#10;例：白族乳扇、汽鍋雞" oninput="markDirty()"></textarea>
+        </div>
+        <div class="card meal-dinner">
+          <div class="card-header"><div class="card-icon">🌙</div><span class="card-label">晚餐</span></div>
+          <textarea id="dinner-${i}" placeholder="餐廳、料理...&#10;例：野生菌火鍋" oninput="markDirty()"></textarea>
+        </div>
+        <div class="card card-sights">
+          <div class="card-header"><div class="card-icon">🏛️</div><span class="card-label">主要景點</span></div>
+          <textarea id="sights-${i}" placeholder="今日景點...&#10;例：洱海、崇聖寺三塔" oninput="markDirty()"></textarea>
+        </div>
+        <div class="card card-transport">
+          <div class="card-header"><div class="card-icon">🚗</div><span class="card-label">交通說明</span></div>
+          <textarea id="transport-${i}" placeholder="交通方式、車次...&#10;例：高鐵G6004 昆明→大理" oninput="markDirty()"></textarea>
+        </div>
+        <div class="card card-hotel">
+          <div class="card-header"><div class="card-icon">🏨</div><span class="card-label">住宿</span></div>
+          <textarea id="hotel-${i}" placeholder="住宿名稱、地址...&#10;例：古城民宿「山居歲月」" oninput="markDirty()"></textarea>
+        </div>
+      </div>
+      <div class="notes-row">
+        <div class="card-header">
+          <div class="card-icon" style="background:#fff8e1;width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:0.95rem;">📝</div>
+          <span class="card-label">備注 / 小叮嚀</span>
+        </div>
+        <textarea id="notes-${i}" placeholder="備注、注意事項、貼心提醒...&#10;例：記得帶防曬，景點09:00開放" oninput="markDirty()"></textarea>
+      </div>`;
+    mc.appendChild(panel);
+  });
+  if(oldData) setData(oldData);
+  if(currentTab>=DAYS.length) currentTab=0;
+  switchTab(currentTab);
+}
+function updateHeaderDates(){
+  const d=buildDays();
+  if(!d.length) return;
+  const s=d[0],e=d[d.length-1];
+  document.getElementById('headerDates').textContent=
+    `${s.getFullYear()}年${s.getMonth()+1}月${s.getDate()}日 — ${e.getMonth()+1}月${e.getDate()}日（${d.length}天）`;
+}
+function rebuildUI(old){ buildUI(old); }
+
+// ─── TAB SWITCH ───
+function switchTab(i){
+  currentTab=i;
+  document.querySelectorAll('.tab-btn').forEach((b,j)=>b.classList.toggle('active',i===j));
+  document.querySelectorAll('.day-panel').forEach((p,j)=>p.classList.toggle('active',i===j));
+}
+
+// ─── DIRTY ───
+function markDirty(){ dirty=true; }
+
+// ─── DATA ───
+function getData(){
+  return DAYS.map((_,i)=>({
+    title:     document.getElementById(`title-${i}`)?.value||'',
+    breakfast: document.getElementById(`breakfast-${i}`)?.value||'',
+    lunch:     document.getElementById(`lunch-${i}`)?.value||'',
+    dinner:    document.getElementById(`dinner-${i}`)?.value||'',
+    sights:    document.getElementById(`sights-${i}`)?.value||'',
+    transport: document.getElementById(`transport-${i}`)?.value||'',
+    hotel:     document.getElementById(`hotel-${i}`)?.value||'',
+    notes:     document.getElementById(`notes-${i}`)?.value||'',
+    timeline:  getTimelineEntries(i),
+  }));
+}
+function setData(arr){
+  if(!arr) return;
+  arr.forEach((row,i)=>{
+    if(i>=DAYS.length) return;
+    const set=(id,v)=>{ const el=document.getElementById(id); if(el) el.value=v||''; };
+    set(`title-${i}`,row.title);
+    set(`breakfast-${i}`,row.breakfast);
+    set(`lunch-${i}`,row.lunch);
+    set(`dinner-${i}`,row.dinner);
+    set(`sights-${i}`,row.sights);
+    set(`transport-${i}`,row.transport);
+    set(`hotel-${i}`,row.hotel);
+    set(`notes-${i}`,row.notes);
+    if(row.timeline?.length) setTimelineEntries(i,row.timeline);
+  });
+}
+
+// ─── LOCAL SAVE ───
+function saveToLocal(){
+  localStorage.setItem('yunnan_2026',JSON.stringify(getData()));
+  dirty=false; toast('✅ 已儲存至本地');
+}
+function loadFromLocal(){
+  const r=localStorage.getItem('yunnan_2026');
+  if(r) try{ setData(JSON.parse(r)); }catch(e){}
+}
+
+// ─── SHEETS SYNC ───
+function connectSheets(){
+  scriptUrl=document.getElementById('scriptUrl').value.trim();
+  if(!scriptUrl||!scriptUrl.startsWith('https://script.google.com')){ toast('❌ Apps Script URL 格式不正確',true); return; }
+  localStorage.setItem('yunnan_scripturl',scriptUrl);
+  document.getElementById('syncErrorBox')?.remove();
+  loadFromSheets();
+}
+async function syncToSheets(){
+  if(!scriptUrl){ toast('請先連接試算表',true); return; }
+  setSyncStatus('同步中...','');
+  try{
+    const rows=getData().map((row,i)=>({
+      day:`第${i+1}天`,date:fmtDate(DAYS[i]),
+      title:row.title,breakfast:row.breakfast,lunch:row.lunch,
+      dinner:row.dinner,sights:row.sights,transport:row.transport,
+      hotel:row.hotel,notes:row.notes,
+      timeline:JSON.stringify(row.timeline||[]),
+    }));
+    const res=await fetch(scriptUrl,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'write',rows,config:tripConfig})});
+    let result; try{ result=await res.json(); }catch{ result={ok:res.ok}; }
+    if(!res.ok||result.error) throw new Error(result.error||`HTTP ${res.status}`);
+    dirty=false; setSyncStatus('✓ 已同步 '+nowTime(),'ok'); toast('✅ 已同步至 Google 試算表');
+    document.getElementById('syncErrorBox')?.remove();
+  }catch(e){ setSyncStatus('✗ 同步失敗','err'); toast('❌ 同步失敗：'+e.message,true); showSyncError('sync',e,''); }
+}
+async function loadFromSheets(){
+  if(!scriptUrl){ toast('請先填入 Apps Script 網址',true); return; }
+  setSyncStatus('載入中...','');
+  let rawText='';
+  try{
+    let res;
+    try{ res=await fetch(scriptUrl+'?action=read&t='+Date.now()); }
+    catch(netErr){ throw new Error('網路連線失敗（可能是 CORS 問題）：'+netErr.message); }
+    rawText=await res.text();
+    if(!res.ok){
+      const hint = res.status===403?' — 存取被拒，請確認部署時「存取權限」設為「任何人」'
+                 : res.status===404?' — 找不到，請確認 URL 是否正確'
+                 : '';
+      throw new Error(`伺服器回傳 HTTP ${res.status}${hint}`);
+    }
+    let result;
+    try{ result=JSON.parse(rawText); }
+    catch{ throw new Error('回應不是合法 JSON，Script 可能有語法錯誤或尚未部署。\n收到：'+rawText.slice(0,300)); }
+    if(result.error) throw new Error('Script 回傳錯誤：'+result.error);
+    document.getElementById('syncErrorBox')?.remove();
+    if(result.config){ tripConfig={...DEFAULT_CONFIG,...result.config}; saveTripConfig(); rebuildUI(null); }
+    if(!result.rows?.length){
+      setSyncStatus('✓ 已連接（試算表為空）','ok');
+      toast('✅ 連線成功！試算表目前無資料，填寫後按「☁️ 同步試算表」即可存入。');
+      return;
+    }
+    const parsed=result.rows.slice(0,DAYS.length).map(r=>({
+      title:r.title||'',breakfast:r.breakfast||'',lunch:r.lunch||'',
+      dinner:r.dinner||'',sights:r.sights||'',transport:r.transport||'',
+      hotel:r.hotel||'',notes:r.notes||'',
+      timeline:(()=>{ try{ return JSON.parse(r.timeline||'[]'); }catch{ return []; } })(),
+    }));
+    setData(parsed);
+    setSyncStatus('✓ 已載入 '+nowTime(),'ok'); toast('✅ 已載入 '+parsed.length+' 天資料');
+  }catch(e){
+    setSyncStatus('✗ 載入失敗','err');
+    toast('❌ '+e.message.split('\n')[0],true);
+    showSyncError('load',e,rawText);
+    console.error('loadFromSheets:',e,'raw:',rawText);
+  }
+}
+function setSyncStatus(msg,cls){ const el=document.getElementById('syncStatus'); el.textContent=msg; el.className='sync-status '+(cls||''); }
+
+
+// ─── DIAGNOSTIC TOOL ───
+async function runDiagnostic(){
+  const url = document.getElementById('scriptUrl').value.trim();
+  const ov = document.createElement('div');
+  ov.id = 'diagModal';
+  ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:99999;display:flex;align-items:center;justify-content:center;padding:1rem;';
+  ov.innerHTML = `<div style="background:#0d1f0d;color:#c8f0c8;border-radius:12px;max-width:620px;width:100%;max-height:88vh;overflow-y:auto;padding:1.8rem;font-family:'Noto Sans TC',sans-serif;font-size:0.83rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem;">
+      <strong style="font-size:1rem;color:#6effa0;">🔬 Apps Script 連線診斷</strong>
+      <button onclick="document.getElementById('diagModal').remove()" style="background:transparent;border:none;color:#6effa0;cursor:pointer;font-size:1.2rem;">✕</button>
+    </div>
+    <div id="diagLog" style="line-height:2.2;"></div>
+  </div>`;
+  document.body.appendChild(ov);
+  ov.addEventListener('click', e=>{ if(e.target===ov) ov.remove(); });
+
+  const log = document.getElementById('diagLog');
+  const write = (msg, color='#c8f0c8') => {
+    log.innerHTML += `<div style="color:${color};">${msg}</div>`;
+    log.scrollTop = log.scrollHeight;
+  };
+  const ok  = msg => write('✅ ' + msg, '#6effa0');
+  const err = msg => write('❌ ' + msg, '#ff8080');
+  const info= msg => write('ℹ️ ' + msg, '#aaddff');
+  const warn= msg => write('⚠️ ' + msg, '#ffd080');
+
+  write('開始診斷...', '#888');
+
+  // Step 1: URL format
+  if(!url){ err('未填入 Apps Script URL，請先貼上網址'); return; }
+  if(!url.startsWith('https://script.google.com/macros/s/')){
+    err('URL 格式錯誤 — 正確格式應為：<code style="color:#adf">https://script.google.com/macros/s/AKfy.../exec</code>');
+    warn('你填入的是：' + url.slice(0,80));
+    return;
+  }
+  ok('URL 格式正確');
+
+  // Step 2: fetch test
+  info('嘗試連線中...');
+  let res, rawText;
+  try{
+    res = await fetch(url + '?action=read&t=' + Date.now());
+    rawText = await res.text();
+  } catch(netErr) {
+    err('網路請求失敗：' + netErr.message);
+    warn('可能原因：① 網路問題 ② Apps Script 尚未部署 ③ CORS 被拒');
+    return;
+  }
+
+  info(`伺服器回應狀態：HTTP ${res.status}`);
+
+  // Step 3: HTTP status
+  if(res.status === 403){
+    err('HTTP 403 — 存取被拒');
+    warn('請回到 Apps Script → 部署 → 管理部署作業 → 編輯（鉛筆圖示）→ 「存取誰可以使用此應用程式」改為<strong style="color:#ffd">「任何人」</strong> → 部署');
+    write('<div style="background:#1a1a0a;padding:0.6rem 0.8rem;border-radius:6px;margin-top:0.3rem;color:#ffd;font-size:0.77rem;">注意：改完設定後需要重新部署，並複製<strong>新的 URL</strong> 回來貼上</div>');
+    return;
+  }
+  if(res.status === 404){
+    err('HTTP 404 — 找不到此 URL');
+    warn('請確認 URL 末尾是 <code style="color:#adf">/exec</code> 而不是 <code style="color:#f96">/dev</code>');
+    return;
+  }
+  if(!res.ok){
+    err(`HTTP ${res.status} 錯誤`);
+    write('原始回應：<pre style="background:#111;padding:0.5rem;border-radius:4px;font-size:0.7rem;color:#aaa;white-space:pre-wrap;margin-top:0.3rem;">' + rawText.slice(0,400).replace(/</g,'&lt;') + '</pre>');
+    return;
+  }
+  ok('HTTP 200 — 伺服器有回應');
+
+  // Step 4: JSON parse
+  let parsed;
+  try{
+    parsed = JSON.parse(rawText);
+  } catch(je) {
+    err('回應不是合法 JSON — Apps Script 程式碼有誤或尚未正確部署');
+    write('收到的原始內容：<pre style="background:#111;padding:0.5rem;border-radius:4px;font-size:0.7rem;color:#f96;white-space:pre-wrap;margin-top:0.3rem;">' + rawText.slice(0,600).replace(/</g,'&lt;') + '</pre>');
+    warn('請回 Apps Script 確認：① 程式碼完整貼上 ② 儲存後重新部署 ③ 沒有語法錯誤');
+    return;
+  }
+  ok('回應為合法 JSON');
+
+  // Step 5: content check
+  if(parsed.error){
+    err('Script 回傳錯誤：' + parsed.error);
+    warn('請確認 SHEET_ID 是否正確，以及試算表是否可被存取');
+    return;
+  }
+  if(Array.isArray(parsed.rows) && parsed.rows.length === 0){
+    ok('連線完全成功！試算表目前無資料（rows 為空陣列）');
+    info('這是正常狀態 — 請在網頁填寫資料後，按「☁️ 同步試算表」把資料寫入，之後再載入即可看到資料');
+  } else if(Array.isArray(parsed.rows)){
+    ok(`連線成功！試算表有 ${parsed.rows.length} 筆資料，可以正常載入`);
+  } else {
+    warn('回應格式異常，缺少 rows 欄位');
+    write('收到：<pre style="background:#111;padding:0.5rem;border-radius:4px;font-size:0.7rem;color:#aaa;white-space:pre-wrap;margin-top:0.3rem;">' + JSON.stringify(parsed).slice(0,300).replace(/</g,'&lt;') + '</pre>');
+  }
+
+  write('──────────────────', '#444');
+  write('──────────────────', '#444');
+  if(location.protocol === 'file:'){
+    write('', '#444');
+    write('⚠️ 目前以本地檔案（file://）開啟，所有跨來源請求都會被瀏覽器封鎖', '#ffd080');
+    write('✅ 請將此檔案上傳至 <strong>GitHub Pages</strong> 後再使用同步功能', '#6effa0');
+    write('→ 上傳後以 <code>https://你的帳號.github.io/倉庫名/</code> 開啟', '#aaddff');
+  }
+  write('診斷完成', '#888');
+}
+
+function showSyncError(type,err,raw){
+  document.getElementById('syncErrorBox')?.remove();
+  const bar=document.getElementById('settingsBar');
+  if(!bar) return;
+  const tips=[
+    '① 部署時「存取誰可以使用此應用程式」必須選 <strong style="color:#ffd">任何人</strong>（不是「僅限自己」）',
+    '② 每次<strong style="color:#ffd">修改 Script 後需重新部署</strong>，並複製新 URL（舊 URL 指向舊版本）',
+    '③ SHEET_ID 是試算表網址中 <code style="color:#adf">/d/</code> 和 <code style="color:#adf">/edit</code> 之間那一段長字串',
+    '④ 試算表需有名為「<strong style="color:#ffd">雲南行程</strong>」的工作表（第一次同步後自動建立）',
+    '⑤ 第一次使用：先填寫資料 → 按「☁️ 同步試算表」→ 再按「🔄 從試算表載入」',
+  ];
+  const box=document.createElement('div');
+  box.id='syncErrorBox';
+  box.style.cssText="background:#1e0a0a;color:#ffb8b8;border-radius:0 0 8px 8px;padding:1rem 1.2rem;font-family:'Noto Sans TC',sans-serif;font-size:0.79rem;line-height:2;border-top:1px solid #5a1a1a;max-width:1100px;margin:0 auto;";
+  const rawHtml = raw ? `<details style="margin-top:0.6rem;"><summary style="cursor:pointer;color:#888;font-size:0.74rem;">▶ 伺服器原始回應（偵錯用，可截圖給開發者）</summary><pre style="background:#111;padding:0.6rem;border-radius:4px;font-size:0.68rem;color:#aaa;white-space:pre-wrap;margin-top:0.4rem;max-height:130px;overflow-y:auto;">${raw.slice(0,600).replace(/</g,'&lt;')}</pre></details>` : '';
+  box.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;">
+    <div style="flex:1;">
+      <strong style="color:#ff8080;font-size:0.88rem;">❌ 連線失敗 — 請依序確認以下事項：</strong>
+      <div style="color:#ffcca0;margin-top:0.3rem;font-size:0.8rem;">錯誤訊息：${err.message.replace(/\n/g,'<br>').replace(/</g,'&lt;')}</div>
+      <ol style="padding-left:1.3rem;margin-top:0.5rem;color:#ffcca0;">${tips.map(t=>`<li>${t}</li>`).join('')}</ol>
+      ${rawHtml}
+    </div>
+    <button onclick="document.getElementById('syncErrorBox').remove()" style="background:transparent;border:none;color:#ff8080;cursor:pointer;font-size:1.1rem;flex-shrink:0;padding:0;">✕</button>
+  </div>`;
+  // Insert after settings bar's parent
+  bar.closest('.header-inner').insertAdjacentElement('afterend', box);
+}
+
+// ─── SETUP GUIDE ───
+function showSetupGuide(){
+  const code=`const SHEET_ID = '你的試算表ID';
+const SHEET_NAME = '雲南行程';
+const COLS=['天數','日期','今日主題','早餐','午餐','晚餐','主要景點','交通','住宿','備注','時間軸'];
+const KEYS=['day','date','title','breakfast','lunch','dinner','sights','transport','hotel','notes','timeline'];
+function doGet(e){
+  if((e?.parameter?.action||'read')==='read') return readData();
+  return ok({rows:[]});
+}
+function doPost(e){
+  const b=JSON.parse(e.postData.contents);
+  if(b.action==='write') return writeData(b.rows,b.config);
+  return ok({error:'未知操作'});
+}
+function readData(){
+  const ss=SpreadsheetApp.openById(SHEET_ID);
+  const sh=ss.getSheetByName(SHEET_NAME);
+  if(!sh||sh.getLastRow()<2) return ok({rows:[]});
+  const vals=sh.getRange(2,1,sh.getLastRow()-1,COLS.length).getValues();
+  const rows=vals.map(r=>{const o={};KEYS.forEach((k,i)=>o[k]=r[i]||'');return o;});
+  let config=null;
+  try{const cs=ss.getSheetByName('_config');if(cs)config=JSON.parse(cs.getRange(1,1).getValue()||'null');}catch(e){}
+  return ok({rows,config});
+}
+function writeData(rows,config){
+  const ss=SpreadsheetApp.openById(SHEET_ID);
+  let sh=ss.getSheetByName(SHEET_NAME);
+  if(!sh) sh=ss.insertSheet(SHEET_NAME);
+  sh.clearContents();sh.appendRow(COLS);
+  rows.forEach(r=>sh.appendRow(KEYS.map(k=>r[k]||'')));
+  if(config){let cs=ss.getSheetByName('_config');if(!cs)cs=ss.insertSheet('_config');cs.getRange(1,1).setValue(JSON.stringify(config));}
+  return ok({ok:true});
+}
+function ok(obj){return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);}`;
+
+  const ov=document.createElement('div');
+  ov.className='modal-overlay'; ov.id='guideModal'; ov.style.zIndex='99999';
+  ov.innerHTML=`<div style="background:#1e2d1e;color:#d4e8d4;border-radius:12px;max-width:700px;width:100%;max-height:90vh;overflow-y:auto;padding:1.8rem;font-family:'Noto Sans TC',sans-serif;">
+    <h2 style="color:#6effa0;margin-bottom:0.9rem;font-size:1.05rem;">📋 Google Apps Script 設定教學</h2>
+    <ol style="line-height:2.3;font-size:0.83rem;margin-bottom:0.9rem;padding-left:1.4rem;">
+      <li>開啟 Google 試算表 → 「擴充功能 → Apps Script」</li>
+      <li>清空編輯器，貼入程式碼，<strong style="color:#ffd;">把 SHEET_ID 換成你的試算表 ID</strong></li>
+      <li>儲存 → 「部署 → 新增部署作業」→ 類型：<strong style="color:#ffd;">網頁應用程式</strong></li>
+      <li>執行身分：<strong style="color:#ffd;">我</strong>；存取權限：<strong style="color:#ffd;">任何人</strong> → 部署</li>
+      <li>複製「網頁應用程式 URL」貼到本頁的欄位，按「連接試算表」</li>
+    </ol>
+    <pre id="guideCode" style="background:#111;padding:0.9rem;border-radius:8px;font-size:0.68rem;overflow-x:auto;white-space:pre-wrap;color:#b8ffb8;line-height:1.55;">${code.replace(/</g,'&lt;')}</pre>
+    <div style="margin-top:0.9rem;display:flex;gap:0.7rem;">
+      <button onclick="navigator.clipboard.writeText(document.getElementById('guideCode').textContent);this.textContent='✅ 已複製!'" style="padding:0.45rem 0.9rem;border-radius:6px;border:1px solid #6effa0;background:transparent;color:#6effa0;cursor:pointer;font-size:0.8rem;">📋 複製程式碼</button>
+      <button onclick="document.getElementById('guideModal').remove()" style="padding:0.45rem 0.9rem;border-radius:6px;border:1px solid #888;background:transparent;color:#aaa;cursor:pointer;font-size:0.8rem;">關閉</button>
+    </div>
+  </div>`;
+  document.body.appendChild(ov);
+  ov.addEventListener('click',e=>{ if(e.target===ov) ov.remove(); });
+}
+
+
+// ─── FLIGHT IMPORT ───
+let flightTab = 'text'; // 'text' | 'file'
+let parsedFlights = [];
+
+function showFlightImport(){
+  const tripStart = DAYS[0];
+  const tripEnd   = DAYS[DAYS.length-1];
+  const ov = mkModal(`
+    <h3>✈️ 匯入航班資訊</h3>
+    <div class="flight-tabs">
+      <button class="flight-tab active" id="ftab-text" onclick="switchFlightTab('text')">📋 貼上文字</button>
+      <button class="flight-tab" id="ftab-file" onclick="switchFlightTab('file')">📎 上傳檔案 / 截圖</button>
+    </div>
+
+    <!-- TEXT TAB -->
+    <div id="ftab-text-panel">
+      <p style="font-family:'Noto Sans TC',sans-serif;font-size:0.79rem;color:var(--text-muted);margin-bottom:0.6rem;">
+        將航班確認信、行程表或訂位記錄貼入下方，AI 自動解析起降時間：
+      </p>
+      <textarea class="flight-textarea" id="flightText" placeholder="例：
+BR195 台北桃園(TPE) → 昆明長水(KMG)
+出發：2026-07-28 09:35
+抵達：2026-07-28 12:50
+---
+或 Booking confirmation / 行程確認信 任意格式均可"></textarea>
+    </div>
+
+    <!-- FILE TAB -->
+    <div id="ftab-file-panel" style="display:none">
+      <div class="flight-drop-zone" id="dropZone" onclick="document.getElementById('flightFileInput').click()"
+           ondragover="event.preventDefault();this.classList.add('drag-over')"
+           ondragleave="this.classList.remove('drag-over')"
+           ondrop="handleFileDrop(event)">
+        <span class="dz-icon">📄</span>
+        <p>點擊或拖曳上傳<br><strong>圖片（截圖）、PDF、文字檔</strong></p>
+        <p style="margin-top:0.4rem;font-size:0.74rem;opacity:0.7;">支援 JPG / PNG / PDF / TXT</p>
+      </div>
+      <input type="file" id="flightFileInput" accept="image/*,.pdf,.txt" style="display:none" onchange="handleFileSelect(this)">
+      <div id="filePreview" style="font-family:'Noto Sans TC',sans-serif;font-size:0.8rem;color:var(--jade);margin-bottom:0.5rem;"></div>
+    </div>
+
+    <!-- LOADING -->
+    <div class="flight-loading" id="flightLoading">
+      <span class="spin">✈️</span> AI 解析中，請稍候...
+    </div>
+
+    <!-- RESULT -->
+    <div class="flight-result" id="flightResult">
+      <h4>✅ 解析結果（確認後按「加入行程」）</h4>
+      <div id="flightResultList"></div>
+    </div>
+
+    <div style="font-family:'Noto Sans TC',sans-serif;font-size:0.74rem;color:var(--text-muted);margin-bottom:0.3rem;">
+      行程範圍：${fmtDate(tripStart)} ─ ${fmtDate(tripEnd)}
+    </div>
+
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closeMod()">取消</button>
+      <button class="modal-confirm" id="flightParseBtn" onclick="parseFlights()">🔍 解析航班</button>
+      <button class="modal-confirm" id="flightAddBtn" onclick="addFlightsToSchedule()" style="display:none;background:var(--jade);border-color:var(--jade);">✅ 加入行程</button>
+    </div>
+  `);
+  // widen modal
+  ov.querySelector('.modal-box').style.maxWidth = '600px';
+}
+
+function switchFlightTab(tab){
+  flightTab = tab;
+  document.getElementById('ftab-text-panel').style.display = tab==='text' ? '' : 'none';
+  document.getElementById('ftab-file-panel').style.display = tab==='file' ? '' : 'none';
+  document.querySelectorAll('.flight-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('ftab-'+tab).classList.add('active');
+}
+
+let flightFileData = null; // {type, base64, mimeType}
+
+function handleFileDrop(e){
+  e.preventDefault();
+  document.getElementById('dropZone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if(file) processFlightFile(file);
+}
+function handleFileSelect(input){
+  const file = input.files[0];
+  if(file) processFlightFile(file);
+}
+function processFlightFile(file){
+  const allowed = ['image/jpeg','image/png','image/gif','image/webp','application/pdf','text/plain'];
+  if(!allowed.includes(file.type)){
+    toast('不支援此格式，請上傳圖片、PDF 或 TXT',true); return;
+  }
+  const reader = new FileReader();
+  reader.onload = e => {
+    const base64 = e.target.result.split(',')[1];
+    flightFileData = { mimeType: file.type, base64, name: file.name };
+    const prev = document.getElementById('filePreview');
+    if(prev) prev.textContent = '✅ 已選擇：' + file.name + ' (' + (file.size/1024).toFixed(0) + ' KB)';
+  };
+  reader.readAsDataURL(file);
+}
+
+async function parseFlights(){
+  const loading  = document.getElementById('flightLoading');
+  const result   = document.getElementById('flightResult');
+  const parseBtn = document.getElementById('flightParseBtn');
+  const addBtn   = document.getElementById('flightAddBtn');
+
+  // Build prompt content
+  let userContent = [];
+  if(flightTab === 'file' && flightFileData){
+    if(flightFileData.mimeType === 'text/plain'){
+      // decode as text
+      const txt = atob(flightFileData.base64);
+      userContent = [{ type:'text', text: '以下是航班文件內容：\n' + txt }];
+    } else if(flightFileData.mimeType === 'application/pdf'){
+      userContent = [
+        { type:'document', source:{ type:'base64', media_type:'application/pdf', data: flightFileData.base64 } },
+        { type:'text', text:'請從此 PDF 中找出所有航班資訊。' }
+      ];
+    } else {
+      // image
+      userContent = [
+        { type:'image', source:{ type:'base64', media_type: flightFileData.mimeType, data: flightFileData.base64 } },
+        { type:'text', text:'請從此圖片中找出所有航班資訊。' }
+      ];
+    }
+  } else {
+    const txt = document.getElementById('flightText')?.value?.trim();
+    if(!txt){ toast('請先貼上航班資訊或上傳檔案',true); return; }
+    userContent = [{ type:'text', text: txt }];
+  }
+
+  const tripStart = DAYS[0];
+  const tripEnd   = DAYS[DAYS.length-1];
+  const systemPrompt = `你是一個航班資訊解析助手。
+用戶會提供航班確認信、截圖或行程文字，你需要：
+1. 找出所有航班（包含搭乘日期、航班號、出發地、目的地、出發時間、抵達時間）
+2. 日期格式統一輸出為 YYYY-MM-DD，時間為 HH:MM（24小時制）
+3. 若年份不明，推斷在行程範圍 ${tripStart.toISOString().split('T')[0]} 至 ${tripEnd.toISOString().split('T')[0]} 內
+4. 只回傳 JSON，不要任何說明文字或 Markdown 符號
+
+回傳格式（陣列）：
+[
+  {
+    "date": "2026-07-28",
+    "flightNo": "BR195",
+    "from": "台北桃園(TPE)",
+    "to": "昆明長水(KMG)",
+    "depTime": "09:35",
+    "arrTime": "12:50",
+    "label": "BR195 台北→昆明",
+    "inRange": true
+  }
+]
+inRange 為 true 表示此日期在行程範圍內。若日期不在行程內，仍輸出但 inRange 設 false。`;
+
+  loading.style.display = 'block';
+  result.style.display = 'none';
+  parseBtn.style.display = 'none';
+
+  try{
+    const resp = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages:[{ role:'user', content: userContent }]
+      })
+    });
+    const data = await resp.json();
+    if(data.error) throw new Error(data.error.message||JSON.stringify(data.error));
+
+    const raw = (data.content||[]).map(b=>b.text||'').join('').trim();
+    const clean = raw.replace(/^```[a-z]*\n?/,'').replace(/```$/,'').trim();
+    parsedFlights = JSON.parse(clean);
+
+    // Render result
+    const list = document.getElementById('flightResultList');
+    list.innerHTML = parsedFlights.map(f=>{
+      const warn = !f.inRange ? ' flight-item-warn' : '';
+      const tag  = !f.inRange ? ' ⚠️ 日期不在行程範圍內' : '';
+      return `<div class="flight-item">
+        <div class="flight-item-dot" style="${!f.inRange?'background:var(--crimson)':''}"></div>
+        <div class="flight-item-body">
+          <strong>${f.date} &nbsp;${f.flightNo||''}</strong>
+          <span class="${warn}">${f.from} → ${f.to}　${f.depTime}─${f.arrTime}${tag}</span>
+        </div>
+      </div>`;
+    }).join('');
+
+    result.style.display = 'block';
+    addBtn.style.display = '';
+    toast('✅ 解析完成，共 '+parsedFlights.length+' 筆航班');
+  }catch(e){
+    toast('❌ 解析失敗：'+e.message,true);
+    parseBtn.style.display = '';
+    console.error(e);
+  } finally {
+    loading.style.display = 'none';
+  }
+}
+
+function addFlightsToSchedule(){
+  if(!parsedFlights.length){ toast('沒有可加入的航班',true); return; }
+  let addedCount = 0;
+  let skipCount  = 0;
+
+  parsedFlights.forEach(f => {
+    if(!f.inRange){ skipCount++; return; }
+    // Find which day index matches
+    const fDate = new Date(f.date + 'T00:00:00');
+    const dayIdx = DAYS.findIndex(d =>
+      d.getFullYear()===fDate.getFullYear() &&
+      d.getMonth()===fDate.getMonth() &&
+      d.getDate()===fDate.getDate()
+    );
+    if(dayIdx < 0){ skipCount++; return; }
+
+    // Add to that day's timeline
+    const entries = getTimelineEntries(dayIdx);
+    entries.push({ from: f.depTime, to: f.arrTime, label: f.label || (f.flightNo+' '+f.from+'→'+f.to) });
+    setTimelineEntries(dayIdx, entries);
+
+    // Also append to transport textarea
+    const ta = document.getElementById('transport-'+dayIdx);
+    if(ta){
+      const existing = ta.value.trim();
+      const newLine = `${f.flightNo} ${f.from}→${f.to} ${f.depTime}─${f.arrTime}`;
+      ta.value = existing ? existing + '\n' + newLine : newLine;
+    }
+    addedCount++;
+  });
+
+  markDirty();
+  closeMod();
+
+  if(addedCount){
+    // Switch to the first day that has a new flight
+    const firstFlight = parsedFlights.find(f=>f.inRange);
+    if(firstFlight){
+      const fDate = new Date(firstFlight.date+'T00:00:00');
+      const idx = DAYS.findIndex(d=>d.getFullYear()===fDate.getFullYear()&&d.getMonth()===fDate.getMonth()&&d.getDate()===fDate.getDate());
+      if(idx>=0) switchTab(idx);
+    }
+    toast('✅ 已加入 '+addedCount+' 筆航班到行程中'+(skipCount?' （'+skipCount+' 筆超出範圍略過）':''));
+  } else {
+    toast('⚠️ 所有航班日期均超出行程範圍，未加入',true);
+  }
+}
+
+// ─── PRINT ───
+function printPDF(){
+  const d=buildDays();
+  const s=d[0],e=d[d.length-1];
+  document.getElementById('printRange').textContent=`${s.getFullYear()}年${s.getMonth()+1}月${s.getDate()}日 ─ ${e.getMonth()+1}月${e.getDate()}日`;
+  document.getElementById('printDate').textContent=new Date().toLocaleDateString('zh-TW');
+  document.querySelectorAll('.day-panel').forEach(p=>p.classList.add('print-include'));
+  window.print();
+  setTimeout(()=>document.querySelectorAll('.day-panel').forEach(p=>p.classList.remove('print-include')),1500);
+}
+
+// ─── TOAST ───
+let toastTimer;
+function toast(msg,isErr=false){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.className='toast show'+(isErr?' err':'');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove('show'),3200);
+}
+
+
+// ─── LOCAL FILE DETECTION ───
+window.addEventListener('DOMContentLoaded', () => {
+  if (location.protocol === 'file:') {
+    const banner = document.createElement('div');
+    banner.id = 'localFileBanner';
+    banner.style.cssText = [
+      'position:fixed','bottom:70px','left:50%','transform:translateX(-50%)',
+      'background:#7a4a00','color:#ffe8b0','padding:0.6rem 1.4rem',
+      'border-radius:30px','font-family:\'Noto Sans TC\',sans-serif',
+      'font-size:0.78rem','z-index:9998','text-align:center',
+      'box-shadow:0 4px 20px rgba(0,0,0,0.4)','white-space:nowrap',
+      'border:1px solid #c97d20'
+    ].join(';');
+    banner.innerHTML = '⚠️ 本地開啟模式 — 同步功能不可用，請上傳至 <strong>GitHub Pages</strong> 後使用';
+    document.body.appendChild(banner);
+  }
+});
+
+// ─── AUTO SAVE ───
+setInterval(()=>{ if(dirty) saveToLocal(); },30_000);
+setInterval(()=>{ if(dirty&&scriptUrl) syncToSheets(); },120_000);
+
+// ─── INIT ───
+loadTripConfig();
+buildUI();
+loadFromLocal();
+const su=localStorage.getItem('yunnan_scripturl');
+if(su){ document.getElementById('scriptUrl').value=su; scriptUrl=su; setSyncStatus('已連接（點擊載入）','ok'); }
+</script>
+</body>
+</html>
