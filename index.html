@@ -873,49 +873,115 @@ function showSyncError(type,err,raw){
 }
 
 // ─── SETUP GUIDE ───
+function copyGuideCode(btn){
+  const code = window._guideCode || '';
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(code).then(()=>{
+      btn.textContent='✅ 已複製！';
+      setTimeout(()=>btn.textContent='📋 複製程式碼',2500);
+    }).catch(()=> fallbackCopy(code, btn));
+  } else {
+    fallbackCopy(code, btn);
+  }
+}
+function fallbackCopy(text, btn){
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;';
+  document.body.appendChild(ta);
+  ta.focus(); ta.select();
+  try{
+    document.execCommand('copy');
+    if(btn){ btn.textContent='✅ 已複製！'; setTimeout(()=>btn.textContent='📋 複製程式碼',2500); }
+  }catch(e){
+    alert('請手動選取程式碼框內文字後複製（Ctrl+A, Ctrl+C）');
+  }
+  document.body.removeChild(ta);
+}
 function showSetupGuide(){
-  const code=`const SHEET_ID = '你的試算表ID';
+  const code=`// ============================================================
+// 雲南旅遊計劃 - Google Apps Script 後端
+// 使用說明：把 SHEET_ID 換成你的試算表 ID 後貼入 Apps Script
+// ============================================================
+const SHEET_ID   = '貼上你的試算表ID';
 const SHEET_NAME = '雲南行程';
-const COLS=['天數','日期','今日主題','早餐','午餐','晚餐','主要景點','交通','住宿','備注','出門時間','時間軸'];
-const KEYS=['day','date','title','breakfast','lunch','dinner','sights','transport','hotel','notes','departure','timeline'];
-function doGet(e){
-  if((e?.parameter?.action||'read')==='read') return readData();
-  return ok({rows:[]});
+const COLS = ['天數','日期','今日主題','早餐','午餐','晚餐','主要景點','交通','住宿','備注','出門時間','時間軸'];
+const KEYS = ['day','date','title','breakfast','lunch','dinner','sights','transport','hotel','notes','departure','timeline'];
+
+function doGet(e) {
+  const action = (e && e.parameter && e.parameter.action) ? e.parameter.action : 'read';
+  if (action === 'read') return readData();
+  return ok({ rows: [] });
 }
-function doPost(e){
-  const b=JSON.parse(e.postData.contents);
-  if(b.action==='write') return writeData(b.rows,b.config);
-  if(b.action==='parseAI') return proxyClaudeAI(b.apiKey, b.system, b.content);
-  return ok({error:'未知操作'});
+
+function doPost(e) {
+  try {
+    const b = JSON.parse(e.postData.contents);
+    if (b.action === 'write')    return writeData(b.rows, b.config);
+    if (b.action === 'parseAI') return proxyClaudeAI(b.apiKey, b.system, b.content);
+    return ok({ error: '未知操作：' + b.action });
+  } catch(err) {
+    return ok({ error: 'doPost 錯誤：' + err.message });
+  }
 }
-function readData(){
-  const ss=SpreadsheetApp.openById(SHEET_ID);
-  const sh=ss.getSheetByName(SHEET_NAME);
-  if(!sh||sh.getLastRow()<2) return ok({rows:[]});
-  const vals=sh.getRange(2,1,sh.getLastRow()-1,COLS.length).getValues();
-  const rows=vals.map(r=>{const o={};KEYS.forEach((k,i)=>o[k]=r[i]||'');return o;});
-  let config=null;
-  try{const cs=ss.getSheetByName('_config');if(cs)config=JSON.parse(cs.getRange(1,1).getValue()||'null');}catch(e){}
-  return ok({rows,config});
+
+function readData() {
+  try {
+    const ss = SpreadsheetApp.openById(SHEET_ID);
+    const sh = ss.getSheetByName(SHEET_NAME);
+    if (!sh || sh.getLastRow() < 2) return ok({ rows: [] });
+    const vals = sh.getRange(2, 1, sh.getLastRow() - 1, COLS.length).getValues();
+    const rows = vals.map(function(r) {
+      var o = {};
+      KEYS.forEach(function(k, i) { o[k] = r[i] ? String(r[i]) : ''; });
+      return o;
+    });
+    var config = null;
+    try {
+      var cs = ss.getSheetByName('_config');
+      if (cs) config = JSON.parse(cs.getRange(1,1).getValue() || 'null');
+    } catch(e) {}
+    return ok({ rows: rows, config: config });
+  } catch(err) {
+    return ok({ error: 'readData 錯誤：' + err.message });
+  }
 }
-function writeData(rows,config){
-  const ss=SpreadsheetApp.openById(SHEET_ID);
-  let sh=ss.getSheetByName(SHEET_NAME);
-  if(!sh) sh=ss.insertSheet(SHEET_NAME);
-  sh.clearContents();sh.appendRow(COLS);
-  rows.forEach(r=>sh.appendRow(KEYS.map(k=>r[k]||'')));
-  if(config){let cs=ss.getSheetByName('_config');if(!cs)cs=ss.insertSheet('_config');cs.getRange(1,1).setValue(JSON.stringify(config));}
-  return ok({ok:true});
+
+function writeData(rows, config) {
+  try {
+    if (!rows || !Array.isArray(rows)) {
+      return ok({ error: 'rows 格式錯誤，收到：' + typeof rows });
+    }
+    const ss = SpreadsheetApp.openById(SHEET_ID);
+    var sh = ss.getSheetByName(SHEET_NAME);
+    if (!sh) sh = ss.insertSheet(SHEET_NAME);
+    sh.clearContents();
+    sh.appendRow(COLS);
+    rows.forEach(function(r) {
+      if (!r) return;
+      sh.appendRow(KEYS.map(function(k) { return r[k] ? String(r[k]) : ''; }));
+    });
+    if (config) {
+      var cs = ss.getSheetByName('_config');
+      if (!cs) cs = ss.insertSheet('_config');
+      cs.getRange(1, 1).setValue(JSON.stringify(config));
+    }
+    return ok({ ok: true, count: rows.length });
+  } catch(err) {
+    return ok({ error: 'writeData 錯誤：' + err.message });
+  }
 }
+
 function proxyClaudeAI(apiKey, system, content) {
   try {
-    const body = {
+    if (!apiKey) return ok({ error: 'API Key 未提供' });
+    var body = {
       model: 'claude-sonnet-4-6',
       max_tokens: 1024,
       system: system,
       messages: [{ role: 'user', content: content }]
     };
-    const resp = UrlFetchApp.fetch('https://api.anthropic.com/v1/messages', {
+    var resp = UrlFetchApp.fetch('https://api.anthropic.com/v1/messages', {
       method: 'post',
       contentType: 'application/json',
       headers: {
@@ -925,16 +991,22 @@ function proxyClaudeAI(apiKey, system, content) {
       payload: JSON.stringify(body),
       muteHttpExceptions: true
     });
-    const json = JSON.parse(resp.getContentText());
-    if(json.error) return ok({ error: 'Claude API 錯誤：' + json.error.message });
-    const text = (json.content||[]).map(b => b.text||'').join('');
+    var json = JSON.parse(resp.getContentText());
+    if (json.error) return ok({ error: 'Claude API 錯誤：' + json.error.message });
+    var text = (json.content || []).map(function(b) { return b.text || ''; }).join('');
     return ok({ result: text });
-  } catch(e) {
-    return ok({ error: 'Apps Script 錯誤：' + e.message });
+  } catch(err) {
+    return ok({ error: 'proxyClaudeAI 錯誤：' + err.message });
   }
 }
-function ok(obj){return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);}`;
 
+function ok(obj) {
+  return ContentService
+    .createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}`;
+
+  window._guideCode = code;
   const ov=document.createElement('div');
   ov.className='modal-overlay'; ov.id='guideModal'; ov.style.zIndex='99999';
   ov.innerHTML=`<div style="background:#1e2d1e;color:#d4e8d4;border-radius:12px;max-width:700px;width:100%;max-height:90vh;overflow-y:auto;padding:1.8rem;font-family:'Noto Sans TC',sans-serif;">
@@ -948,7 +1020,7 @@ function ok(obj){return ContentService.createTextOutput(JSON.stringify(obj)).set
     </ol>
     <pre id="guideCode" style="background:#111;padding:0.9rem;border-radius:8px;font-size:0.68rem;overflow-x:auto;white-space:pre-wrap;color:#b8ffb8;line-height:1.55;">${code.replace(/</g,'&lt;')}</pre>
     <div style="margin-top:0.9rem;display:flex;gap:0.7rem;">
-      <button onclick="navigator.clipboard.writeText(document.getElementById('guideCode').textContent);this.textContent='✅ 已複製!'" style="padding:0.45rem 0.9rem;border-radius:6px;border:1px solid #6effa0;background:transparent;color:#6effa0;cursor:pointer;font-size:0.8rem;">📋 複製程式碼</button>
+      <button onclick="copyGuideCode(this)" style="padding:0.45rem 0.9rem;border-radius:6px;border:1px solid #6effa0;background:transparent;color:#6effa0;cursor:pointer;font-size:0.8rem;">📋 複製程式碼</button>
       <button onclick="document.getElementById('guideModal').remove()" style="padding:0.45rem 0.9rem;border-radius:6px;border:1px solid #888;background:transparent;color:#aaa;cursor:pointer;font-size:0.8rem;">關閉</button>
     </div>
   </div>`;
