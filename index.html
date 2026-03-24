@@ -1079,8 +1079,8 @@ inRange 為 true 表示此日期在行程範圍內。若日期不在行程內，
     };
 
     const resp = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`,
-      { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(geminiBody) }
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
+      { method:'POST', headers:{'Content-Type':'application/json','x-goog-api-key': geminiKey}, body:JSON.stringify(geminiBody) }
     );
     const data = await resp.json();
     if(data.error) throw new Error(`Gemini 錯誤：${data.error.message||JSON.stringify(data.error)}`);
