@@ -55,6 +55,8 @@ body{font-family:'Noto Serif TC',serif;background:var(--parchment);color:var(--t
 .header-mountain{opacity:0.1;font-size:4.5rem;line-height:1;color:#fff;user-select:none;}
 .header-admin-btns{display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:flex-end;}
 .btn-header{padding:0.38rem 0.95rem;border-radius:20px;font-family:'Noto Sans TC',sans-serif;font-size:0.76rem;cursor:pointer;transition:all 0.2s;border:1px solid;white-space:nowrap;}
+.btn-member{border-color:rgba(110,200,255,0.5);background:rgba(30,100,160,0.25);color:#90d0ff;}
+.btn-member:hover{background:rgba(30,100,160,0.4);}
 .btn-lock{border-color:rgba(255,255,255,0.3);background:transparent;color:rgba(255,255,255,0.7);}
 .btn-lock:hover{background:rgba(255,255,255,0.12);}
 .btn-unlock{border-color:var(--gold-light);background:rgba(201,150,42,0.2);color:var(--gold-light);}
@@ -292,6 +294,7 @@ body.view-mode .dep-time-input{pointer-events:none;border-color:transparent;back
       <div class="header-right">
         <div class="header-mountain">⛰️</div>
         <div class="header-admin-btns">
+          <button class="btn-header btn-member" id="memberBtn" onclick="showMemberLogin()">👥 團員登入</button>
           <button class="btn-header btn-lock" id="editBtn" onclick="showLoginModal()">🔒 編輯模式</button>
           <button class="btn-header btn-unlock" id="logoutBtn" onclick="exitEdit()" style="display:none">🔓 結束編輯</button>
           <button class="btn-header btn-trip-settings" id="tripSettingsBtn" onclick="showTripSettings()" style="display:none">⚙️ 行程設定</button>
@@ -319,9 +322,9 @@ body.view-mode .dep-time-input{pointer-events:none;border-color:transparent;back
   <div class="edit-only" style="display:flex;gap:0.7rem;flex-wrap:wrap;align-items:center;">
     <button class="btn btn-jade" onclick="saveToLocal()">💾 儲存本地</button>
     <button class="btn btn-jade" onclick="syncToSheets()">☁️ 同步試算表</button>
-    <button class="btn btn-gold" onclick="loadFromSheets()">🔄 從試算表載入</button>
     <button class="btn btn-sky" onclick="showFlightImport()">✈️ 匯入航班</button>
   </div>
+  <button class="btn btn-gold" onclick="loadFromSheets()">🔄 載入最新行程</button>
   <button class="btn btn-primary" onclick="printPDF()">🖨️ 列印 / 轉存 PDF</button>
 </div>
 
@@ -331,11 +334,14 @@ body.view-mode .dep-time-input{pointer-events:none;border-color:transparent;back
 // ─── CONFIG ───
 const DEFAULT_CONFIG = {startYear:2026,startMonth:7,startDay:28,totalDays:12};
 let tripConfig = {...DEFAULT_CONFIG};
-const PASS = 'CCcc7379403!';
+const PASS        = 'CCcc7379403!'; // 管理員（完整編輯）
+const MEMBER_PASS = 'Wondali78';     // 團員（連接試算表，唯讀）
+const SCRIPT_URL  = 'https://script.google.com/macros/s/AKfycbxk0lXUJyiXp4Lvp1LzqkKs7FLWGTDOyh9wEolFgRVyH_CUpt2lNQ-yf56189jXgIc/exec'; // Apps Script URL（固定）
 const WEEKDAYS = ['日','一','二','三','四','五','六'];
 let DAYS = [];
 let currentTab = 0;
 let isEditMode = false;
+let memberUnlocked = false; // 團員已通過驗證
 let dirty = false;
 let scriptUrl = '';
 
@@ -353,6 +359,48 @@ function fmtShort(d){ return `${d.getMonth()+1}/${d.getDate()}`; }
 function nowTime(){ return new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}); }
 
 // ─── AUTH ───
+function showMemberLogin(){
+  // If already unlocked (scriptUrl saved), just load directly
+  if(memberUnlocked || localStorage.getItem('yunnan_scripturl')){
+    enterMemberMode(); return;
+  }
+  const ov=mkModal(`
+    <h3>👥 團員登入</h3>
+    <p style="font-family:'Noto Sans TC',sans-serif;font-size:0.82rem;color:var(--text-muted);margin-bottom:0.9rem;">輸入團員密碼以載入最新行程</p>
+    <label class="modal-field-label">團員密碼</label>
+    <input class="modal-input" type="password" id="memberPwInput" placeholder="請輸入密碼" onkeydown="if(event.key==='Enter')doMemberLogin()">
+    <div class="modal-err" id="memberPwErr"></div>
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closeMod()">取消</button>
+      <button class="modal-confirm" onclick="doMemberLogin()" style="background:var(--jade);border-color:var(--jade);">登入</button>
+    </div>`);
+  setTimeout(()=>ov.querySelector('#memberPwInput').focus(),50);
+}
+function doMemberLogin(){
+  const pw=(document.getElementById('memberPwInput')?.value)||'';
+  if(pw===MEMBER_PASS){ closeMod(); enterMemberMode(); }
+  else if(pw===PASS){ closeMod(); enterEdit(); } // admin can also use this dialog
+  else{
+    const e=document.getElementById('memberPwErr');
+    if(e) e.textContent='密碼錯誤，請再試一次';
+    const i=document.getElementById('memberPwInput');
+    if(i){ i.value=''; i.focus(); i.style.borderColor='var(--crimson)'; }
+  }
+}
+function enterMemberMode(){
+  memberUnlocked=true;
+  document.getElementById('memberBtn').style.display='none';
+  // Auto-connect with hardcoded URL
+  scriptUrl = SCRIPT_URL;
+  localStorage.setItem('yunnan_scripturl', SCRIPT_URL);
+  localStorage.setItem('yunnan_member_ok', '1');
+  document.getElementById('scriptUrl').value = SCRIPT_URL;
+  setSyncStatus('已連接，載入中...','ok');
+  closeMod();
+  loadFromSheets();
+  toast('✅ 登入成功，載入行程中...');
+}
+
 function showLoginModal(){
   const ov=mkModal(`
     <h3>🔐 進入編輯模式</h3>
@@ -377,12 +425,20 @@ function doLogin(){
 }
 function enterEdit(){
   isEditMode=true;
+  memberUnlocked=true;
+  localStorage.setItem('yunnan_member_ok','1');
+  // Auto-connect hardcoded URL
+  scriptUrl = SCRIPT_URL;
+  localStorage.setItem('yunnan_scripturl', SCRIPT_URL);
+  document.getElementById('scriptUrl').value = SCRIPT_URL;
   document.body.classList.remove('view-mode');
+  document.getElementById('memberBtn').style.display='none';
   document.getElementById('editBtn').style.display='none';
   document.getElementById('logoutBtn').style.display='';
   document.getElementById('tripSettingsBtn').style.display='';
   document.getElementById('settingsBar').style.display='';
   document.querySelectorAll('.edit-only').forEach(el=>el.style.display='flex');
+  setSyncStatus('已連接','ok');
   toast('✅ 已進入編輯模式');
 }
 function exitEdit(){
@@ -393,6 +449,8 @@ function exitEdit(){
   document.getElementById('tripSettingsBtn').style.display='none';
   document.getElementById('settingsBar').style.display='none';
   document.querySelectorAll('.edit-only').forEach(el=>el.style.display='none');
+  // Keep memberBtn hidden if already member-unlocked
+  if(!memberUnlocked) document.getElementById('memberBtn').style.display='';
   toast('已切換為瀏覽模式');
 }
 
@@ -1364,11 +1422,21 @@ setInterval(()=>{ if(dirty&&scriptUrl) syncToSheets(); },120_000);
 loadTripConfig();
 buildUI();
 loadFromLocal();
-const su=localStorage.getItem('yunnan_scripturl');
-if(su){ document.getElementById('scriptUrl').value=su; scriptUrl=su; setSyncStatus('已連接（點擊載入）','ok'); }
+// Always use hardcoded SCRIPT_URL as default
+const su = localStorage.getItem('yunnan_scripturl') || SCRIPT_URL;
+scriptUrl = su;
+localStorage.setItem('yunnan_scripturl', su);
+document.getElementById('scriptUrl').value = su;
+if(localStorage.getItem('yunnan_member_ok')==='1'){
+  // Returning member: auto-load silently
+  memberUnlocked=true;
+  document.getElementById('memberBtn').style.display='none';
+  setSyncStatus('已連接，載入中...','ok');
+  setTimeout(loadFromSheets, 800);
+}
 
 // ─── PWA: SERVICE WORKER ───
-if('serviceWorker' in navigator){
+if('serviceWorker' in navigator && location.protocol === 'https:' && !location.hostname.includes('claude')){
   window.addEventListener('load', ()=>{
     navigator.serviceWorker.register('./sw.js').catch(e=>console.log('SW reg failed:',e));
   });
