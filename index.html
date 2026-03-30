@@ -360,10 +360,7 @@ function nowTime(){ return new Date().toLocaleTimeString('zh-TW',{hour:'2-digit'
 
 // ─── AUTH ───
 function showMemberLogin(){
-  // If already unlocked (scriptUrl saved), just load directly
-  if(memberUnlocked || localStorage.getItem('yunnan_scripturl')){
-    enterMemberMode(); return;
-  }
+  // Always require password - never skip
   const ov=mkModal(`
     <h3>👥 團員登入</h3>
     <p style="font-family:'Noto Sans TC',sans-serif;font-size:0.82rem;color:var(--text-muted);margin-bottom:0.9rem;">輸入團員密碼以載入最新行程</p>
@@ -393,7 +390,6 @@ function enterMemberMode(){
   // Auto-connect with hardcoded URL
   scriptUrl = SCRIPT_URL;
   localStorage.setItem('yunnan_scripturl', SCRIPT_URL);
-  localStorage.setItem('yunnan_member_ok', '1');
   document.getElementById('scriptUrl').value = SCRIPT_URL;
   setSyncStatus('已連接，載入中...','ok');
   closeMod();
@@ -426,7 +422,6 @@ function doLogin(){
 function enterEdit(){
   isEditMode=true;
   memberUnlocked=true;
-  localStorage.setItem('yunnan_member_ok','1');
   // Auto-connect hardcoded URL
   scriptUrl = SCRIPT_URL;
   localStorage.setItem('yunnan_scripturl', SCRIPT_URL);
@@ -1422,18 +1417,9 @@ setInterval(()=>{ if(dirty&&scriptUrl) syncToSheets(); },120_000);
 loadTripConfig();
 buildUI();
 loadFromLocal();
-// Always use hardcoded SCRIPT_URL as default
-const su = localStorage.getItem('yunnan_scripturl') || SCRIPT_URL;
-scriptUrl = su;
-localStorage.setItem('yunnan_scripturl', su);
-document.getElementById('scriptUrl').value = su;
-if(localStorage.getItem('yunnan_member_ok')==='1'){
-  // Returning member: auto-load silently
-  memberUnlocked=true;
-  document.getElementById('memberBtn').style.display='none';
-  setSyncStatus('已連接，載入中...','ok');
-  setTimeout(loadFromSheets, 800);
-}
+// Pre-fill scriptUrl silently (URL is fixed, no auto-load without password)
+scriptUrl = SCRIPT_URL;
+document.getElementById('scriptUrl').value = SCRIPT_URL;
 
 // ─── PWA: SERVICE WORKER ───
 if('serviceWorker' in navigator && location.protocol === 'https:' && !location.hostname.includes('claude')){
