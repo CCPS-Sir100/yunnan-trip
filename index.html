@@ -18,6 +18,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="description" content="雲南旅遊計劃 2026 — 團隊行程規劃">
+<link rel="manifest" href="manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="雲南之旅">
+<link rel="apple-touch-icon" href="icon-192.svg">
+<meta name="msapplication-TileColor" content="#1a3a2a">
 <meta name="theme-color" content="#1a3a2a">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -226,6 +233,28 @@ body.view-mode .dep-time-input{pointer-events:none;border-color:transparent;back
 .modal-cancel:hover{border-color:var(--text-muted);}
 .trip-preview{font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;color:var(--jade);margin-bottom:0.4rem;margin-top:-0.3rem;min-height:1.2em;}
 .trip-warn{font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;color:var(--crimson);background:#fff5f5;border-radius:6px;padding:0.5rem 0.7rem;margin-bottom:0.5rem;}
+
+/* PWA / MOBILE */
+@media(max-width:480px){
+  .cards-grid{grid-template-columns:1fr!important;}
+  .day-header{flex-wrap:wrap;gap:0.8rem;}
+  .day-num-big{font-size:3rem;}
+  .main{padding:1rem 0.9rem 6rem;}
+  .header-title{font-size:2rem!important;}
+  .header-mountain{display:none;}
+  .actions-bar{padding:0.6rem 0.8rem;gap:0.5rem;}
+  .btn{padding:0.5rem 0.9rem;font-size:0.8rem;}
+  .tab-btn{padding:0.5rem 0.7rem;}
+  .tab-btn .day-num{font-size:1.6rem;}
+  .departure-block{gap:0.8rem;}
+  .dep-time-input{font-size:1.2rem;width:85px;}
+}
+@media(max-width:380px){
+  .btn span,.btn-text{display:none;}
+}
+/* Safe area for notch phones */
+.site-header{padding-top:calc(1.6rem + env(safe-area-inset-top));}
+.tab-nav-wrap{top:calc(env(safe-area-inset-top))}
 
 /* PRINT */
 .print-cover{display:none;}
@@ -1337,6 +1366,92 @@ buildUI();
 loadFromLocal();
 const su=localStorage.getItem('yunnan_scripturl');
 if(su){ document.getElementById('scriptUrl').value=su; scriptUrl=su; setSyncStatus('已連接（點擊載入）','ok'); }
+
+// ─── PWA: SERVICE WORKER ───
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('./sw.js').catch(e=>console.log('SW reg failed:',e));
+  });
+}
+
+// ─── PWA: JUMP TO TODAY ───
+(function(){
+  const params = new URLSearchParams(location.search);
+  if(params.get('today')==='1'){
+    const today = new Date();
+    const idx = DAYS.findIndex(d =>
+      d.getFullYear()===today.getFullYear() &&
+      d.getMonth()===today.getMonth() &&
+      d.getDate()===today.getDate()
+    );
+    if(idx>=0) setTimeout(()=>switchTab(idx), 100);
+  }
+})();
+
+// ─── PWA: INSTALL PROMPT ───
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // Show install banner after 3 seconds if not standalone
+  if(!window.matchMedia('(display-mode: standalone)').matches){
+    setTimeout(showInstallBanner, 3000);
+  }
+});
+
+function showInstallBanner(){
+  if(document.getElementById('installBanner')) return;
+  const banner = document.createElement('div');
+  banner.id = 'installBanner';
+  banner.style.cssText = [
+    'position:fixed','top:0','left:0','right:0',
+    'background:linear-gradient(90deg,#1a3a2a,#1e4060)',
+    'color:#fff','padding:0.7rem 1rem',
+    'display:flex','align-items:center','justify-content:space-between',
+    'font-family:\'Noto Sans TC\',sans-serif','font-size:0.82rem',
+    'z-index:99999','gap:0.8rem','flex-wrap:wrap',
+    'box-shadow:0 2px 12px rgba(0,0,0,0.3)'
+  ].join(';');
+  banner.innerHTML = `
+    <span>⛰️ <strong>加到主畫面</strong>，像 App 一樣使用！</span>
+    <div style="display:flex;gap:0.5rem;">
+      <button onclick="installApp()" style="padding:0.4rem 1rem;border-radius:20px;border:none;background:#e8b84b;color:#1a3a2a;font-weight:600;cursor:pointer;font-size:0.8rem;">安裝</button>
+      <button onclick="document.getElementById('installBanner').remove()" style="padding:0.4rem 0.8rem;border-radius:20px;border:1px solid rgba(255,255,255,0.4);background:transparent;color:#fff;cursor:pointer;font-size:0.8rem;">略過</button>
+    </div>`;
+  document.body.prepend(banner);
+}
+
+async function installApp(){
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    const {outcome} = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    document.getElementById('installBanner')?.remove();
+  } else {
+    // iOS fallback instructions
+    showIOSInstallGuide();
+  }
+}
+
+function showIOSInstallGuide(){
+  const ov = document.createElement('div');
+  ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:99999;display:flex;align-items:flex-end;justify-content:center;padding:1rem;';
+  ov.innerHTML = `<div style="background:#fff;border-radius:16px;padding:1.5rem;max-width:400px;width:100%;font-family:'Noto Sans TC',sans-serif;text-align:center;">
+    <div style="font-size:2rem;margin-bottom:0.5rem;">📱</div>
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:1rem;color:#1a3a2a;">加到 iPhone 主畫面</h3>
+    <ol style="text-align:left;line-height:2.2;font-size:0.85rem;color:#444;padding-left:1.2rem;margin-bottom:1rem;">
+      <li>點下方工具列的 <strong>「分享」</strong> 按鈕 <span style="font-size:1.1rem;">⬆️</span></li>
+      <li>向下滑找到 <strong>「加入主畫面」</strong></li>
+      <li>點右上角 <strong>「新增」</strong></li>
+    </ol>
+    <button onclick="this.closest('div[style*=fixed]').remove()" style="padding:0.6rem 2rem;border-radius:20px;border:none;background:#1a3a2a;color:#fff;font-size:0.9rem;cursor:pointer;">知道了</button>
+  </div>`;
+  document.body.appendChild(ov);
+  ov.addEventListener('click', e=>{ if(e.target===ov) ov.remove(); });
+}
+
+// ─── MOBILE: improve bottom bar padding for safe area ───
+document.querySelector('.actions-bar').style.paddingBottom = 'calc(0.65rem + env(safe-area-inset-bottom))';
 </script>
 </body>
 </html>
