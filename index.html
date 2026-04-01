@@ -117,20 +117,20 @@ body.view-mode .edit-only{display:none!important;}
 .tl-add-btn:hover{background:var(--jade);color:#fff;}
 
 .tl-axis{display:flex;justify-content:space-between;font-family:'Noto Sans TC',sans-serif;font-size:0.58rem;color:var(--text-muted);margin-bottom:3px;user-select:none;}
-.tl-bar{position:relative;height:38px;background:#f0ebe0;border-radius:6px;overflow:hidden;border:1px solid var(--border);}
+.tl-bar{position:relative;height:42px;background:linear-gradient(180deg,#f8f4ee,#efe8d8);border-radius:8px;overflow:hidden;border:1px solid var(--border);}
 .tl-grid-line{position:absolute;top:0;bottom:0;width:1px;background:rgba(0,0,0,0.06);}
 .tl-segment{position:absolute;top:5px;bottom:5px;border-radius:4px;cursor:default;display:flex;align-items:center;justify-content:center;overflow:hidden;white-space:nowrap;font-family:'Noto Sans TC',sans-serif;font-size:0.65rem;font-weight:500;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.35);transition:opacity 0.15s;min-width:4px;}
 .tl-segment:hover{opacity:0.82;}
-.tl-c0{background:linear-gradient(90deg,#e74c3c,#c0392b);}
-.tl-c1{background:linear-gradient(90deg,#3498db,#2980b9);}
-.tl-c2{background:linear-gradient(90deg,#27ae60,#229954);}
-.tl-c3{background:linear-gradient(90deg,#8e44ad,#7d3c98);}
-.tl-c4{background:linear-gradient(90deg,#e67e22,#ca6f1e);}
-.tl-c5{background:linear-gradient(90deg,#16a085,#138d75);}
-.tl-c6{background:linear-gradient(90deg,#d35400,#ba4a00);}
-.tl-c7{background:linear-gradient(90deg,#2c3e50,#1a252f);}
-.tl-c8{background:linear-gradient(90deg,#c0392b,#96281b);}
-.tl-c9{background:linear-gradient(90deg,#1abc9c,#17a589);}
+.tl-c0{background:linear-gradient(90deg,#ff6b6b,#ee5a24);}
+.tl-c1{background:linear-gradient(90deg,#48dbfb,#0abde3);}
+.tl-c2{background:linear-gradient(90deg,#1dd1a1,#10ac84);}
+.tl-c3{background:linear-gradient(90deg,#f368e0,#e056bf);}
+.tl-c4{background:linear-gradient(90deg,#feca57,#ff9f43);}
+.tl-c5{background:linear-gradient(90deg,#54a0ff,#2e86de);}
+.tl-c6{background:linear-gradient(90deg,#5f27cd,#341f97);}
+.tl-c7{background:linear-gradient(90deg,#ff9ff3,#f368e0);}
+.tl-c8{background:linear-gradient(90deg,#00d2d3,#01abc3);}
+.tl-c9{background:linear-gradient(90deg,#ff6348,#ff4757);}
 
 .tl-entries{display:flex;flex-direction:column;gap:0.45rem;margin-top:0.65rem;}
 .tl-entry-header{display:grid;grid-template-columns:72px 72px 1fr 26px;gap:0.4rem;}
@@ -236,6 +236,34 @@ body.view-mode .dep-time-input{pointer-events:none;border-color:transparent;back
 .trip-preview{font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;color:var(--jade);margin-bottom:0.4rem;margin-top:-0.3rem;min-height:1.2em;}
 .trip-warn{font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;color:var(--crimson);background:#fff5f5;border-radius:6px;padding:0.5rem 0.7rem;margin-bottom:0.5rem;}
 
+/* WEBSITES PANEL */
+.websites-panel{display:none;}
+.websites-panel.active{display:block;animation:fadeIn 0.3s ease;}
+.websites-section{background:#fff;border-radius:12px;border:1px solid var(--border);padding:1.2rem;box-shadow:0 2px 8px var(--shadow);margin-bottom:1rem;}
+.websites-section h3{font-family:'Noto Serif TC',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;}
+.website-list{display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1rem;}
+.website-item{display:flex;align-items:center;gap:0.6rem;}
+.website-link{flex:1;display:flex;align-items:center;gap:0.6rem;padding:0.6rem 0.9rem;background:var(--parchment);border-radius:8px;border:1px solid var(--border);text-decoration:none;color:var(--ink);font-family:'Noto Sans TC',sans-serif;font-size:0.85rem;transition:all 0.2s;overflow:hidden;}
+.website-link:hover{background:var(--jade);color:#fff;border-color:var(--jade);transform:translateX(3px);}
+.website-link .ws-icon{font-size:1.1rem;flex-shrink:0;}
+.website-link .ws-info{flex:1;overflow:hidden;}
+.website-link .ws-name{font-weight:600;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.website-link .ws-url{font-size:0.72rem;opacity:0.6;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ws-del-btn{width:26px;height:26px;border-radius:50%;border:1px solid #ddd;background:transparent;color:#bbb;cursor:pointer;font-size:0.75rem;flex-shrink:0;transition:all 0.2s;display:flex;align-items:center;justify-content:center;padding:0;}
+.ws-del-btn:hover{border-color:var(--crimson);color:var(--crimson);}
+.ws-add-form{display:none;background:var(--parchment);border-radius:10px;padding:1rem;border:1px dashed var(--border);margin-top:0.5rem;}
+.ws-add-form.open{display:block;}
+.ws-add-form input{width:100%;padding:0.5rem 0.75rem;border:1.5px solid var(--border);border-radius:7px;font-family:'Noto Sans TC',sans-serif;font-size:0.85rem;color:var(--ink);background:#fff;margin-bottom:0.5rem;}
+.ws-add-form input:focus{outline:none;border-color:var(--jade);}
+.ws-form-btns{display:flex;gap:0.5rem;justify-content:flex-end;}
+.ws-form-btns button{padding:0.45rem 1.1rem;border-radius:7px;font-family:'Noto Serif TC',serif;font-size:0.85rem;cursor:pointer;border:2px solid transparent;transition:all 0.18s;}
+.ws-btn-add-open{padding:0.35rem 1rem;border-radius:20px;border:1px solid var(--jade);background:transparent;color:var(--jade);font-size:0.75rem;font-family:'Noto Sans TC',sans-serif;cursor:pointer;transition:all 0.2s;}
+.ws-btn-add-open:hover{background:var(--jade);color:#fff;}
+body.view-mode .ws-del-btn{display:none;}
+body.view-mode .ws-btn-add-open{display:none;}
+body.view-mode .ws-add-form{display:none!important;}
+.ws-empty{font-family:'Noto Sans TC',sans-serif;font-size:0.8rem;color:var(--border);padding:0.5rem 0;}
+
 /* PWA / MOBILE */
 @media(max-width:480px){
   .cards-grid{grid-template-columns:1fr!important;}
@@ -332,7 +360,7 @@ body.view-mode .dep-time-input{pointer-events:none;border-color:transparent;back
 
 <script>
 // ─── CONFIG ───
-const DEFAULT_CONFIG = {startYear:2026,startMonth:7,startDay:28,totalDays:12};
+const DEFAULT_CONFIG = {startYear:2026,startMonth:7,startDay:27,totalDays:12};
 let tripConfig = {...DEFAULT_CONFIG};
 const PASS        = 'CCcc7379403!'; // 管理員（完整編輯）
 const MEMBER_PASS = 'Wondali78';     // 團員（連接試算表，唯讀）
@@ -557,6 +585,16 @@ function getTimelineEntries(i){
     label:document.getElementById(`tl-label-${i}-${k}`)?.value||'',
   }));
 }
+function sortEntries(entries){
+  // Sort by departure time; entries with no time go to end
+  return [...entries].sort((a,b)=>{
+    const ta=parseTime(a.from), tb=parseTime(b.from);
+    if(!ta && !tb) return 0;
+    if(!ta) return 1;
+    if(!tb) return -1;
+    return (ta.h*60+ta.m) - (tb.h*60+tb.m);
+  });
+}
 function setTimelineEntries(i,entries){
   const el=document.getElementById(`tl-entries-${i}`);
   const cnt=document.getElementById(`tl-count-${i}`);
@@ -565,13 +603,24 @@ function setTimelineEntries(i,entries){
   el.innerHTML=buildTLRows(i,entries);
   renderTimeline(i);
 }
+function sortAndRefresh(i){
+  // Called on blur of time inputs — re-sort and rebuild
+  const entries=getTimelineEntries(i);
+  const sorted=sortEntries(entries);
+  // Only rebuild if order changed
+  const changed=entries.some((e,k)=>e.from!==sorted[k].from||e.label!==sorted[k].label);
+  if(changed){
+    setTimelineEntries(i,sorted);
+    markDirty();
+  }
+}
 function buildTLRows(i,entries){
   if(!entries.length) return '<div class="tl-empty-msg">尚無交通資料，點「新增移動」加入</div>';
   let h=`<div class="tl-entry-header"><span>出發</span><span>抵達</span><span>交通說明</span><span></span></div>`;
   entries.forEach((ent,k)=>{
     h+=`<div class="tl-entry">
-      <input class="timeline-input" type="text" id="tl-from-${i}-${k}" value="${ent.from||''}" placeholder="08:00" maxlength="5" oninput="renderTimeline(${i});markDirty()">
-      <input class="timeline-input" type="text" id="tl-to-${i}-${k}"   value="${ent.to||''}"   placeholder="12:30" maxlength="5" oninput="renderTimeline(${i});markDirty()">
+      <input class="timeline-input" type="text" id="tl-from-${i}-${k}" value="${ent.from||''}" placeholder="08:00" maxlength="5" oninput="renderTimeline(${i});markDirty()" onblur="sortAndRefresh(${i})">
+      <input class="timeline-input" type="text" id="tl-to-${i}-${k}"   value="${ent.to||''}"   placeholder="12:30" maxlength="5" oninput="renderTimeline(${i});markDirty()" onblur="sortAndRefresh(${i})">
       <input class="timeline-input" type="text" id="tl-label-${i}-${k}" value="${ent.label||''}" placeholder="高鐵 昆明→大理 G6004" oninput="renderTimeline(${i});markDirty()">
       <button class="tl-del-btn" onclick="delTLEntry(${i},${k})">✕</button>
     </div>`;
@@ -678,8 +727,38 @@ function buildUI(oldData){
       </div>`;
     mc.appendChild(panel);
   });
+  // ── WEBSITES TAB ──
+  const wsBtn = document.createElement('button');
+  wsBtn.className = 'tab-btn';
+  wsBtn.id = 'tab-btn-ws';
+  wsBtn.onclick = () => switchTab('ws');
+  wsBtn.innerHTML = '<span class="day-num">🔗</span><span class="day-date">網站</span>';
+  tabNav.appendChild(wsBtn);
+
+  const wsPanel = document.createElement('div');
+  wsPanel.className = 'websites-panel';
+  wsPanel.id = 'panel-ws';
+  wsPanel.innerHTML = `
+    <div class="websites-section">
+      <h3>🔗 常用網站</h3>
+      <div class="website-list" id="websiteList"></div>
+      <div class="ws-empty" id="wsEmpty" style="display:none">尚無網站，點「新增網站」加入</div>
+      <button class="ws-btn-add-open" onclick="toggleWsForm()">＋ 新增網站</button>
+      <div class="ws-add-form" id="wsAddForm">
+        <input type="text" id="wsName" placeholder="網站名稱（例：住宿訂單）">
+        <input type="url"  id="wsUrl"  placeholder="網址（例：https://booking.com/...）">
+        <input type="text" id="wsIcon" placeholder="圖示 Emoji（選填，例：🏨）">
+        <div class="ws-form-btns">
+          <button style="background:transparent;color:var(--text-muted);border-color:var(--border);" onclick="toggleWsForm()">取消</button>
+          <button style="background:var(--jade);color:#fff;border-color:var(--jade);" onclick="addWebsite()">新增</button>
+        </div>
+      </div>
+    </div>`;
+  mc.appendChild(wsPanel);
+
   if(oldData) setData(oldData);
-  if(currentTab>=DAYS.length) currentTab=0;
+  renderWebsites();
+  if(currentTab>=DAYS.length && currentTab!=='ws') currentTab=0;
   switchTab(currentTab);
 }
 function updateHeaderDates(){
@@ -694,12 +773,82 @@ function rebuildUI(old){ buildUI(old); }
 // ─── TAB SWITCH ───
 function switchTab(i){
   currentTab=i;
-  document.querySelectorAll('.tab-btn').forEach((b,j)=>b.classList.toggle('active',i===j));
-  document.querySelectorAll('.day-panel').forEach((p,j)=>p.classList.toggle('active',i===j));
+  // Tab buttons
+  document.querySelectorAll('.tab-btn').forEach((b,j)=>{
+    const isWs = i==='ws' && b.id==='tab-btn-ws';
+    const isDay = i!=='ws' && j===i;
+    b.classList.toggle('active', isWs||isDay);
+  });
+  // Day panels
+  document.querySelectorAll('.day-panel').forEach((p,j)=>p.classList.toggle('active',i!=='ws'&&j===i));
+  // Websites panel
+  const wp=document.getElementById('panel-ws');
+  if(wp) wp.classList.toggle('active',i==='ws');
 }
 
 // ─── DIRTY ───
 function markDirty(){ dirty=true; }
+
+// ─── WEBSITES ───
+function getWebsites(){
+  try{ return JSON.parse(localStorage.getItem('yunnan_websites')||'[]'); }catch{ return []; }
+}
+function saveWebsites(list){
+  localStorage.setItem('yunnan_websites', JSON.stringify(list));
+  markDirty();
+}
+function renderWebsites(){
+  const list = getWebsites();
+  const el = document.getElementById('websiteList');
+  const empty = document.getElementById('wsEmpty');
+  if(!el) return;
+  if(!list.length){
+    el.innerHTML='';
+    if(empty) empty.style.display='';
+    return;
+  }
+  if(empty) empty.style.display='none';
+  el.innerHTML = list.map((w,k)=>`
+    <div class="website-item">
+      <a class="website-link" href="${w.url}" target="_blank" rel="noopener">
+        <span class="ws-icon">${w.icon||'🌐'}</span>
+        <span class="ws-info">
+          <span class="ws-name">${w.name}</span>
+          <span class="ws-url">${w.url}</span>
+        </span>
+      </a>
+      <button class="ws-del-btn" onclick="delWebsite(${k})">✕</button>
+    </div>`).join('');
+}
+function toggleWsForm(){
+  const f=document.getElementById('wsAddForm');
+  if(!f) return;
+  f.classList.toggle('open');
+  if(f.classList.contains('open')) document.getElementById('wsName').focus();
+}
+function addWebsite(){
+  const name=(document.getElementById('wsName')?.value||'').trim();
+  const url =(document.getElementById('wsUrl')?.value||'').trim();
+  const icon=(document.getElementById('wsIcon')?.value||'').trim();
+  if(!name){ document.getElementById('wsName').focus(); return; }
+  if(!url || !url.startsWith('http')){ document.getElementById('wsUrl').focus(); return; }
+  const list=getWebsites();
+  list.push({name,url,icon:icon||'🌐'});
+  saveWebsites(list);
+  renderWebsites();
+  // Clear form
+  document.getElementById('wsName').value='';
+  document.getElementById('wsUrl').value='';
+  document.getElementById('wsIcon').value='';
+  toggleWsForm();
+  toast('✅ 網站已新增');
+}
+function delWebsite(k){
+  const list=getWebsites();
+  list.splice(k,1);
+  saveWebsites(list);
+  renderWebsites();
+}
 
 // ─── DATA ───
 function getData(){
@@ -730,7 +879,7 @@ function setData(arr){
     set(`hotel-${i}`,row.hotel);
     set(`notes-${i}`,row.notes);
     set(`dep-${i}`,row.departure||'');
-    if(row.timeline?.length) setTimelineEntries(i,row.timeline);
+    if(row.timeline?.length) setTimelineEntries(i,sortEntries(row.timeline));
     renderTimeline(i);
   });
 }
@@ -757,6 +906,7 @@ async function syncToSheets(){
   if(!scriptUrl){ toast('請先連接試算表',true); return; }
   setSyncStatus('同步中...','');
   try{
+    const websites=getWebsites();
     const rows=getData().map((row,i)=>({
       day:`第${i+1}天`,date:fmtDate(DAYS[i]),
       title:row.title,breakfast:row.breakfast,lunch:row.lunch,
@@ -792,6 +942,10 @@ async function loadFromSheets(){
     catch{ throw new Error('回應不是合法 JSON，Script 可能有語法錯誤或尚未部署。\n收到：'+rawText.slice(0,300)); }
     if(result.error) throw new Error('Script 回傳錯誤：'+result.error);
     document.getElementById('syncErrorBox')?.remove();
+    if(result.websites && Array.isArray(result.websites)){
+      localStorage.setItem('yunnan_websites', JSON.stringify(result.websites));
+      renderWebsites();
+    }
     if(result.config){ tripConfig={...DEFAULT_CONFIG,...result.config}; saveTripConfig(); rebuildUI(null); }
     if(!result.rows?.length){
       setSyncStatus('✓ 已連接（試算表為空）','ok');
@@ -999,7 +1153,7 @@ function doGet(e) {
 function doPost(e) {
   try {
     const b = JSON.parse(e.postData.contents);
-    if (b.action === 'write')    return writeData(b.rows, b.config);
+    if (b.action === 'write')    return writeData(b.rows, b.config, b.websites);
     if (b.action === 'parseAI') return proxyClaudeAI(b.apiKey, b.system, b.content);
     return ok({ error: '未知操作：' + b.action });
   } catch(err) {
@@ -1029,7 +1183,7 @@ function readData() {
   }
 }
 
-function writeData(rows, config) {
+function writeData(rows, config, websites) {
   try {
     if (!rows || !Array.isArray(rows)) {
       return ok({ error: 'rows 格式錯誤，收到：' + typeof rows });
@@ -1047,6 +1201,11 @@ function writeData(rows, config) {
       var cs = ss.getSheetByName('_config');
       if (!cs) cs = ss.insertSheet('_config');
       cs.getRange(1, 1).setValue(JSON.stringify(config));
+    }
+    if (websites) {
+      var ws = ss.getSheetByName('_websites');
+      if (!ws) ws = ss.insertSheet('_websites');
+      ws.getRange(1, 1).setValue(JSON.stringify(websites));
     }
     return ok({ ok: true, count: rows.length });
   } catch(err) {
