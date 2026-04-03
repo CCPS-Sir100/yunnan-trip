@@ -1,35 +1,20 @@
-<!--
-  雲南旅遊計劃 2026
-  ==================
-  GitHub Pages 部署步驟：
-  1. 在 GitHub 建立新 repository（Public）
-  2. 上傳此檔案，改名為 index.html
-  3. Settings → Pages → Branch: main → Save
-  4. 用 https://你的帳號.github.io/倉庫名/ 開啟
-
-  Google Apps Script 設定：
-  - 點網頁內「📋 設定教學」按鈕查看完整說明
-  - 部署時存取權限必須選「任何人」
-
-  編輯密碼：CCcc7379403!
--->
 <!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0046)file:///C:/Users/sir999/Downloads/index_3.html -->
+<html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="description" content="雲南旅遊計劃 2026 — 團隊行程規劃">
-<link rel="manifest" href="manifest.json">
+<link rel="manifest" href="file:///C:/Users/sir999/Downloads/manifest.json">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="雲南之旅">
-<link rel="apple-touch-icon" href="icon-192.svg">
+<link rel="apple-touch-icon" href="file:///C:/Users/sir999/Downloads/icon-192.svg">
 <meta name="msapplication-TileColor" content="#1a3a2a">
 <meta name="theme-color" content="#1a3a2a">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>雲南旅遊計劃 2026 ✈️</title>
-<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+TC:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="./index_files/css2" rel="stylesheet">
 <style>
 :root {
   --ink:#1a1209; --parchment:#f5efe3; --parchment-dark:#e8dcc8;
@@ -757,9 +742,10 @@ function buildUI(oldData){
   mc.appendChild(wsPanel);
 
   if(oldData) setData(oldData);
-  renderWebsites();
   if(currentTab>=DAYS.length && currentTab!=='ws') currentTab=0;
   switchTab(currentTab);
+  // Always render websites after UI is built
+  renderWebsites();
 }
 function updateHeaderDates(){
   const d=buildDays();
@@ -949,14 +935,14 @@ async function loadFromSheets(){
     catch{ throw new Error('回應不是合法 JSON，Script 可能有語法錯誤或尚未部署。\n收到：'+rawText.slice(0,300)); }
     if(result.error) throw new Error('Script 回傳錯誤：'+result.error);
     document.getElementById('syncErrorBox')?.remove();
-    if(result.websites && Array.isArray(result.websites)){
-      localStorage.setItem('yunnan_websites', JSON.stringify(result.websites));
-      renderWebsites();
-    }
+    // Save websites first, render AFTER all UI is rebuilt
+    const incomingWebsites = (result.websites && Array.isArray(result.websites)) ? result.websites : null;
+    if(incomingWebsites) localStorage.setItem('yunnan_websites', JSON.stringify(incomingWebsites));
     if(result.config){ tripConfig={...DEFAULT_CONFIG,...result.config}; saveTripConfig(); rebuildUI(null); }
     if(!result.rows?.length){
       setSyncStatus('✓ 已連接（試算表為空）','ok');
       toast('✅ 連線成功！試算表目前無資料，填寫後按「☁️ 同步試算表」即可存入。');
+      if(incomingWebsites) renderWebsites();
       return;
     }
     const parsed=result.rows.slice(0,DAYS.length).map(r=>({
@@ -967,6 +953,8 @@ async function loadFromSheets(){
       timeline:(()=>{ try{ return JSON.parse(r.timeline||'[]'); }catch{ return []; } })(),
     }));
     setData(parsed);
+    // Render websites AFTER everything is built
+    if(incomingWebsites) renderWebsites();
     setSyncStatus('✓ 已載入 '+nowTime(),'ok'); toast('✅ 已載入 '+parsed.length+' 天資料');
   }catch(e){
     setSyncStatus('✗ 載入失敗','err');
@@ -1677,5 +1665,6 @@ function showIOSInstallGuide(){
 // ─── MOBILE: improve bottom bar padding for safe area ───
 document.querySelector('.actions-bar').style.paddingBottom = 'calc(0.65rem + env(safe-area-inset-bottom))';
 </script>
-</body>
-</html>
+
+
+</body></html>
