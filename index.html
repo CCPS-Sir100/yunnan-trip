@@ -1,52 +1,45 @@
-<!--
-  雲南旅遊計劃 2026
-  ==================
-  GitHub Pages 部署步驟：
-  1. 在 GitHub 建立新 repository（Public）
-  2. 上傳此檔案，改名為 index.html
-  3. Settings → Pages → Branch: main → Save
-  4. 用 https://你的帳號.github.io/倉庫名/ 開啟
-
-  Google Apps Script 設定：
-  - 點網頁內「📋 設定教學」按鈕查看完整說明
-  - 部署時存取權限必須選「任何人」
-
-  編輯密碼：CCcc7379403!
--->
 <!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0046)file:///C:/Users/sir999/Downloads/index_5.html -->
+<html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="description" content="雲南旅遊計劃 2026 — 團隊行程規劃">
-<link rel="manifest" href="manifest.json">
+<link rel="manifest" href="file:///C:/Users/sir999/Downloads/manifest.json">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="雲南之旅">
-<link rel="apple-touch-icon" href="icon-192.svg">
+<link rel="apple-touch-icon" href="file:///C:/Users/sir999/Downloads/icon-192.svg">
 <meta name="msapplication-TileColor" content="#1a3a2a">
 <meta name="theme-color" content="#1a3a2a">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>雲南旅遊計劃 2026 ✈️</title>
-<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+TC:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="./index_files/css2" rel="stylesheet">
 <style>
 :root {
-  --ink:#1a1209; --parchment:#f5efe3; --parchment-dark:#e8dcc8;
-  --terracotta:#c4622d; --jade:#3a7d5e; --jade-light:#5aaa80;
-  --gold:#c9962a; --gold-light:#e8b84b; --crimson:#9b2335;
-  --text:#2c1f0e; --text-muted:#7a6040; --border:#c8b090;
-  --shadow:rgba(44,31,14,0.15);
+  --ink:#1a0f00; --parchment:#fff8f0; --parchment-dark:#ffe8d0;
+  --terracotta:#f05a28; --jade:#00b87a; --jade-light:#00d48a;
+  --gold:#ffb300; --gold-light:#ffd54f; --crimson:#e53935;
+  --sky:#0288d1; --purple:#7c3aed;
+  --text:#2d1a0a; --text-muted:#8a6050; --border:#f0c8a0;
+  --shadow:rgba(200,100,40,0.12);
+  --c1:#f05a28; --c2:#0288d1; --c3:#00b87a; --c4:#7c3aed; --c5:#ffb300;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Noto Serif TC',serif;background:var(--parchment);color:var(--text);min-height:100vh;}
+body{font-family:'Noto Serif TC',serif;background:linear-gradient(180deg,#f0f8ff 0%,#e8f4fc 50%,#f0f8ff 100%);background-attachment:fixed;color:var(--text);min-height:100vh;}
 
 /* HEADER */
-.site-header{background:linear-gradient(160deg,#1a3a2a 0%,#2d5a3d 40%,#1e4060 100%);padding:1.6rem 2rem 0;position:relative;overflow:hidden;}
-.site-header::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M60 10 Q70 30 90 30 Q70 35 80 55 Q60 40 40 55 Q50 35 30 30 Q50 30 60 10Z' fill='%23ffffff08'/%3E%3C/svg%3E") repeat;opacity:0.4;}
+.site-header{background:linear-gradient(160deg,#1a4a6e 0%,#2272a8 45%,#3fa0d0 80%,#6dc8e8 100%);padding:1.6rem 2rem 0;position:relative;overflow:hidden;}
+.site-header::before{content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 30% 60%, rgba(255,220,100,0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 20%, rgba(255,255,255,0.08) 0%, transparent 40%);
+}
+.header-erhai{position:absolute;right:0;top:0;bottom:0;width:420px;pointer-events:none;overflow:hidden;opacity:0.55;}
+.header-erhai svg{position:absolute;right:0;bottom:0;height:100%;width:auto;}
 .header-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1;}
 .header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:2rem;}
-.header-badge{font-family:'Noto Sans TC',sans-serif;font-size:0.7rem;letter-spacing:0.2em;color:var(--gold-light);margin-bottom:0.35rem;}
+.header-badge{font-family:'Noto Sans TC',sans-serif;font-size:0.7rem;letter-spacing:0.2em;color:#90d8f8;margin-bottom:0.35rem;}
 .header-title{font-family:'Ma Shan Zheng',cursive;font-size:clamp(2.2rem,5vw,4rem);color:#fff;line-height:1.1;text-shadow:2px 3px 12px rgba(0,0,0,0.4);}
 .header-title span{color:var(--gold-light);}
 .header-subtitle{font-size:0.88rem;color:rgba(255,255,255,0.65);margin-top:0.3rem;letter-spacing:0.05em;}
@@ -76,12 +69,12 @@ body{font-family:'Noto Serif TC',serif;background:var(--parchment);color:var(--t
 .sync-status.ok{color:#6effa0;} .sync-status.err{color:#ff8080;}
 
 /* TABS */
-.tab-nav-wrap{background:var(--parchment-dark);border-bottom:2px solid var(--border);position:sticky;top:0;z-index:50;}
+.tab-nav-wrap{background:linear-gradient(90deg,#e8f4fc,#f0f8ff);border-bottom:2px solid #b8d8f0;position:sticky;top:0;z-index:50;}
 .tab-nav{max-width:1100px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none;padding:0 1rem;}
 .tab-nav::-webkit-scrollbar{display:none;}
-.tab-btn{flex-shrink:0;padding:0.5rem 0.9rem;border:none;background:transparent;font-family:'Noto Serif TC',serif;font-size:0.78rem;color:var(--text-muted);cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;white-space:nowrap;}
-.tab-btn:hover{color:var(--terracotta);}
-.tab-btn.active{color:var(--terracotta);border-bottom-color:var(--terracotta);font-weight:600;}
+.tab-btn{flex-shrink:0;padding:0.5rem 0.9rem;border:none;background:transparent;font-family:'Noto Serif TC',serif;font-size:0.78rem;color:#4a7a9a;cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;white-space:nowrap;}
+.tab-btn:hover{color:#f05a28;}
+.tab-btn.active{color:#f05a28;border-bottom-color:#f05a28;font-weight:600;}
 .tab-btn .day-num{display:block;font-size:2rem;font-weight:700;font-family:'Ma Shan Zheng',cursive;line-height:1.1;}
 .tab-btn .day-date{display:block;font-size:0.62rem;opacity:0.75;letter-spacing:0.02em;}
 .tab-btn .day-week{display:block;font-size:0.6rem;opacity:0.6;font-family:'Noto Sans TC',sans-serif;}
@@ -93,7 +86,7 @@ body{font-family:'Noto Serif TC',serif;background:var(--parchment);color:var(--t
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 
 .day-header{display:flex;align-items:center;gap:1.1rem;margin-bottom:1.1rem;padding-bottom:0.9rem;border-bottom:2px solid var(--parchment-dark);}
-.day-num-big{font-family:'Ma Shan Zheng',cursive;font-size:4rem;color:var(--terracotta);line-height:1;flex-shrink:0;text-shadow:2px 3px 0 rgba(196,98,45,0.15);}
+.day-num-big{font-family:'Ma Shan Zheng',cursive;font-size:4rem;color:#f05a28;line-height:1;flex-shrink:0;text-shadow:2px 3px 0 rgba(196,98,45,0.15);}
 .day-info h2{font-family:'Noto Serif TC',serif;font-size:1.2rem;font-weight:700;color:var(--ink);}
 .day-info .day-date-full{font-size:0.82rem;color:var(--text-muted);margin-top:0.15rem;}
 .day-title-input{flex:1;padding:0.45rem 0.75rem;border:1px dashed var(--border);border-radius:6px;background:transparent;font-family:'Noto Serif TC',serif;font-size:0.95rem;color:var(--ink);transition:border-color 0.2s;}
@@ -102,8 +95,7 @@ body{font-family:'Noto Serif TC',serif;background:var(--parchment);color:var(--t
 
 /* VIEW MODE */
 body.view-mode .day-title-input{pointer-events:none;border-color:transparent;background:transparent;}
-body.view-mode .card textarea{pointer-events:none;background:var(--parchment);resize:none;}
-body.view-mode .notes-row textarea{pointer-events:none;background:var(--parchment);resize:none;}
+body.view-mode .info-card textarea{pointer-events:none;background:#fafafa;resize:none;}
 body.view-mode .timeline-input{pointer-events:none;}
 body.view-mode .tl-add-btn{display:none;}
 body.view-mode .tl-del-btn{display:none;}
@@ -112,12 +104,23 @@ body.view-mode .edit-only{display:none!important;}
 /* TIMELINE */
 .timeline-section{background:#fff;border-radius:12px;border:1px solid var(--border);padding:0.95rem 1.1rem 1.1rem;margin-bottom:1.1rem;box-shadow:0 2px 8px var(--shadow);}
 .timeline-section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;}
+/* left panel tl header */
+.tl-vertical-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.6rem;}
 .tl-title{font-family:'Noto Serif TC',serif;font-size:0.86rem;font-weight:600;color:var(--ink);}
 .tl-add-btn{padding:0.28rem 0.85rem;border-radius:20px;border:1px solid var(--jade);background:transparent;color:var(--jade);font-size:0.72rem;font-family:'Noto Sans TC',sans-serif;cursor:pointer;transition:all 0.2s;}
 .tl-add-btn:hover{background:var(--jade);color:#fff;}
 
 .tl-axis{display:flex;justify-content:space-between;font-family:'Noto Sans TC',sans-serif;font-size:0.58rem;color:var(--text-muted);margin-bottom:3px;user-select:none;}
-.tl-bar{position:relative;height:42px;background:linear-gradient(180deg,#f8f4ee,#efe8d8);border-radius:8px;overflow:hidden;border:1px solid var(--border);}
+.tl-bar{display:none;} /* horizontal bar hidden — using vertical layout */
+.tl-bar-v{position:relative;width:32px;flex-shrink:0;background:linear-gradient(180deg,#eaf6ff,#d4ecf8);border-radius:8px;border:1px solid #a8d4f0;min-height:320px;}
+.tl-bar-v .tl-grid-line-h{position:absolute;left:0;right:0;height:1px;background:rgba(0,100,180,0.08);}
+.tl-segment-v{position:absolute;left:3px;right:3px;border-radius:4px;cursor:default;overflow:hidden;min-height:4px;}
+.tl-segment-v:hover{opacity:0.82;}
+.tl-time-label{position:absolute;right:calc(100% + 4px);font-family:'Noto Sans TC',sans-serif;font-size:0.55rem;color:#7a9ab8;white-space:nowrap;line-height:1;transform:translateY(-50%);}
+.tl-seg-label{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:0.58rem;font-weight:600;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.4);writing-mode:vertical-rl;white-space:nowrap;overflow:hidden;max-height:90%;}
+.tl-axis{display:none;} /* hide horizontal axis */
+.tl-v-wrap{display:flex;gap:0.6rem;padding:0.5rem 0.3rem 0.5rem 2.2rem;min-height:320px;}
+.tl-v-entries{flex:1;display:flex;flex-direction:column;gap:0.4rem;justify-content:flex-start;padding-top:0.2rem;}
 .tl-grid-line{position:absolute;top:0;bottom:0;width:1px;background:rgba(0,0,0,0.06);}
 .tl-segment{position:absolute;top:5px;bottom:5px;border-radius:4px;cursor:default;display:flex;align-items:center;justify-content:center;overflow:hidden;white-space:nowrap;font-family:'Noto Sans TC',sans-serif;font-size:0.65rem;font-weight:500;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.35);transition:opacity 0.15s;min-width:4px;}
 .tl-segment:hover{opacity:0.82;}
@@ -156,36 +159,32 @@ body.view-mode .dep-time-input{pointer-events:none;border-color:transparent;back
 .tl-dep-marker::before{content:'出門';position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-family:'Noto Sans TC',sans-serif;font-size:0.6rem;color:#e74c3c;white-space:nowrap;font-weight:600;}
 .tl-dep-marker::after{content:'▼';position:absolute;top:0;left:50%;transform:translateX(-50%);font-size:0.55rem;color:#e74c3c;}
 
-/* CARDS */
-.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1rem;}
-@media(max-width:768px){.cards-grid{grid-template-columns:1fr;}}
-@media(min-width:769px) and (max-width:1000px){.cards-grid{grid-template-columns:repeat(2,1fr);}}
-.card{background:#fff;border-radius:12px;border:1px solid var(--border);padding:1rem;box-shadow:0 2px 8px var(--shadow);transition:box-shadow 0.2s;}
-.card:hover{box-shadow:0 4px 16px var(--shadow);}
-.card-header{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.65rem;}
-.card-icon{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:0.95rem;flex-shrink:0;}
-.card-label{font-family:'Noto Serif TC',serif;font-size:0.85rem;font-weight:600;color:var(--ink);}
-.card textarea{width:100%;border:none;background:var(--parchment);border-radius:6px;padding:0.55rem;font-family:'Noto Sans TC',sans-serif;font-size:0.81rem;color:var(--text);resize:vertical;min-height:90px;line-height:1.7;transition:background 0.2s;}
-.card textarea:focus{outline:none;background:#fff;box-shadow:inset 0 0 0 1.5px var(--jade-light);}
-.card textarea::placeholder{color:var(--border);}
-.meal-breakfast .card-icon{background:#fff5e0;}
-.meal-lunch .card-icon{background:#e8f5e9;}
-.meal-dinner .card-icon{background:#fce4ec;}
-.card-sights .card-icon{background:#e3f2fd;}
-.card-transport .card-icon{background:#f3e5f5;}
-.card-hotel .card-icon{background:#e8f5e9;}
-.notes-row{background:#fff;border-radius:12px;border:1px solid var(--border);padding:1rem;box-shadow:0 2px 8px var(--shadow);margin-bottom:1rem;}
-.notes-row textarea{width:100%;border:none;background:var(--parchment);border-radius:6px;padding:0.55rem;font-family:'Noto Sans TC',sans-serif;font-size:0.81rem;color:var(--text);resize:vertical;min-height:65px;line-height:1.7;}
-.notes-row textarea:focus{outline:none;background:#fff;box-shadow:inset 0 0 0 1.5px var(--gold);}
+/* NEW TWO-COLUMN LAYOUT */
+.day-layout{display:grid;grid-template-columns:300px 1fr;gap:1.2rem;align-items:start;}
+@media(max-width:900px){.day-layout{grid-template-columns:1fr;}}
+.day-left{background:linear-gradient(180deg,#f0f8ff,#e8f4fc);border-radius:14px;border:1px solid #b8d8f0;padding:1rem;box-shadow:0 3px 16px rgba(0,100,180,0.1);position:sticky;top:70px;}
+.tl-vertical-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.7rem;}
+.day-right{display:flex;flex-direction:column;gap:0.8rem;}
+.info-row-3{display:grid;grid-template-columns:repeat(3,1fr);gap:0.8rem;}
+.info-row-2{display:grid;grid-template-columns:repeat(2,1fr);gap:0.8rem;}
+@media(max-width:600px){.info-row-3{grid-template-columns:1fr;}.info-row-2{grid-template-columns:1fr;}}
+.info-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 10px var(--shadow);border:1px solid var(--border);}
+.info-card-head{padding:0.45rem 0.8rem;font-family:'Noto Serif TC',serif;font-size:0.8rem;font-weight:700;color:#fff;letter-spacing:0.03em;}
+.info-card textarea{width:100%;border:none;background:#fafafa;padding:0.6rem 0.8rem;font-family:'Noto Sans TC',sans-serif;font-size:0.82rem;color:var(--text);resize:vertical;min-height:80px;line-height:1.7;}
+.info-card textarea:focus{outline:none;background:#fff;}
+.info-card textarea::placeholder{color:#ccc;}
+.meal-card textarea{min-height:70px;}
+.sights-card textarea{min-height:90px;}
+body.view-mode .info-card textarea{pointer-events:none;background:#fafafa;resize:none;}
 
 /* ACTIONS BAR */
-.actions-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(245,239,227,0.96);backdrop-filter:blur(10px);border-top:2px solid var(--border);padding:0.65rem 2rem;display:flex;align-items:center;justify-content:center;gap:0.7rem;z-index:100;flex-wrap:wrap;}
+.actions-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(255,248,240,0.97);backdrop-filter:blur(10px);border-top:2px solid var(--border);padding:0.65rem 2rem;display:flex;align-items:center;justify-content:center;gap:0.7rem;z-index:100;flex-wrap:wrap;}
 .btn{padding:0.55rem 1.3rem;border-radius:8px;font-family:'Noto Serif TC',serif;font-size:0.86rem;cursor:pointer;transition:all 0.2s;border:2px solid transparent;display:flex;align-items:center;gap:0.4rem;}
-.btn-jade{background:var(--jade);color:#fff;border-color:var(--jade);box-shadow:0 3px 10px rgba(58,125,94,0.3);}
-.btn-jade:hover{background:#2d6349;transform:translateY(-1px);}
-.btn-gold{background:var(--gold);color:#fff;border-color:var(--gold);box-shadow:0 3px 10px rgba(201,150,42,0.3);}
+.btn-jade{background:#00b87a;color:#fff;border-color:#00b87a;box-shadow:0 3px 12px rgba(0,184,122,0.35);}
+.btn-jade:hover{background:#009960;transform:translateY(-1px);}
+.btn-gold{background:#ffb300;color:#fff;border-color:#ffb300;box-shadow:0 3px 12px rgba(255,179,0,0.35);}
 .btn-gold:hover{background:#a97d20;transform:translateY(-1px);}
-.btn-primary{background:var(--terracotta);color:#fff;border-color:var(--terracotta);box-shadow:0 3px 10px rgba(196,98,45,0.3);}
+.btn-primary{background:#f05a28;color:#fff;border-color:#f05a28;box-shadow:0 3px 12px rgba(240,90,40,0.35);}
 .btn-primary:hover{background:#a84f22;transform:translateY(-1px);}
 .btn-sky{background:#2471a3;color:#fff;border-color:#2471a3;box-shadow:0 3px 10px rgba(36,113,163,0.3);}
 .btn-sky:hover{background:#1a5276;transform:translateY(-1px);}
@@ -316,11 +315,84 @@ body.view-mode .ws-add-form{display:none!important;}
       <div class="header-title-area">
         <div class="header-badge">✦ 旅遊行程規劃 ✦</div>
         <h1 class="header-title">雲南<span>之旅</span></h1>
-        <p class="header-subtitle">山水詩情，歲月靜好</p>
-        <p class="header-dates" id="headerDates">載入中...</p>
+        <p class="header-dates" id="headerDates">2026年7月29日 — 8月9日（12天）</p>
+      </div>
+      <div class="header-erhai">
+        <svg viewBox="0 0 420 180" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <lineargradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#87ceeb" stop-opacity="0.6"></stop>
+              <stop offset="60%" stop-color="#b8e4f7" stop-opacity="0.4"></stop>
+              <stop offset="100%" stop-color="#e0f4ff" stop-opacity="0.2"></stop>
+            </lineargradient>
+            <lineargradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#1a8fc1" stop-opacity="0.85"></stop>
+              <stop offset="50%" stop-color="#0d6fa0" stop-opacity="0.9"></stop>
+              <stop offset="100%" stop-color="#0a4f78" stop-opacity="0.95"></stop>
+            </lineargradient>
+            <lineargradient id="mountainGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#4a7fa8" stop-opacity="0.7"></stop>
+              <stop offset="100%" stop-color="#2a5a7a" stop-opacity="0.9"></stop>
+            </lineargradient>
+            <filter id="blur2">
+              <fegaussianblur stdDeviation="2"></fegaussianblur>
+            </filter>
+          </defs>
+
+          <!-- Sky -->
+          <rect width="420" height="180" fill="url(#skyGrad)"></rect>
+
+          <!-- Distant clouds -->
+          <ellipse cx="80" cy="30" rx="40" ry="14" fill="white" opacity="0.25"></ellipse>
+          <ellipse cx="110" cy="24" rx="28" ry="10" fill="white" opacity="0.2"></ellipse>
+          <ellipse cx="280" cy="20" rx="50" ry="15" fill="white" opacity="0.2"></ellipse>
+          <ellipse cx="320" cy="14" rx="35" ry="11" fill="white" opacity="0.18"></ellipse>
+          <ellipse cx="380" cy="35" rx="30" ry="10" fill="white" opacity="0.15"></ellipse>
+
+          <!-- Cangshan Mountains (蒼山) — layered ranges -->
+          <path d="M0,110 Q40,40 90,70 Q130,30 170,65 Q210,20 250,60 Q290,15 330,55 Q360,25 420,50 L420,130 L0,130 Z" fill="url(#mountainGrad)" opacity="0.55"></path>
+          <path d="M0,120 Q50,70 100,90 Q150,55 200,85 Q250,50 300,80 Q350,60 420,75 L420,135 L0,135 Z" fill="#3a6a8a" opacity="0.5"></path>
+          <!-- Snow caps -->
+          <path d="M88,42 Q90,35 92,42 Z" fill="white" opacity="0.7"></path>
+          <path d="M168,38 Q170,30 172,38 Z" fill="white" opacity="0.6"></path>
+          <path d="M248,33 Q250,24 252,33 Z" fill="white" opacity="0.7"></path>
+          <path d="M328,28 Q330,20 332,28 Z" fill="white" opacity="0.6"></path>
+
+          <!-- Erhai Lake horizon line -->
+          <path d="M0,132 Q105,128 210,130 Q315,132 420,129 L420,180 L0,180 Z" fill="url(#waterGrad)"></path>
+
+          <!-- Water reflections - shimmering lines -->
+          <line x1="10" y1="145" x2="80" y2="143" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" stroke-linecap="round"></line>
+          <line x1="100" y1="150" x2="190" y2="148" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-linecap="round"></line>
+          <line x1="210" y1="142" x2="290" y2="144" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" stroke-linecap="round"></line>
+          <line x1="310" y1="155" x2="410" y2="153" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-linecap="round"></line>
+          <line x1="50" y1="160" x2="140" y2="158" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-linecap="round"></line>
+          <line x1="240" y1="165" x2="360" y2="163" stroke="rgba(255,255,255,0.1)" stroke-width="1.5" stroke-linecap="round"></line>
+
+          <!-- Mountain reflections in water -->
+          <path d="M0,135 Q50,155 100,140 Q150,160 200,142 Q250,158 300,143 Q350,155 420,138 L420,165 L0,165 Z" fill="#0a4060" opacity="0.25"></path>
+
+          <!-- Small sailboat -->
+          <polygon points="200,133 206,133 203,118" fill="white" opacity="0.5"></polygon>
+          <rect x="202" y="133" width="4" height="2" rx="1" fill="#8ab4c8" opacity="0.6"></rect>
+
+          <!-- Another boat -->
+          <polygon points="310,136 315,136 312,124" fill="white" opacity="0.4"></polygon>
+          <rect x="309" y="136" width="5" height="1.5" rx="1" fill="#7aa8c0" opacity="0.5"></rect>
+
+          <!-- Distant islet / 南詔風情島 hint -->
+          <ellipse cx="355" cy="131" rx="18" ry="4" fill="#2a6040" opacity="0.4"></ellipse>
+
+          <!-- Sun glow on water -->
+          <ellipse cx="380" cy="135" rx="35" ry="8" fill="#ffd060" opacity="0.12"></ellipse>
+          <ellipse cx="380" cy="150" rx="25" ry="5" fill="#ffd060" opacity="0.08"></ellipse>
+
+          <!-- Foreground gentle wave ripples -->
+          <path d="M0,170 Q30,167 60,170 Q90,173 120,170 Q150,167 180,170 Q210,173 240,170 Q270,167 300,170 Q330,173 360,170 Q390,167 420,170" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" fill="none"></path>
+          <path d="M0,176 Q40,173 80,176 Q120,179 160,176 Q200,173 240,176 Q280,179 320,176 Q360,173 420,176" stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"></path>
+        </svg>
       </div>
       <div class="header-right">
-        <div class="header-mountain">⛰️</div>
         <div class="header-admin-btns">
           <button class="btn-header btn-member" id="memberBtn" onclick="showMemberLogin()">👥 團員登入</button>
           <button class="btn-header btn-lock" id="editBtn" onclick="showLoginModal()">🔒 編輯模式</button>
@@ -341,12 +413,795 @@ body.view-mode .ws-add-form{display:none!important;}
 </header>
 
 <div class="tab-nav-wrap">
-  <nav class="tab-nav" id="tabNav"></nav>
+  <nav class="tab-nav" id="tabNav"><button class="tab-btn active" id="tab-btn-0"><span class="day-num">1</span><span class="day-date">7/29</span><span class="day-week">（三）</span></button><button class="tab-btn" id="tab-btn-1"><span class="day-num">2</span><span class="day-date">7/30</span><span class="day-week">（四）</span></button><button class="tab-btn" id="tab-btn-2"><span class="day-num">3</span><span class="day-date">7/31</span><span class="day-week">（五）</span></button><button class="tab-btn" id="tab-btn-3"><span class="day-num">4</span><span class="day-date">8/1</span><span class="day-week">（六）</span></button><button class="tab-btn" id="tab-btn-4"><span class="day-num">5</span><span class="day-date">8/2</span><span class="day-week">（日）</span></button><button class="tab-btn" id="tab-btn-5"><span class="day-num">6</span><span class="day-date">8/3</span><span class="day-week">（一）</span></button><button class="tab-btn" id="tab-btn-6"><span class="day-num">7</span><span class="day-date">8/4</span><span class="day-week">（二）</span></button><button class="tab-btn" id="tab-btn-7"><span class="day-num">8</span><span class="day-date">8/5</span><span class="day-week">（三）</span></button><button class="tab-btn" id="tab-btn-8"><span class="day-num">9</span><span class="day-date">8/6</span><span class="day-week">（四）</span></button><button class="tab-btn" id="tab-btn-9"><span class="day-num">10</span><span class="day-date">8/7</span><span class="day-week">（五）</span></button><button class="tab-btn" id="tab-btn-10"><span class="day-num">11</span><span class="day-date">8/8</span><span class="day-week">（六）</span></button><button class="tab-btn" id="tab-btn-11"><span class="day-num">12</span><span class="day-date">8/9</span><span class="day-week">（日）</span></button><button class="tab-btn" id="tab-btn-ws"><span class="day-num">🔗</span><span class="day-date">網站</span></button></nav>
 </div>
 
-<main class="main" id="mainContent"></main>
+<main class="main" id="mainContent"><div class="day-panel active" id="panel-0">
+      <div class="day-header">
+        <div class="day-num-big">1</div>
+        <div class="day-info">
+          <h2>第 1 天</h2>
+          <div class="day-date-full">7月29日（週三）</div>
+        </div>
+        <input class="day-title-input" type="text" id="title-0" placeholder="今天的主題（例：大理古城漫遊）" oninput="markDirty()">
+      </div>
+      <div class="day-layout">
+        <!-- LEFT: vertical timeline -->
+        <div class="day-left">
+          <div class="tl-vertical-header">
+            <span class="tl-title">🚌 交通時間軸</span>
+            <button class="tl-add-btn" onclick="addTLEntry(0)">＋ 新增</button>
+          </div>
+          <div class="tl-v-wrap">
+            <!-- Vertical bar -->
+            <div class="tl-bar-v" id="tl-vbar-0"></div>
+            <!-- Entry inputs -->
+            <div class="tl-v-entries">
+              <input type="hidden" id="tl-count-0" value="0">
+              <div id="tl-entries-0">
+                <div class="tl-empty-msg">點「＋ 新增」加入交通</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- RIGHT: stacked info cards -->
+        <div class="day-right">
+          <div class="info-card sights-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#0288d1,#01579b);">🏛️ 主要景點</div>
+            <textarea id="sights-0" placeholder="今日景點...
+例：洱海、崇聖寺三塔" oninput="markDirty()"></textarea>
+          </div>
+          <div class="info-row-3">
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#ff9800,#f57c00);">🌅 早餐</div>
+              <textarea id="breakfast-0" placeholder="早餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#43a047,#2e7d32);">☀️ 午餐</div>
+              <textarea id="lunch-0" placeholder="午餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#7c3aed,#5b21b6);">🌙 晚餐</div>
+              <textarea id="dinner-0" placeholder="晚餐..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-row-2">
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#e53935,#b71c1c);">🏨 住宿</div>
+              <textarea id="hotel-0" placeholder="住宿名稱、地址..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#00897b,#00695c);">🚗 交通說明</div>
+              <textarea id="transport-0" placeholder="交通方式、車次..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#f57f17,#e65100);">📝 備注 / 小叮嚀</div>
+            <textarea id="notes-0" placeholder="備注、注意事項、貼心提醒..." oninput="markDirty()"></textarea>
+          </div>
+        </div>
+      </div></div><div class="day-panel" id="panel-1">
+      <div class="day-header">
+        <div class="day-num-big">2</div>
+        <div class="day-info">
+          <h2>第 2 天</h2>
+          <div class="day-date-full">7月30日（週四）</div>
+        </div>
+        <input class="day-title-input" type="text" id="title-1" placeholder="今天的主題（例：大理古城漫遊）" oninput="markDirty()">
+      </div>
+      <div class="day-layout">
+        <!-- LEFT: vertical timeline -->
+        <div class="day-left">
+          <div class="tl-vertical-header">
+            <span class="tl-title">🚌 交通時間軸</span>
+            <button class="tl-add-btn" onclick="addTLEntry(1)">＋ 新增</button>
+          </div>
+          <div class="tl-v-wrap">
+            <!-- Vertical bar -->
+            <div class="tl-bar-v" id="tl-vbar-1"></div>
+            <!-- Entry inputs -->
+            <div class="tl-v-entries">
+              <input type="hidden" id="tl-count-1" value="0">
+              <div id="tl-entries-1">
+                <div class="tl-empty-msg">點「＋ 新增」加入交通</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- RIGHT: stacked info cards -->
+        <div class="day-right">
+          <div class="info-card sights-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#0288d1,#01579b);">🏛️ 主要景點</div>
+            <textarea id="sights-1" placeholder="今日景點...
+例：洱海、崇聖寺三塔" oninput="markDirty()"></textarea>
+          </div>
+          <div class="info-row-3">
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#ff9800,#f57c00);">🌅 早餐</div>
+              <textarea id="breakfast-1" placeholder="早餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#43a047,#2e7d32);">☀️ 午餐</div>
+              <textarea id="lunch-1" placeholder="午餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#7c3aed,#5b21b6);">🌙 晚餐</div>
+              <textarea id="dinner-1" placeholder="晚餐..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-row-2">
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#e53935,#b71c1c);">🏨 住宿</div>
+              <textarea id="hotel-1" placeholder="住宿名稱、地址..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#00897b,#00695c);">🚗 交通說明</div>
+              <textarea id="transport-1" placeholder="交通方式、車次..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#f57f17,#e65100);">📝 備注 / 小叮嚀</div>
+            <textarea id="notes-1" placeholder="備注、注意事項、貼心提醒..." oninput="markDirty()"></textarea>
+          </div>
+        </div>
+      </div></div><div class="day-panel" id="panel-2">
+      <div class="day-header">
+        <div class="day-num-big">3</div>
+        <div class="day-info">
+          <h2>第 3 天</h2>
+          <div class="day-date-full">7月31日（週五）</div>
+        </div>
+        <input class="day-title-input" type="text" id="title-2" placeholder="今天的主題（例：大理古城漫遊）" oninput="markDirty()">
+      </div>
+      <div class="day-layout">
+        <!-- LEFT: vertical timeline -->
+        <div class="day-left">
+          <div class="tl-vertical-header">
+            <span class="tl-title">🚌 交通時間軸</span>
+            <button class="tl-add-btn" onclick="addTLEntry(2)">＋ 新增</button>
+          </div>
+          <div class="tl-v-wrap">
+            <!-- Vertical bar -->
+            <div class="tl-bar-v" id="tl-vbar-2"></div>
+            <!-- Entry inputs -->
+            <div class="tl-v-entries">
+              <input type="hidden" id="tl-count-2" value="0">
+              <div id="tl-entries-2">
+                <div class="tl-empty-msg">點「＋ 新增」加入交通</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- RIGHT: stacked info cards -->
+        <div class="day-right">
+          <div class="info-card sights-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#0288d1,#01579b);">🏛️ 主要景點</div>
+            <textarea id="sights-2" placeholder="今日景點...
+例：洱海、崇聖寺三塔" oninput="markDirty()"></textarea>
+          </div>
+          <div class="info-row-3">
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#ff9800,#f57c00);">🌅 早餐</div>
+              <textarea id="breakfast-2" placeholder="早餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#43a047,#2e7d32);">☀️ 午餐</div>
+              <textarea id="lunch-2" placeholder="午餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#7c3aed,#5b21b6);">🌙 晚餐</div>
+              <textarea id="dinner-2" placeholder="晚餐..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-row-2">
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#e53935,#b71c1c);">🏨 住宿</div>
+              <textarea id="hotel-2" placeholder="住宿名稱、地址..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#00897b,#00695c);">🚗 交通說明</div>
+              <textarea id="transport-2" placeholder="交通方式、車次..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#f57f17,#e65100);">📝 備注 / 小叮嚀</div>
+            <textarea id="notes-2" placeholder="備注、注意事項、貼心提醒..." oninput="markDirty()"></textarea>
+          </div>
+        </div>
+      </div></div><div class="day-panel" id="panel-3">
+      <div class="day-header">
+        <div class="day-num-big">4</div>
+        <div class="day-info">
+          <h2>第 4 天</h2>
+          <div class="day-date-full">8月1日（週六）</div>
+        </div>
+        <input class="day-title-input" type="text" id="title-3" placeholder="今天的主題（例：大理古城漫遊）" oninput="markDirty()">
+      </div>
+      <div class="day-layout">
+        <!-- LEFT: vertical timeline -->
+        <div class="day-left">
+          <div class="tl-vertical-header">
+            <span class="tl-title">🚌 交通時間軸</span>
+            <button class="tl-add-btn" onclick="addTLEntry(3)">＋ 新增</button>
+          </div>
+          <div class="tl-v-wrap">
+            <!-- Vertical bar -->
+            <div class="tl-bar-v" id="tl-vbar-3"></div>
+            <!-- Entry inputs -->
+            <div class="tl-v-entries">
+              <input type="hidden" id="tl-count-3" value="0">
+              <div id="tl-entries-3">
+                <div class="tl-empty-msg">點「＋ 新增」加入交通</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- RIGHT: stacked info cards -->
+        <div class="day-right">
+          <div class="info-card sights-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#0288d1,#01579b);">🏛️ 主要景點</div>
+            <textarea id="sights-3" placeholder="今日景點...
+例：洱海、崇聖寺三塔" oninput="markDirty()"></textarea>
+          </div>
+          <div class="info-row-3">
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#ff9800,#f57c00);">🌅 早餐</div>
+              <textarea id="breakfast-3" placeholder="早餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#43a047,#2e7d32);">☀️ 午餐</div>
+              <textarea id="lunch-3" placeholder="午餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#7c3aed,#5b21b6);">🌙 晚餐</div>
+              <textarea id="dinner-3" placeholder="晚餐..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-row-2">
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#e53935,#b71c1c);">🏨 住宿</div>
+              <textarea id="hotel-3" placeholder="住宿名稱、地址..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#00897b,#00695c);">🚗 交通說明</div>
+              <textarea id="transport-3" placeholder="交通方式、車次..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#f57f17,#e65100);">📝 備注 / 小叮嚀</div>
+            <textarea id="notes-3" placeholder="備注、注意事項、貼心提醒..." oninput="markDirty()"></textarea>
+          </div>
+        </div>
+      </div></div><div class="day-panel" id="panel-4">
+      <div class="day-header">
+        <div class="day-num-big">5</div>
+        <div class="day-info">
+          <h2>第 5 天</h2>
+          <div class="day-date-full">8月2日（週日）</div>
+        </div>
+        <input class="day-title-input" type="text" id="title-4" placeholder="今天的主題（例：大理古城漫遊）" oninput="markDirty()">
+      </div>
+      <div class="day-layout">
+        <!-- LEFT: vertical timeline -->
+        <div class="day-left">
+          <div class="tl-vertical-header">
+            <span class="tl-title">🚌 交通時間軸</span>
+            <button class="tl-add-btn" onclick="addTLEntry(4)">＋ 新增</button>
+          </div>
+          <div class="tl-v-wrap">
+            <!-- Vertical bar -->
+            <div class="tl-bar-v" id="tl-vbar-4"></div>
+            <!-- Entry inputs -->
+            <div class="tl-v-entries">
+              <input type="hidden" id="tl-count-4" value="0">
+              <div id="tl-entries-4">
+                <div class="tl-empty-msg">點「＋ 新增」加入交通</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- RIGHT: stacked info cards -->
+        <div class="day-right">
+          <div class="info-card sights-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#0288d1,#01579b);">🏛️ 主要景點</div>
+            <textarea id="sights-4" placeholder="今日景點...
+例：洱海、崇聖寺三塔" oninput="markDirty()"></textarea>
+          </div>
+          <div class="info-row-3">
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#ff9800,#f57c00);">🌅 早餐</div>
+              <textarea id="breakfast-4" placeholder="早餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#43a047,#2e7d32);">☀️ 午餐</div>
+              <textarea id="lunch-4" placeholder="午餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#7c3aed,#5b21b6);">🌙 晚餐</div>
+              <textarea id="dinner-4" placeholder="晚餐..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-row-2">
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#e53935,#b71c1c);">🏨 住宿</div>
+              <textarea id="hotel-4" placeholder="住宿名稱、地址..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#00897b,#00695c);">🚗 交通說明</div>
+              <textarea id="transport-4" placeholder="交通方式、車次..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#f57f17,#e65100);">📝 備注 / 小叮嚀</div>
+            <textarea id="notes-4" placeholder="備注、注意事項、貼心提醒..." oninput="markDirty()"></textarea>
+          </div>
+        </div>
+      </div></div><div class="day-panel" id="panel-5">
+      <div class="day-header">
+        <div class="day-num-big">6</div>
+        <div class="day-info">
+          <h2>第 6 天</h2>
+          <div class="day-date-full">8月3日（週一）</div>
+        </div>
+        <input class="day-title-input" type="text" id="title-5" placeholder="今天的主題（例：大理古城漫遊）" oninput="markDirty()">
+      </div>
+      <div class="day-layout">
+        <!-- LEFT: vertical timeline -->
+        <div class="day-left">
+          <div class="tl-vertical-header">
+            <span class="tl-title">🚌 交通時間軸</span>
+            <button class="tl-add-btn" onclick="addTLEntry(5)">＋ 新增</button>
+          </div>
+          <div class="tl-v-wrap">
+            <!-- Vertical bar -->
+            <div class="tl-bar-v" id="tl-vbar-5"></div>
+            <!-- Entry inputs -->
+            <div class="tl-v-entries">
+              <input type="hidden" id="tl-count-5" value="0">
+              <div id="tl-entries-5">
+                <div class="tl-empty-msg">點「＋ 新增」加入交通</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- RIGHT: stacked info cards -->
+        <div class="day-right">
+          <div class="info-card sights-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#0288d1,#01579b);">🏛️ 主要景點</div>
+            <textarea id="sights-5" placeholder="今日景點...
+例：洱海、崇聖寺三塔" oninput="markDirty()"></textarea>
+          </div>
+          <div class="info-row-3">
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#ff9800,#f57c00);">🌅 早餐</div>
+              <textarea id="breakfast-5" placeholder="早餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#43a047,#2e7d32);">☀️ 午餐</div>
+              <textarea id="lunch-5" placeholder="午餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#7c3aed,#5b21b6);">🌙 晚餐</div>
+              <textarea id="dinner-5" placeholder="晚餐..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-row-2">
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#e53935,#b71c1c);">🏨 住宿</div>
+              <textarea id="hotel-5" placeholder="住宿名稱、地址..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#00897b,#00695c);">🚗 交通說明</div>
+              <textarea id="transport-5" placeholder="交通方式、車次..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#f57f17,#e65100);">📝 備注 / 小叮嚀</div>
+            <textarea id="notes-5" placeholder="備注、注意事項、貼心提醒..." oninput="markDirty()"></textarea>
+          </div>
+        </div>
+      </div></div><div class="day-panel" id="panel-6">
+      <div class="day-header">
+        <div class="day-num-big">7</div>
+        <div class="day-info">
+          <h2>第 7 天</h2>
+          <div class="day-date-full">8月4日（週二）</div>
+        </div>
+        <input class="day-title-input" type="text" id="title-6" placeholder="今天的主題（例：大理古城漫遊）" oninput="markDirty()">
+      </div>
+      <div class="day-layout">
+        <!-- LEFT: vertical timeline -->
+        <div class="day-left">
+          <div class="tl-vertical-header">
+            <span class="tl-title">🚌 交通時間軸</span>
+            <button class="tl-add-btn" onclick="addTLEntry(6)">＋ 新增</button>
+          </div>
+          <div class="tl-v-wrap">
+            <!-- Vertical bar -->
+            <div class="tl-bar-v" id="tl-vbar-6"></div>
+            <!-- Entry inputs -->
+            <div class="tl-v-entries">
+              <input type="hidden" id="tl-count-6" value="0">
+              <div id="tl-entries-6">
+                <div class="tl-empty-msg">點「＋ 新增」加入交通</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- RIGHT: stacked info cards -->
+        <div class="day-right">
+          <div class="info-card sights-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#0288d1,#01579b);">🏛️ 主要景點</div>
+            <textarea id="sights-6" placeholder="今日景點...
+例：洱海、崇聖寺三塔" oninput="markDirty()"></textarea>
+          </div>
+          <div class="info-row-3">
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#ff9800,#f57c00);">🌅 早餐</div>
+              <textarea id="breakfast-6" placeholder="早餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#43a047,#2e7d32);">☀️ 午餐</div>
+              <textarea id="lunch-6" placeholder="午餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#7c3aed,#5b21b6);">🌙 晚餐</div>
+              <textarea id="dinner-6" placeholder="晚餐..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-row-2">
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#e53935,#b71c1c);">🏨 住宿</div>
+              <textarea id="hotel-6" placeholder="住宿名稱、地址..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#00897b,#00695c);">🚗 交通說明</div>
+              <textarea id="transport-6" placeholder="交通方式、車次..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#f57f17,#e65100);">📝 備注 / 小叮嚀</div>
+            <textarea id="notes-6" placeholder="備注、注意事項、貼心提醒..." oninput="markDirty()"></textarea>
+          </div>
+        </div>
+      </div></div><div class="day-panel" id="panel-7">
+      <div class="day-header">
+        <div class="day-num-big">8</div>
+        <div class="day-info">
+          <h2>第 8 天</h2>
+          <div class="day-date-full">8月5日（週三）</div>
+        </div>
+        <input class="day-title-input" type="text" id="title-7" placeholder="今天的主題（例：大理古城漫遊）" oninput="markDirty()">
+      </div>
+      <div class="day-layout">
+        <!-- LEFT: vertical timeline -->
+        <div class="day-left">
+          <div class="tl-vertical-header">
+            <span class="tl-title">🚌 交通時間軸</span>
+            <button class="tl-add-btn" onclick="addTLEntry(7)">＋ 新增</button>
+          </div>
+          <div class="tl-v-wrap">
+            <!-- Vertical bar -->
+            <div class="tl-bar-v" id="tl-vbar-7"></div>
+            <!-- Entry inputs -->
+            <div class="tl-v-entries">
+              <input type="hidden" id="tl-count-7" value="0">
+              <div id="tl-entries-7">
+                <div class="tl-empty-msg">點「＋ 新增」加入交通</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- RIGHT: stacked info cards -->
+        <div class="day-right">
+          <div class="info-card sights-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#0288d1,#01579b);">🏛️ 主要景點</div>
+            <textarea id="sights-7" placeholder="今日景點...
+例：洱海、崇聖寺三塔" oninput="markDirty()"></textarea>
+          </div>
+          <div class="info-row-3">
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#ff9800,#f57c00);">🌅 早餐</div>
+              <textarea id="breakfast-7" placeholder="早餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#43a047,#2e7d32);">☀️ 午餐</div>
+              <textarea id="lunch-7" placeholder="午餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#7c3aed,#5b21b6);">🌙 晚餐</div>
+              <textarea id="dinner-7" placeholder="晚餐..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-row-2">
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#e53935,#b71c1c);">🏨 住宿</div>
+              <textarea id="hotel-7" placeholder="住宿名稱、地址..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#00897b,#00695c);">🚗 交通說明</div>
+              <textarea id="transport-7" placeholder="交通方式、車次..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#f57f17,#e65100);">📝 備注 / 小叮嚀</div>
+            <textarea id="notes-7" placeholder="備注、注意事項、貼心提醒..." oninput="markDirty()"></textarea>
+          </div>
+        </div>
+      </div></div><div class="day-panel" id="panel-8">
+      <div class="day-header">
+        <div class="day-num-big">9</div>
+        <div class="day-info">
+          <h2>第 9 天</h2>
+          <div class="day-date-full">8月6日（週四）</div>
+        </div>
+        <input class="day-title-input" type="text" id="title-8" placeholder="今天的主題（例：大理古城漫遊）" oninput="markDirty()">
+      </div>
+      <div class="day-layout">
+        <!-- LEFT: vertical timeline -->
+        <div class="day-left">
+          <div class="tl-vertical-header">
+            <span class="tl-title">🚌 交通時間軸</span>
+            <button class="tl-add-btn" onclick="addTLEntry(8)">＋ 新增</button>
+          </div>
+          <div class="tl-v-wrap">
+            <!-- Vertical bar -->
+            <div class="tl-bar-v" id="tl-vbar-8"></div>
+            <!-- Entry inputs -->
+            <div class="tl-v-entries">
+              <input type="hidden" id="tl-count-8" value="0">
+              <div id="tl-entries-8">
+                <div class="tl-empty-msg">點「＋ 新增」加入交通</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- RIGHT: stacked info cards -->
+        <div class="day-right">
+          <div class="info-card sights-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#0288d1,#01579b);">🏛️ 主要景點</div>
+            <textarea id="sights-8" placeholder="今日景點...
+例：洱海、崇聖寺三塔" oninput="markDirty()"></textarea>
+          </div>
+          <div class="info-row-3">
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#ff9800,#f57c00);">🌅 早餐</div>
+              <textarea id="breakfast-8" placeholder="早餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#43a047,#2e7d32);">☀️ 午餐</div>
+              <textarea id="lunch-8" placeholder="午餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#7c3aed,#5b21b6);">🌙 晚餐</div>
+              <textarea id="dinner-8" placeholder="晚餐..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-row-2">
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#e53935,#b71c1c);">🏨 住宿</div>
+              <textarea id="hotel-8" placeholder="住宿名稱、地址..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#00897b,#00695c);">🚗 交通說明</div>
+              <textarea id="transport-8" placeholder="交通方式、車次..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#f57f17,#e65100);">📝 備注 / 小叮嚀</div>
+            <textarea id="notes-8" placeholder="備注、注意事項、貼心提醒..." oninput="markDirty()"></textarea>
+          </div>
+        </div>
+      </div></div><div class="day-panel" id="panel-9">
+      <div class="day-header">
+        <div class="day-num-big">10</div>
+        <div class="day-info">
+          <h2>第 10 天</h2>
+          <div class="day-date-full">8月7日（週五）</div>
+        </div>
+        <input class="day-title-input" type="text" id="title-9" placeholder="今天的主題（例：大理古城漫遊）" oninput="markDirty()">
+      </div>
+      <div class="day-layout">
+        <!-- LEFT: vertical timeline -->
+        <div class="day-left">
+          <div class="tl-vertical-header">
+            <span class="tl-title">🚌 交通時間軸</span>
+            <button class="tl-add-btn" onclick="addTLEntry(9)">＋ 新增</button>
+          </div>
+          <div class="tl-v-wrap">
+            <!-- Vertical bar -->
+            <div class="tl-bar-v" id="tl-vbar-9"></div>
+            <!-- Entry inputs -->
+            <div class="tl-v-entries">
+              <input type="hidden" id="tl-count-9" value="0">
+              <div id="tl-entries-9">
+                <div class="tl-empty-msg">點「＋ 新增」加入交通</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- RIGHT: stacked info cards -->
+        <div class="day-right">
+          <div class="info-card sights-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#0288d1,#01579b);">🏛️ 主要景點</div>
+            <textarea id="sights-9" placeholder="今日景點...
+例：洱海、崇聖寺三塔" oninput="markDirty()"></textarea>
+          </div>
+          <div class="info-row-3">
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#ff9800,#f57c00);">🌅 早餐</div>
+              <textarea id="breakfast-9" placeholder="早餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#43a047,#2e7d32);">☀️ 午餐</div>
+              <textarea id="lunch-9" placeholder="午餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#7c3aed,#5b21b6);">🌙 晚餐</div>
+              <textarea id="dinner-9" placeholder="晚餐..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-row-2">
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#e53935,#b71c1c);">🏨 住宿</div>
+              <textarea id="hotel-9" placeholder="住宿名稱、地址..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#00897b,#00695c);">🚗 交通說明</div>
+              <textarea id="transport-9" placeholder="交通方式、車次..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#f57f17,#e65100);">📝 備注 / 小叮嚀</div>
+            <textarea id="notes-9" placeholder="備注、注意事項、貼心提醒..." oninput="markDirty()"></textarea>
+          </div>
+        </div>
+      </div></div><div class="day-panel" id="panel-10">
+      <div class="day-header">
+        <div class="day-num-big">11</div>
+        <div class="day-info">
+          <h2>第 11 天</h2>
+          <div class="day-date-full">8月8日（週六）</div>
+        </div>
+        <input class="day-title-input" type="text" id="title-10" placeholder="今天的主題（例：大理古城漫遊）" oninput="markDirty()">
+      </div>
+      <div class="day-layout">
+        <!-- LEFT: vertical timeline -->
+        <div class="day-left">
+          <div class="tl-vertical-header">
+            <span class="tl-title">🚌 交通時間軸</span>
+            <button class="tl-add-btn" onclick="addTLEntry(10)">＋ 新增</button>
+          </div>
+          <div class="tl-v-wrap">
+            <!-- Vertical bar -->
+            <div class="tl-bar-v" id="tl-vbar-10"></div>
+            <!-- Entry inputs -->
+            <div class="tl-v-entries">
+              <input type="hidden" id="tl-count-10" value="0">
+              <div id="tl-entries-10">
+                <div class="tl-empty-msg">點「＋ 新增」加入交通</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- RIGHT: stacked info cards -->
+        <div class="day-right">
+          <div class="info-card sights-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#0288d1,#01579b);">🏛️ 主要景點</div>
+            <textarea id="sights-10" placeholder="今日景點...
+例：洱海、崇聖寺三塔" oninput="markDirty()"></textarea>
+          </div>
+          <div class="info-row-3">
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#ff9800,#f57c00);">🌅 早餐</div>
+              <textarea id="breakfast-10" placeholder="早餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#43a047,#2e7d32);">☀️ 午餐</div>
+              <textarea id="lunch-10" placeholder="午餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#7c3aed,#5b21b6);">🌙 晚餐</div>
+              <textarea id="dinner-10" placeholder="晚餐..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-row-2">
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#e53935,#b71c1c);">🏨 住宿</div>
+              <textarea id="hotel-10" placeholder="住宿名稱、地址..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#00897b,#00695c);">🚗 交通說明</div>
+              <textarea id="transport-10" placeholder="交通方式、車次..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#f57f17,#e65100);">📝 備注 / 小叮嚀</div>
+            <textarea id="notes-10" placeholder="備注、注意事項、貼心提醒..." oninput="markDirty()"></textarea>
+          </div>
+        </div>
+      </div></div><div class="day-panel" id="panel-11">
+      <div class="day-header">
+        <div class="day-num-big">12</div>
+        <div class="day-info">
+          <h2>第 12 天</h2>
+          <div class="day-date-full">8月9日（週日）</div>
+        </div>
+        <input class="day-title-input" type="text" id="title-11" placeholder="今天的主題（例：大理古城漫遊）" oninput="markDirty()">
+      </div>
+      <div class="day-layout">
+        <!-- LEFT: vertical timeline -->
+        <div class="day-left">
+          <div class="tl-vertical-header">
+            <span class="tl-title">🚌 交通時間軸</span>
+            <button class="tl-add-btn" onclick="addTLEntry(11)">＋ 新增</button>
+          </div>
+          <div class="tl-v-wrap">
+            <!-- Vertical bar -->
+            <div class="tl-bar-v" id="tl-vbar-11"></div>
+            <!-- Entry inputs -->
+            <div class="tl-v-entries">
+              <input type="hidden" id="tl-count-11" value="0">
+              <div id="tl-entries-11">
+                <div class="tl-empty-msg">點「＋ 新增」加入交通</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- RIGHT: stacked info cards -->
+        <div class="day-right">
+          <div class="info-card sights-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#0288d1,#01579b);">🏛️ 主要景點</div>
+            <textarea id="sights-11" placeholder="今日景點...
+例：洱海、崇聖寺三塔" oninput="markDirty()"></textarea>
+          </div>
+          <div class="info-row-3">
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#ff9800,#f57c00);">🌅 早餐</div>
+              <textarea id="breakfast-11" placeholder="早餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#43a047,#2e7d32);">☀️ 午餐</div>
+              <textarea id="lunch-11" placeholder="午餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#7c3aed,#5b21b6);">🌙 晚餐</div>
+              <textarea id="dinner-11" placeholder="晚餐..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-row-2">
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#e53935,#b71c1c);">🏨 住宿</div>
+              <textarea id="hotel-11" placeholder="住宿名稱、地址..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#00897b,#00695c);">🚗 交通說明</div>
+              <textarea id="transport-11" placeholder="交通方式、車次..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#f57f17,#e65100);">📝 備注 / 小叮嚀</div>
+            <textarea id="notes-11" placeholder="備注、注意事項、貼心提醒..." oninput="markDirty()"></textarea>
+          </div>
+        </div>
+      </div></div><div class="websites-panel" id="panel-ws">
+    <div class="websites-section">
+      <h3>🔗 常用網站</h3>
+      <div class="website-list" id="websiteList"></div>
+      <div class="ws-empty" id="wsEmpty" style="display:none">尚無網站，點「新增網站」加入</div>
+      <button class="ws-btn-add-open" onclick="toggleWsForm()">＋ 新增網站</button>
+      <div class="ws-add-form" id="wsAddForm">
+        <input type="text" id="wsName" placeholder="網站名稱（例：住宿訂單）">
+        <input type="url" id="wsUrl" placeholder="網址（例：https://booking.com/...）">
+        <input type="text" id="wsIcon" placeholder="圖示 Emoji（選填，例：🏨）">
+        <div class="ws-form-btns">
+          <button style="background:transparent;color:var(--text-muted);border-color:var(--border);" onclick="toggleWsForm()">取消</button>
+          <button style="background:var(--jade);color:#fff;border-color:var(--jade);" onclick="addWebsite()">新增</button>
+        </div>
+      </div>
+    </div></div></main>
 
-<div class="actions-bar">
+<div class="actions-bar" style="padding-bottom: calc(0.65rem + env(safe-area-inset-bottom));">
   <div class="edit-only" style="display:flex;gap:0.7rem;flex-wrap:wrap;align-items:center;">
     <button class="btn btn-jade" onclick="saveToLocal()">💾 儲存本地</button>
     <button class="btn btn-jade" onclick="syncToSheets()">☁️ 同步試算表</button>
@@ -360,7 +1215,7 @@ body.view-mode .ws-add-form{display:none!important;}
 
 <script>
 // ─── CONFIG ───
-const DEFAULT_CONFIG = {startYear:2026,startMonth:7,startDay:27,totalDays:12};
+const DEFAULT_CONFIG = {startYear:2026,startMonth:7,startDay:29,totalDays:12};
 let tripConfig = {...DEFAULT_CONFIG};
 const PASS        = 'CCcc7379403!'; // 管理員（完整編輯）
 const MEMBER_PASS = 'Wondali78';     // 團員（連接試算表，唯讀）
@@ -551,31 +1406,61 @@ function parseTime(str){
   return null;
 }
 function renderTimeline(i){
-  const bar=document.getElementById(`tl-bar-${i}`);
-  if(!bar) return;
-  bar.querySelectorAll('.tl-segment,.tl-dep-marker').forEach(e=>e.remove());
-  getTimelineEntries(i).forEach((ent,ci)=>{
+  const vbar=document.getElementById(`tl-vbar-${i}`);
+  if(!vbar) return;
+  vbar.querySelectorAll('.tl-segment-v,.tl-time-label').forEach(e=>e.remove());
+
+  const entries=getTimelineEntries(i);
+  const HOUR_START=6, HOUR_END=24; // show 06:00–24:00
+  const totalMins=(HOUR_END-HOUR_START)*60;
+
+  // Draw hour grid — only label 8, 12, 16, 20
+  const MARK_HOURS=[8,12,16,20];
+  for(let h=HOUR_START;h<=HOUR_END;h+=1){
+    const pctV=((h-HOUR_START)/(HOUR_END-HOUR_START))*100;
+    const isMark=MARK_HOURS.includes(h);
+    // Grid line
+    const gl=document.createElement('div');
+    gl.style.cssText=`position:absolute;left:0;right:0;top:${pctV}%;height:${isMark?'1.5':'0.5'}px;background:${isMark?'rgba(0,120,200,0.25)':'rgba(0,100,180,0.06)'};`;
+    vbar.appendChild(gl);
+    if(isMark){
+      // Tick mark on left edge
+      const tick=document.createElement('div');
+      tick.style.cssText=`position:absolute;left:-5px;top:${pctV}%;width:5px;height:2px;background:#5aaad0;transform:translateY(-50%);`;
+      vbar.appendChild(tick);
+      // Time label
+      const lbl=document.createElement('div');
+      lbl.className='tl-time-label';
+      lbl.style.top=pctV+'%';
+      lbl.style.fontWeight='600';
+      lbl.style.color='#2a7ab8';
+      lbl.style.fontSize='0.6rem';
+      lbl.textContent=String(h).padStart(2,'0');
+      vbar.appendChild(lbl);
+    }
+  }
+
+  entries.forEach((ent,ci)=>{
     const t1=parseTime(ent.from),t2=parseTime(ent.to);
     if(!t1||!t2) return;
-    let p1=pct(t1.h,t1.m),p2=pct(t2.h,t2.m);
-    if(p2<=p1) p2=Math.min(100,p1+2);
+    const m1=Math.max(0,(t1.h-HOUR_START)*60+t1.m);
+    let m2=Math.max(0,(t2.h-HOUR_START)*60+t2.m);
+    if(m2<=m1) m2=Math.min(totalMins,m1+30);
+    const top=(m1/totalMins)*100;
+    const height=Math.max(3,((m2-m1)/totalMins)*100);
     const seg=document.createElement('div');
-    seg.className='tl-segment '+TL_COLORS[ci%TL_COLORS.length];
-    seg.style.left=p1+'%'; seg.style.width=(p2-p1)+'%';
+    seg.className='tl-segment-v '+TL_COLORS[ci%TL_COLORS.length];
+    seg.style.top=top+'%';
+    seg.style.height=height+'%';
     seg.title=`${ent.from}─${ent.to} ${ent.label}`;
-    if((p2-p1)>4) seg.textContent=ent.label.length>8?ent.label.slice(0,7)+'…':ent.label;
-    bar.appendChild(seg);
+    if(height>5){
+      const lbl=document.createElement('div');
+      lbl.className='tl-seg-label';
+      lbl.textContent=ent.label.length>10?ent.label.slice(0,9)+'…':ent.label;
+      seg.appendChild(lbl);
+    }
+    vbar.appendChild(seg);
   });
-  // Draw departure marker
-  const depVal=(document.getElementById(`dep-${i}`)?.value||'').trim();
-  const dt=parseTime(depVal);
-  if(dt){
-    const marker=document.createElement('div');
-    marker.className='tl-dep-marker';
-    marker.style.left=pct(dt.h,dt.m)+'%';
-    marker.title=`出門時間 ${depVal}`;
-    bar.appendChild(marker);
-  }
 }
 function getTimelineEntries(i){
   const n=+(document.getElementById(`tl-count-${i}`)?.value||0);
@@ -615,14 +1500,19 @@ function sortAndRefresh(i){
   }
 }
 function buildTLRows(i,entries){
-  if(!entries.length) return '<div class="tl-empty-msg">尚無交通資料，點「新增移動」加入</div>';
-  let h=`<div class="tl-entry-header"><span>出發</span><span>抵達</span><span>交通說明</span><span></span></div>`;
+  if(!entries.length) return '<div class="tl-empty-msg" style="font-size:0.72rem;color:#aac;padding:0.3rem 0;">點「＋ 新增」加入交通段</div>';
+  let h='';
   entries.forEach((ent,k)=>{
-    h+=`<div class="tl-entry">
-      <input class="timeline-input" type="text" id="tl-from-${i}-${k}" value="${ent.from||''}" placeholder="08:00" maxlength="5" oninput="renderTimeline(${i});markDirty()" onblur="sortAndRefresh(${i})">
-      <input class="timeline-input" type="text" id="tl-to-${i}-${k}"   value="${ent.to||''}"   placeholder="12:30" maxlength="5" oninput="renderTimeline(${i});markDirty()" onblur="sortAndRefresh(${i})">
-      <input class="timeline-input" type="text" id="tl-label-${i}-${k}" value="${ent.label||''}" placeholder="高鐵 昆明→大理 G6004" oninput="renderTimeline(${i});markDirty()">
-      <button class="tl-del-btn" onclick="delTLEntry(${i},${k})">✕</button>
+    h+=`<div class="tl-entry" style="display:grid;grid-template-columns:1fr 26px;gap:0.3rem;align-items:start;background:#f0f8ff;border-radius:7px;padding:0.4rem 0.5rem;border:1px solid #cce4f8;">
+      <div>
+        <div style="display:flex;gap:0.3rem;margin-bottom:0.3rem;">
+          <input class="timeline-input" type="text" id="tl-from-${i}-${k}" value="${ent.from||''}" placeholder="出發 08:00" maxlength="5" style="flex:1;font-size:0.75rem;" oninput="renderTimeline(${i});markDirty()" onblur="sortAndRefresh(${i})">
+          <span style="font-size:0.7rem;color:#7aa;align-self:center;">→</span>
+          <input class="timeline-input" type="text" id="tl-to-${i}-${k}" value="${ent.to||''}" placeholder="抵達 12:30" maxlength="5" style="flex:1;font-size:0.75rem;" oninput="renderTimeline(${i});markDirty()" onblur="sortAndRefresh(${i})">
+        </div>
+        <input class="timeline-input" type="text" id="tl-label-${i}-${k}" value="${ent.label||''}" placeholder="交通說明（如：高鐵G6004 昆明→大理）" style="width:100%;font-size:0.75rem;" oninput="renderTimeline(${i});markDirty()">
+      </div>
+      <button class="tl-del-btn" onclick="delTLEntry(${i},${k})" style="margin-top:0.3rem;">✕</button>
     </div>`;
   });
   return h;
@@ -671,59 +1561,60 @@ function buildUI(oldData){
         </div>
         <input class="day-title-input" type="text" id="title-${i}" placeholder="今天的主題（例：大理古城漫遊）" oninput="markDirty()">
       </div>
-      <div class="departure-block">
-        <div class="dep-icon">🚶</div>
-        <span class="dep-label">出門時間</span>
-        <div class="dep-time-wrap">
-          <input class="dep-time-input" type="text" id="dep-${i}" maxlength="5"
-            placeholder="07:00" oninput="renderTimeline(${i});markDirty()">
-          <span class="dep-note">輸入24小時制時間，將顯示在時間軸上</span>
+      <div class="day-layout">
+        <!-- LEFT: vertical timeline -->
+        <div class="day-left">
+          <div class="tl-vertical-header">
+            <span class="tl-title">🚌 交通時間軸</span>
+            <button class="tl-add-btn" onclick="addTLEntry(${i})">＋ 新增</button>
+          </div>
+          <div class="tl-v-wrap">
+            <!-- Vertical bar -->
+            <div class="tl-bar-v" id="tl-vbar-${i}"></div>
+            <!-- Entry inputs -->
+            <div class="tl-v-entries">
+              <input type="hidden" id="tl-count-${i}" value="0">
+              <div id="tl-entries-${i}">
+                <div class="tl-empty-msg">點「＋ 新增」加入交通</div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="timeline-section">
-        <div class="timeline-section-header">
-          <span class="tl-title">🚌 今日交通時間軸（24小時）</span>
-          <button class="tl-add-btn" onclick="addTLEntry(${i})">＋ 新增移動</button>
+        <!-- RIGHT: stacked info cards -->
+        <div class="day-right">
+          <div class="info-card sights-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#0288d1,#01579b);">🏛️ 主要景點</div>
+            <textarea id="sights-${i}" placeholder="今日景點...&#10;例：洱海、崇聖寺三塔" oninput="markDirty()"></textarea>
+          </div>
+          <div class="info-row-3">
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#ff9800,#f57c00);">🌅 早餐</div>
+              <textarea id="breakfast-${i}" placeholder="早餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#43a047,#2e7d32);">☀️ 午餐</div>
+              <textarea id="lunch-${i}" placeholder="午餐..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#7c3aed,#5b21b6);">🌙 晚餐</div>
+              <textarea id="dinner-${i}" placeholder="晚餐..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-row-2">
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#e53935,#b71c1c);">🏨 住宿</div>
+              <textarea id="hotel-${i}" placeholder="住宿名稱、地址..." oninput="markDirty()"></textarea>
+            </div>
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#00897b,#00695c);">🚗 交通說明</div>
+              <textarea id="transport-${i}" placeholder="交通方式、車次..." oninput="markDirty()"></textarea>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#f57f17,#e65100);">📝 備注 / 小叮嚀</div>
+            <textarea id="notes-${i}" placeholder="備注、注意事項、貼心提醒..." oninput="markDirty()"></textarea>
+          </div>
         </div>
-        <div class="tl-axis">${axisHtml}</div>
-        <div class="tl-bar" id="tl-bar-${i}">${gridHtml}</div>
-        <input type="hidden" id="tl-count-${i}" value="0">
-        <div class="tl-entries" id="tl-entries-${i}">
-          <div class="tl-empty-msg">尚無交通資料，點「新增移動」加入</div>
-        </div>
-      </div>
-      <div class="cards-grid">
-        <div class="card meal-breakfast">
-          <div class="card-header"><div class="card-icon">🌅</div><span class="card-label">早餐</span></div>
-          <textarea id="breakfast-${i}" placeholder="餐廳、料理...&#10;例：過橋米線、餌塊" oninput="markDirty()"></textarea>
-        </div>
-        <div class="card meal-lunch">
-          <div class="card-header"><div class="card-icon">☀️</div><span class="card-label">午餐</span></div>
-          <textarea id="lunch-${i}" placeholder="餐廳、料理...&#10;例：白族乳扇、汽鍋雞" oninput="markDirty()"></textarea>
-        </div>
-        <div class="card meal-dinner">
-          <div class="card-header"><div class="card-icon">🌙</div><span class="card-label">晚餐</span></div>
-          <textarea id="dinner-${i}" placeholder="餐廳、料理...&#10;例：野生菌火鍋" oninput="markDirty()"></textarea>
-        </div>
-        <div class="card card-sights">
-          <div class="card-header"><div class="card-icon">🏛️</div><span class="card-label">主要景點</span></div>
-          <textarea id="sights-${i}" placeholder="今日景點...&#10;例：洱海、崇聖寺三塔" oninput="markDirty()"></textarea>
-        </div>
-        <div class="card card-transport">
-          <div class="card-header"><div class="card-icon">🚗</div><span class="card-label">交通說明</span></div>
-          <textarea id="transport-${i}" placeholder="交通方式、車次...&#10;例：高鐵G6004 昆明→大理" oninput="markDirty()"></textarea>
-        </div>
-        <div class="card card-hotel">
-          <div class="card-header"><div class="card-icon">🏨</div><span class="card-label">住宿</span></div>
-          <textarea id="hotel-${i}" placeholder="住宿名稱、地址...&#10;例：古城民宿「山居歲月」" oninput="markDirty()"></textarea>
-        </div>
-      </div>
-      <div class="notes-row">
-        <div class="card-header">
-          <div class="card-icon" style="background:#fff8e1;width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:0.95rem;">📝</div>
-          <span class="card-label">備注 / 小叮嚀</span>
-        </div>
-        <textarea id="notes-${i}" placeholder="備注、注意事項、貼心提醒...&#10;例：記得帶防曬，景點09:00開放" oninput="markDirty()"></textarea>
       </div>`;
     mc.appendChild(panel);
   });
@@ -1691,5 +2582,6 @@ function showIOSInstallGuide(){
 // ─── MOBILE: improve bottom bar padding for safe area ───
 document.querySelector('.actions-bar').style.paddingBottom = 'calc(0.65rem + env(safe-area-inset-bottom))';
 </script>
-</body>
-</html>
+
+
+<div id="localFileBanner" style="position: fixed; bottom: 70px; left: 50%; transform: translateX(-50%); background: rgb(122, 74, 0); color: rgb(255, 232, 176); padding: 0.6rem 1.4rem; border-radius: 30px; font-family: &quot;Noto Sans TC&quot;, sans-serif; font-size: 0.78rem; z-index: 9998; text-align: center; box-shadow: rgba(0, 0, 0, 0.4) 0px 4px 20px; white-space: nowrap; border: 1px solid rgb(201, 125, 32);">⚠️ 本地開啟模式 — 同步功能不可用，請上傳至 <strong>GitHub Pages</strong> 後使用</div></body></html>
