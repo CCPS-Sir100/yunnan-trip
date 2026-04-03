@@ -915,7 +915,7 @@ async function syncToSheets(){
       departure:row.departure||'',
       timeline:JSON.stringify(row.timeline||[]),
     }));
-    const res=await fetch(scriptUrl,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'write',rows,config:tripConfig})});
+    const res=await fetch(scriptUrl,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'write',rows,config:tripConfig,websites:getWebsites()})});
     let result; try{ result=await res.json(); }catch{ result={ok:res.ok}; }
     if(!res.ok||result.error) throw new Error(result.error||`HTTP ${res.status}`);
     dirty=false; setSyncStatus('✓ 已同步 '+nowTime(),'ok'); toast('✅ 已同步至 Google 試算表');
@@ -1172,12 +1172,16 @@ function readData() {
       KEYS.forEach(function(k, i) { o[k] = r[i] ? String(r[i]) : ''; });
       return o;
     });
-    var config = null;
+    var config = null, websites = null;
     try {
       var cs = ss.getSheetByName('_config');
       if (cs) config = JSON.parse(cs.getRange(1,1).getValue() || 'null');
     } catch(e) {}
-    return ok({ rows: rows, config: config });
+    try {
+      var wss = ss.getSheetByName('_websites');
+      if (wss) websites = JSON.parse(wss.getRange(1,1).getValue() || 'null');
+    } catch(e) {}
+    return ok({ rows: rows, config: config, websites: websites });
   } catch(err) {
     return ok({ error: 'readData 錯誤：' + err.message });
   }
