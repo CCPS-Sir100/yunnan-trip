@@ -915,10 +915,17 @@ async function syncToSheets(){
       departure:row.departure||'',
       timeline:JSON.stringify(row.timeline||[]),
     }));
-    const res=await fetch(scriptUrl,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'write',rows,config:tripConfig,websites:getWebsites()})});
+    const websites = getWebsites();
+    const payload = {action:'write',rows,config:tripConfig,websites};
+    console.log('同步資料：', JSON.stringify(payload).slice(0,200));
+    const res=await fetch(scriptUrl,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(payload)});
     let result; try{ result=await res.json(); }catch{ result={ok:res.ok}; }
+    console.log('同步回應：', JSON.stringify(result));
     if(!res.ok||result.error) throw new Error(result.error||`HTTP ${res.status}`);
-    dirty=false; setSyncStatus('✓ 已同步 '+nowTime(),'ok'); toast('✅ 已同步至 Google 試算表');
+    dirty=false;
+    const wsCount = websites.length;
+    setSyncStatus('✓ 已同步 '+nowTime(),'ok');
+    toast(`✅ 已同步（行程 ${rows.length} 天，網站 ${wsCount} 筆）`);
     document.getElementById('syncErrorBox')?.remove();
   }catch(e){ setSyncStatus('✗ 同步失敗','err'); toast('❌ 同步失敗：'+e.message,true); showSyncError('sync',e,''); }
 }
