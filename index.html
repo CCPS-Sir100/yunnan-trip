@@ -178,6 +178,24 @@ body.view-mode .dep-time-input{pointer-events:none;border-color:transparent;back
 .tl-dep-marker::before{content:'出門';position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-family:'Noto Sans TC',sans-serif;font-size:0.6rem;color:#e74c3c;white-space:nowrap;font-weight:600;}
 .tl-dep-marker::after{content:'▼';position:absolute;top:0;left:50%;transform:translateX(-50%);font-size:0.55rem;color:#e74c3c;}
 
+/* WISH POOL */
+.wish-pool{background:linear-gradient(135deg,#fff8e1,#fff3cd);border-radius:14px;border:2px solid #ffd54f;padding:1rem 1.2rem;margin-bottom:1.1rem;box-shadow:0 3px 12px rgba(255,180,0,0.15);}
+.wish-pool-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem;gap:0.5rem;}
+.wish-pool-title{font-family:'Noto Serif TC',serif;font-size:0.95rem;font-weight:700;color:#b7860a;display:flex;align-items:center;gap:0.5rem;}
+.wish-list{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:0.7rem;min-height:0;}
+.wish-item{display:flex;align-items:center;gap:0.6rem;background:#fff;border-radius:8px;padding:0.5rem 0.75rem;border:1px solid #ffe082;font-family:'Noto Sans TC',sans-serif;font-size:0.83rem;color:#5a4000;}
+.wish-item .wish-who{font-size:0.72rem;color:#c8940a;font-weight:600;white-space:nowrap;background:#fff8e1;padding:0.1rem 0.4rem;border-radius:10px;flex-shrink:0;}
+.wish-item .wish-text{flex:1;}
+.wish-item .wish-del{background:transparent;border:none;color:#dda;cursor:pointer;font-size:0.8rem;padding:0 0.2rem;flex-shrink:0;transition:color 0.2s;}
+.wish-item .wish-del:hover{color:#e53935;}
+.wish-empty{font-family:'Noto Sans TC',sans-serif;font-size:0.8rem;color:#c8a83a;padding:0.3rem 0;text-align:center;}
+.wish-input-row{display:flex;gap:0.5rem;}
+.wish-input-row input{flex:1;padding:0.45rem 0.75rem;border:1.5px solid #ffd54f;border-radius:8px;font-family:'Noto Sans TC',sans-serif;font-size:0.83rem;color:#5a4000;background:#fffbf0;}
+.wish-input-row input:focus{outline:none;border-color:#ffb300;background:#fff;}
+.wish-submit{padding:0.45rem 1rem;border-radius:8px;border:none;background:#ffb300;color:#fff;font-family:'Noto Serif TC',serif;font-size:0.83rem;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-weight:600;}
+.wish-submit:hover{background:#e6a200;transform:translateY(-1px);}
+.wish-name-badge{font-size:0.72rem;background:#ffb300;color:#fff;border-radius:20px;padding:0.15rem 0.6rem;font-family:'Noto Sans TC',sans-serif;}
+
 /* NEW TWO-COLUMN LAYOUT */
 .day-layout{display:grid;grid-template-columns:300px 1fr;gap:1.2rem;align-items:start;}
 @media(max-width:900px){
@@ -535,6 +553,13 @@ function enterMemberMode(){
   localStorage.setItem('yunnan_scripturl', SCRIPT_URL);
   document.getElementById('scriptUrl').value = SCRIPT_URL;
   setSyncStatus('已連接，載入中...','ok');
+  // Ask for member name
+  const savedName = localStorage.getItem('yunnan_member_name');
+  if(!savedName){
+    const name = prompt('請輸入你的名字（顯示在許願池）：','') || '團員';
+    localStorage.setItem('yunnan_member_name', name.trim()||'團員');
+  }
+  showWishInputs();
   closeMod();
   loadFromSheets();
   toast('✅ 登入成功，載入行程中...');
@@ -576,6 +601,8 @@ function enterEdit(){
   document.getElementById('tripSettingsBtn').style.display='';
   document.getElementById('settingsBar').style.display='';
   document.querySelectorAll('.edit-only').forEach(el=>el.style.display='flex');
+  if(!localStorage.getItem('yunnan_member_name')) localStorage.setItem('yunnan_member_name','管理員');
+  showWishInputs();
   setSyncStatus('已連接','ok');
   toast('✅ 已進入編輯模式');
 }
@@ -821,6 +848,18 @@ function buildUI(oldData){
         </div>
         <input class="day-title-input" type="text" id="title-${i}" placeholder="今天的主題（例：大理古城漫遊）" oninput="markDirty()">
       </div>
+      <div class="wish-pool" id="wish-pool-${i}">
+        <div class="wish-pool-header">
+          <span class="wish-pool-title">🌟 團員許願池 <span class="wish-name-badge" id="wish-badge-${i}" style="display:none"></span></span>
+        </div>
+        <div class="wish-list" id="wish-list-${i}">
+          <div class="wish-empty">尚無許願，登入後可新增想去的景點 ✨</div>
+        </div>
+        <div class="wish-input-row" id="wish-input-row-${i}" style="display:none">
+          <input type="text" id="wish-input-${i}" placeholder="輸入想去的景點..." maxlength="50" onkeydown="if(event.key==='Enter')submitWish(${i})">
+          <button class="wish-submit" onclick="submitWish(${i})">許願 🌠</button>
+        </div>
+      </div>
       <div class="day-layout">
         <!-- LEFT: vertical timeline -->
         <div class="day-left">
@@ -911,6 +950,8 @@ function buildUI(oldData){
   if(currentTab!=='ws' && (currentTab>=DAYS.length || currentTab<0)) currentTab=0;
   switchTab(currentTab);
   renderWebsites();
+  renderAllWishes();
+  if(memberUnlocked) showWishInputs();
 }
 function updateHeaderDates(){
   const d=buildDays();
@@ -939,6 +980,92 @@ function switchTab(i){
 
 // ─── DIRTY ───
 function markDirty(){ dirty=true; }
+
+// ─── WISH POOL ───
+function getWishes(dayIdx){
+  try{ return JSON.parse(localStorage.getItem(`yunnan_wishes_${dayIdx}`)||'[]'); }catch{ return []; }
+}
+function saveWishes(dayIdx, list){
+  localStorage.setItem(`yunnan_wishes_${dayIdx}`, JSON.stringify(list));
+  markDirty();
+}
+function renderWishes(dayIdx){
+  const el = document.getElementById(`wish-list-${dayIdx}`);
+  if(!el) return;
+  const wishes = getWishes(dayIdx);
+  if(!wishes.length){
+    el.innerHTML = '<div class="wish-empty">尚無許願，登入後可新增想去的景點 ✨</div>';
+    return;
+  }
+  el.innerHTML = wishes.map((w,k)=>`
+    <div class="wish-item">
+      <span class="wish-who">${w.name||'團員'}</span>
+      <span class="wish-text">${w.text}</span>
+      ${memberUnlocked ? `<button class="wish-del" onclick="delWish(${dayIdx},${k})" title="刪除">✕</button>` : ''}
+    </div>`).join('');
+}
+function renderAllWishes(){
+  DAYS.forEach((_,i)=>renderWishes(i));
+}
+function submitWish(dayIdx){
+  const input = document.getElementById(`wish-input-${dayIdx}`);
+  if(!input) return;
+  const text = input.value.trim();
+  if(!text){ input.focus(); return; }
+  const wishes = getWishes(dayIdx);
+  const name = localStorage.getItem('yunnan_member_name') || '團員';
+  wishes.push({ text, name, time: Date.now() });
+  saveWishes(dayIdx, wishes);
+  renderWishes(dayIdx);
+  input.value = '';
+  input.focus();
+  toast('🌟 許願成功！');
+  // Sync to sheets
+  if(scriptUrl) syncWishesToSheets();
+}
+function delWish(dayIdx, k){
+  const wishes = getWishes(dayIdx);
+  wishes.splice(k,1);
+  saveWishes(dayIdx, wishes);
+  renderWishes(dayIdx);
+  if(scriptUrl) syncWishesToSheets();
+}
+function showWishInputs(){
+  // Show input row on all day panels + show name badge
+  DAYS.forEach((_,i)=>{
+    const row = document.getElementById(`wish-input-row-${i}`);
+    const badge = document.getElementById(`wish-badge-${i}`);
+    if(row) row.style.display='flex';
+    if(badge){
+      badge.textContent = localStorage.getItem('yunnan_member_name')||'團員';
+      badge.style.display='';
+    }
+  });
+}
+function hideWishInputs(){
+  DAYS.forEach((_,i)=>{
+    const row = document.getElementById(`wish-input-row-${i}`);
+    const badge = document.getElementById(`wish-badge-${i}`);
+    if(row) row.style.display='none';
+    if(badge) badge.style.display='none';
+  });
+}
+async function syncWishesToSheets(){
+  if(!scriptUrl) return;
+  const wishes = {};
+  DAYS.forEach((_,i)=>{ wishes[i]=getWishes(i); });
+  try{
+    await fetch(scriptUrl,{method:'POST',headers:{'Content-Type':'text/plain'},
+      body:JSON.stringify({action:'writeWishes',wishes})});
+  }catch(e){}
+}
+async function loadWishesFromSheets(result){
+  if(!result.wishes) return;
+  Object.entries(result.wishes).forEach(([i,list])=>{
+    if(Array.isArray(list)) localStorage.setItem(`yunnan_wishes_${i}`,JSON.stringify(list));
+  });
+  renderAllWishes();
+}
 
 // ─── WEBSITES ───
 function getWebsites(){
@@ -1133,6 +1260,7 @@ async function loadFromSheets(){
 
     // Always render websites last, after UI is fully built
     renderWebsites();
+    loadWishesFromSheets(result);
     setSyncStatus('✓ 已載入 '+nowTime(),'ok');
     toast('✅ 已載入 '+parsed.length+' 天資料');
   }catch(e){
@@ -1328,6 +1456,7 @@ function doPost(e) {
   try {
     const b = JSON.parse(e.postData.contents);
     if (b.action === 'write')    return writeData(b.rows, b.config, b.websites);
+    if (b.action === 'writeWishes') return writeWishes(b.wishes);
     if (b.action === 'parseAI') return proxyClaudeAI(b.apiKey, b.system, b.content);
     return ok({ error: '未知操作：' + b.action });
   } catch(err) {
@@ -1355,7 +1484,9 @@ function readData() {
       var wss = ss.getSheetByName('_websites');
       if (wss) websites = JSON.parse(wss.getRange(1,1).getValue() || 'null');
     } catch(e) {}
-    return ok({ rows: rows, config: config, websites: websites });
+    var wishes = null;
+    try { var wsh=ss.getSheetByName('_wishes'); if(wsh) wishes=JSON.parse(wsh.getRange(1,1).getValue()||'null'); } catch(e) {}
+    return ok({ rows: rows, config: config, websites: websites, wishes: wishes });
   } catch(err) {
     return ok({ error: 'readData 錯誤：' + err.message });
   }
@@ -1419,6 +1550,17 @@ function proxyClaudeAI(apiKey, system, content) {
   }
 }
 
+function writeWishes(wishes) {
+  try {
+    var ss = SpreadsheetApp.openById(SHEET_ID);
+    var ws = ss.getSheetByName('_wishes');
+    if (!ws) ws = ss.insertSheet('_wishes');
+    ws.getRange(1, 1).setValue(JSON.stringify(wishes));
+    return ok({ ok: true });
+  } catch(err) {
+    return ok({ error: 'writeWishes 錯誤：' + err.message });
+  }
+}
 function ok(obj) {
   return ContentService
     .createTextOutput(JSON.stringify(obj))
