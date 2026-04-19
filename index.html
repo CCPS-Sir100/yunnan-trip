@@ -13,9 +13,7 @@
 
   編輯密碼：CCcc7379403!
 -->
-
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
@@ -47,55 +45,55 @@ body{font-family:'Noto Serif TC',serif;background:linear-gradient(180deg,#f0f8ff
 
 /* HEADER */
 .site-header{background:linear-gradient(160deg,#1a4a6e 0%,#2272a8 45%,#3fa0d0 80%,#6dc8e8 100%);padding:1.6rem 2rem 0;position:relative;overflow:hidden;}
-.site-header::before{content:’’;position:absolute;inset:0;
-background:
-radial-gradient(ellipse at 30% 60%, rgba(255,220,100,0.18) 0%, transparent 55%),
-radial-gradient(ellipse at 85% 20%, rgba(255,255,255,0.08) 0%, transparent 40%);
+.site-header::before{content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 30% 60%, rgba(255,220,100,0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 20%, rgba(255,255,255,0.08) 0%, transparent 40%);
 }
 .header-erhai{position:absolute;right:0;top:0;bottom:0;width:420px;pointer-events:none;overflow:hidden;opacity:0.55;}
 .header-erhai svg{position:absolute;right:0;bottom:0;height:100%;width:auto;}
 .header-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1;}
 .header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;min-height:90px;}
 .header-title-area{flex:1;min-width:0;}
-.header-badge{font-family:‘Noto Sans TC’,sans-serif;font-size:0.7rem;letter-spacing:0.2em;color:#90d8f8;margin-bottom:0.35rem;}
-.header-title{font-family:‘Ma Shan Zheng’,cursive;font-size:clamp(2.2rem,5vw,4rem);color:#fff;line-height:1.1;text-shadow:2px 3px 12px rgba(0,0,0,0.4);}
-.header-title span{color:var(–gold-light);}
+.header-badge{font-family:'Noto Sans TC',sans-serif;font-size:0.7rem;letter-spacing:0.2em;color:#90d8f8;margin-bottom:0.35rem;}
+.header-title{font-family:'Ma Shan Zheng',cursive;font-size:clamp(2.2rem,5vw,4rem);color:#fff;line-height:1.1;text-shadow:2px 3px 12px rgba(0,0,0,0.4);}
+.header-title span{color:var(--gold-light);}
 .header-subtitle{font-size:0.88rem;color:rgba(255,255,255,0.65);margin-top:0.3rem;letter-spacing:0.05em;}
-.header-dates{font-family:‘Noto Sans TC’,sans-serif;font-size:0.78rem;color:rgba(255,255,255,0.55);margin-top:0.2rem;line-height:1.5;}
+.header-dates{font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;color:rgba(255,255,255,0.55);margin-top:0.2rem;line-height:1.5;}
 .header-right{display:flex;flex-direction:column;align-items:flex-end;gap:0.5rem;flex-shrink:0;}
 .header-mountain{opacity:0.1;font-size:4.5rem;line-height:1;color:#fff;user-select:none;}
 .header-admin-btns{display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:flex-end;}
-.btn-header{padding:0.38rem 0.95rem;border-radius:20px;font-family:‘Noto Sans TC’,sans-serif;font-size:0.76rem;cursor:pointer;transition:all 0.2s;border:1px solid;white-space:nowrap;}
+.btn-header{padding:0.38rem 0.95rem;border-radius:20px;font-family:'Noto Sans TC',sans-serif;font-size:0.76rem;cursor:pointer;transition:all 0.2s;border:1px solid;white-space:nowrap;}
 .btn-member{border-color:rgba(110,200,255,0.5);background:rgba(30,100,160,0.25);color:#90d0ff;}
 .btn-member:hover{background:rgba(30,100,160,0.4);}
 .btn-lock{border-color:rgba(255,255,255,0.3);background:transparent;color:rgba(255,255,255,0.7);}
 .btn-lock:hover{background:rgba(255,255,255,0.12);}
-.btn-unlock{border-color:var(–gold-light);background:rgba(201,150,42,0.2);color:var(–gold-light);}
+.btn-unlock{border-color:var(--gold-light);background:rgba(201,150,42,0.2);color:var(--gold-light);}
 .btn-unlock:hover{background:rgba(201,150,42,0.35);}
 .btn-trip-settings{border-color:rgba(110,255,160,0.5);background:rgba(58,125,94,0.2);color:#6effa0;}
 .btn-trip-settings:hover{background:rgba(58,125,94,0.35);}
 
 /* SETTINGS BAR */
 .settings-bar{display:flex;align-items:center;gap:0.7rem;margin-top:1.1rem;padding:0.75rem 1.1rem;background:rgba(0,0,0,0.2);border-radius:8px 8px 0 0;flex-wrap:wrap;}
-.settings-bar label{font-family:‘Noto Sans TC’,sans-serif;font-size:0.76rem;color:rgba(255,255,255,0.65);white-space:nowrap;}
-.settings-bar input{flex:1;min-width:160px;padding:0.38rem 0.65rem;border-radius:5px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:#fff;font-family:‘Noto Sans TC’,sans-serif;font-size:0.78rem;}
+.settings-bar label{font-family:'Noto Sans TC',sans-serif;font-size:0.76rem;color:rgba(255,255,255,0.65);white-space:nowrap;}
+.settings-bar input{flex:1;min-width:160px;padding:0.38rem 0.65rem;border-radius:5px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:#fff;font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;}
 .settings-bar input::placeholder{color:rgba(255,255,255,0.3);}
-.settings-bar input:focus{outline:none;border-color:var(–gold-light);}
-.btn-connect{padding:0.38rem 0.9rem;border-radius:5px;border:1px solid var(–gold-light);background:transparent;color:var(–gold-light);font-family:‘Noto Sans TC’,sans-serif;font-size:0.76rem;cursor:pointer;white-space:nowrap;transition:all 0.2s;}
-.btn-connect:hover{background:var(–gold-light);color:#1a3a2a;}
-.sync-status{font-family:‘Noto Sans TC’,sans-serif;font-size:0.7rem;color:rgba(255,255,255,0.45);white-space:nowrap;}
+.settings-bar input:focus{outline:none;border-color:var(--gold-light);}
+.btn-connect{padding:0.38rem 0.9rem;border-radius:5px;border:1px solid var(--gold-light);background:transparent;color:var(--gold-light);font-family:'Noto Sans TC',sans-serif;font-size:0.76rem;cursor:pointer;white-space:nowrap;transition:all 0.2s;}
+.btn-connect:hover{background:var(--gold-light);color:#1a3a2a;}
+.sync-status{font-family:'Noto Sans TC',sans-serif;font-size:0.7rem;color:rgba(255,255,255,0.45);white-space:nowrap;}
 .sync-status.ok{color:#6effa0;} .sync-status.err{color:#ff8080;}
 
 /* TABS */
 .tab-nav-wrap{background:linear-gradient(90deg,#e8f4fc,#f0f8ff);border-bottom:2px solid #b8d8f0;position:sticky;top:0;z-index:50;}
 .tab-nav{max-width:1100px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none;padding:0 1rem;}
 .tab-nav::-webkit-scrollbar{display:none;}
-.tab-btn{flex-shrink:0;padding:0.5rem 0.9rem;border:none;background:transparent;font-family:‘Noto Serif TC’,serif;font-size:0.78rem;color:#4a7a9a;cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;white-space:nowrap;}
+.tab-btn{flex-shrink:0;padding:0.5rem 0.9rem;border:none;background:transparent;font-family:'Noto Serif TC',serif;font-size:0.78rem;color:#4a7a9a;cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;white-space:nowrap;}
 .tab-btn:hover{color:#f05a28;}
 .tab-btn.active{color:#f05a28;border-bottom-color:#f05a28;font-weight:600;}
-.tab-btn .day-num{display:block;font-size:2rem;font-weight:700;font-family:‘Ma Shan Zheng’,cursive;line-height:1.1;}
+.tab-btn .day-num{display:block;font-size:2rem;font-weight:700;font-family:'Ma Shan Zheng',cursive;line-height:1.1;}
 .tab-btn .day-date{display:block;font-size:0.62rem;opacity:0.75;letter-spacing:0.02em;}
-.tab-btn .day-week{display:block;font-size:0.6rem;opacity:0.6;font-family:‘Noto Sans TC’,sans-serif;}
+.tab-btn .day-week{display:block;font-size:0.6rem;opacity:0.6;font-family:'Noto Sans TC',sans-serif;}
 
 /* MAIN */
 .main{max-width:1100px;margin:0 auto;padding:1.4rem 1.4rem 6rem;}
@@ -103,19 +101,19 @@ radial-gradient(ellipse at 85% 20%, rgba(255,255,255,0.08) 0%, transparent 40%);
 .day-panel.active{display:block;animation:fadeIn 0.3s ease;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 
-.day-header{display:flex;align-items:center;gap:1.1rem;margin-bottom:1.1rem;padding-bottom:0.9rem;border-bottom:2px solid var(–parchment-dark);}
-.day-num-big{font-family:‘Ma Shan Zheng’,cursive;font-size:4rem;color:#f05a28;line-height:1;flex-shrink:0;text-shadow:2px 3px 0 rgba(196,98,45,0.15);}
-.day-info h2{font-family:‘Noto Serif TC’,serif;font-size:1.2rem;font-weight:700;color:var(–ink);}
-.day-info .day-date-full{font-size:0.82rem;color:var(–text-muted);margin-top:0.15rem;}
-.day-title-input{flex:1;padding:0.45rem 0.75rem;border:1px dashed var(–border);border-radius:6px;background:transparent;font-family:‘Noto Serif TC’,serif;font-size:0.95rem;color:var(–ink);transition:border-color 0.2s;}
-.day-title-input:focus{outline:none;border-color:var(–terracotta);border-style:solid;}
-.day-title-input::placeholder{color:var(–border);}
+.day-header{display:flex;align-items:center;gap:1.1rem;margin-bottom:1.1rem;padding-bottom:0.9rem;border-bottom:2px solid var(--parchment-dark);}
+.day-num-big{font-family:'Ma Shan Zheng',cursive;font-size:4rem;color:#f05a28;line-height:1;flex-shrink:0;text-shadow:2px 3px 0 rgba(196,98,45,0.15);}
+.day-info h2{font-family:'Noto Serif TC',serif;font-size:1.2rem;font-weight:700;color:var(--ink);}
+.day-info .day-date-full{font-size:0.82rem;color:var(--text-muted);margin-top:0.15rem;}
+.day-title-input{flex:1;padding:0.45rem 0.75rem;border:1px dashed var(--border);border-radius:6px;background:transparent;font-family:'Noto Serif TC',serif;font-size:0.95rem;color:var(--ink);transition:border-color 0.2s;}
+.day-title-input:focus{outline:none;border-color:var(--terracotta);border-style:solid;}
+.day-title-input::placeholder{color:var(--border);}
 
 /* VIEW MODE */
 body.view-mode .day-title-input{pointer-events:none;border-color:transparent;background:transparent;}
 body.view-mode .info-card textarea{display:none;}
 body.view-mode .info-card .card-view{display:block;}
-.info-card .card-view{display:none;padding:0.6rem 0.8rem;font-family:‘Noto Sans TC’,sans-serif;font-size:0.82rem;color:var(–text);line-height:1.8;min-height:2.5rem;white-space:pre-wrap;word-break:break-word;}
+.info-card .card-view{display:none;padding:0.6rem 0.8rem;font-family:'Noto Sans TC',sans-serif;font-size:0.82rem;color:var(--text);line-height:1.8;min-height:2.5rem;white-space:pre-wrap;word-break:break-word;}
 .info-card .card-view:empty::before{content:attr(data-placeholder);color:#ccc;}
 body.view-mode .timeline-input{pointer-events:none;}
 body.view-mode .tl-add-btn{display:none;}
@@ -123,27 +121,27 @@ body.view-mode .tl-del-btn{display:none;}
 body.view-mode .edit-only{display:none!important;}
 
 /* TIMELINE */
-.timeline-section{background:#fff;border-radius:12px;border:1px solid var(–border);padding:0.95rem 1.1rem 1.1rem;margin-bottom:1.1rem;box-shadow:0 2px 8px var(–shadow);}
+.timeline-section{background:#fff;border-radius:12px;border:1px solid var(--border);padding:0.95rem 1.1rem 1.1rem;margin-bottom:1.1rem;box-shadow:0 2px 8px var(--shadow);}
 .timeline-section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;}
 /* left panel tl header */
 .tl-vertical-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.6rem;}
-.tl-title{font-family:‘Noto Serif TC’,serif;font-size:0.86rem;font-weight:600;color:var(–ink);}
-.tl-add-btn{padding:0.28rem 0.85rem;border-radius:20px;border:1px solid var(–jade);background:transparent;color:var(–jade);font-size:0.72rem;font-family:‘Noto Sans TC’,sans-serif;cursor:pointer;transition:all 0.2s;}
-.tl-add-btn:hover{background:var(–jade);color:#fff;}
+.tl-title{font-family:'Noto Serif TC',serif;font-size:0.86rem;font-weight:600;color:var(--ink);}
+.tl-add-btn{padding:0.28rem 0.85rem;border-radius:20px;border:1px solid var(--jade);background:transparent;color:var(--jade);font-size:0.72rem;font-family:'Noto Sans TC',sans-serif;cursor:pointer;transition:all 0.2s;}
+.tl-add-btn:hover{background:var(--jade);color:#fff;}
 
-.tl-axis{display:flex;justify-content:space-between;font-family:‘Noto Sans TC’,sans-serif;font-size:0.58rem;color:var(–text-muted);margin-bottom:3px;user-select:none;}
+.tl-axis{display:flex;justify-content:space-between;font-family:'Noto Sans TC',sans-serif;font-size:0.58rem;color:var(--text-muted);margin-bottom:3px;user-select:none;}
 .tl-bar{display:none;} /* horizontal bar hidden — using vertical layout */
 .tl-bar-v{position:relative;width:32px;flex-shrink:0;background:linear-gradient(180deg,#eaf6ff,#d4ecf8);border-radius:8px;border:1px solid #a8d4f0;min-height:320px;}
 .tl-bar-v .tl-grid-line-h{position:absolute;left:0;right:0;height:1px;background:rgba(0,100,180,0.08);}
 .tl-segment-v{position:absolute;left:3px;right:3px;border-radius:4px;cursor:default;overflow:hidden;min-height:4px;}
 .tl-segment-v:hover{opacity:0.82;}
-.tl-time-label{position:absolute;right:calc(100% + 4px);font-family:‘Noto Sans TC’,sans-serif;font-size:0.55rem;color:#7a9ab8;white-space:nowrap;line-height:1;transform:translateY(-50%);}
+.tl-time-label{position:absolute;right:calc(100% + 4px);font-family:'Noto Sans TC',sans-serif;font-size:0.55rem;color:#7a9ab8;white-space:nowrap;line-height:1;transform:translateY(-50%);}
 .tl-seg-label{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:0.58rem;font-weight:600;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.4);writing-mode:vertical-rl;white-space:nowrap;overflow:hidden;max-height:90%;}
 .tl-axis{display:none;} /* hide horizontal axis */
 .tl-v-wrap{display:flex;gap:0.6rem;padding:0.5rem 0.3rem 0.5rem 2.2rem;min-height:320px;}
 .tl-v-entries{flex:1;display:flex;flex-direction:column;gap:0.4rem;justify-content:flex-start;padding-top:0.2rem;}
 .tl-grid-line{position:absolute;top:0;bottom:0;width:1px;background:rgba(0,0,0,0.06);}
-.tl-segment{position:absolute;top:5px;bottom:5px;border-radius:4px;cursor:default;display:flex;align-items:center;justify-content:center;overflow:hidden;white-space:nowrap;font-family:‘Noto Sans TC’,sans-serif;font-size:0.65rem;font-weight:500;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.35);transition:opacity 0.15s;min-width:4px;}
+.tl-segment{position:absolute;top:5px;bottom:5px;border-radius:4px;cursor:default;display:flex;align-items:center;justify-content:center;overflow:hidden;white-space:nowrap;font-family:'Noto Sans TC',sans-serif;font-size:0.65rem;font-weight:500;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.35);transition:opacity 0.15s;min-width:4px;}
 .tl-segment:hover{opacity:0.82;}
 .tl-c0{background:linear-gradient(90deg,#ff6b6b,#ee5a24);}
 .tl-c1{background:linear-gradient(90deg,#48dbfb,#0abde3);}
@@ -158,35 +156,35 @@ body.view-mode .edit-only{display:none!important;}
 
 .tl-entries{display:flex;flex-direction:column;gap:0.45rem;margin-top:0.65rem;}
 .tl-entry-header{display:grid;grid-template-columns:72px 72px 1fr 26px;gap:0.4rem;}
-.tl-entry-header span{font-family:‘Noto Sans TC’,sans-serif;font-size:0.66rem;color:var(–text-muted);padding:0 0.15rem;}
+.tl-entry-header span{font-family:'Noto Sans TC',sans-serif;font-size:0.66rem;color:var(--text-muted);padding:0 0.15rem;}
 .tl-entry{display:grid;grid-template-columns:72px 72px 1fr 26px;gap:0.4rem;align-items:center;}
-.timeline-input{padding:0.28rem 0.45rem;border:1px solid var(–border);border-radius:5px;font-family:‘Noto Sans TC’,sans-serif;font-size:0.78rem;color:var(–ink);background:var(–parchment);width:100%;}
-.timeline-input:focus{outline:none;border-color:var(–jade);background:#fff;}
+.timeline-input{padding:0.28rem 0.45rem;border:1px solid var(--border);border-radius:5px;font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;color:var(--ink);background:var(--parchment);width:100%;}
+.timeline-input:focus{outline:none;border-color:var(--jade);background:#fff;}
 .tl-del-btn{width:22px;height:22px;border-radius:50%;border:1px solid #ddd;background:transparent;color:#bbb;cursor:pointer;font-size:0.7rem;display:flex;align-items:center;justify-content:center;padding:0;transition:all 0.2s;flex-shrink:0;}
-.tl-del-btn:hover{border-color:var(–crimson);color:var(–crimson);}
-.tl-empty-msg{font-family:‘Noto Sans TC’,sans-serif;font-size:0.76rem;color:var(–border);padding:0.2rem 0;}
+.tl-del-btn:hover{border-color:var(--crimson);color:var(--crimson);}
+.tl-empty-msg{font-family:'Noto Sans TC',sans-serif;font-size:0.76rem;color:var(--border);padding:0.2rem 0;}
 /* Departure block */
-.departure-block{background:#fff;border-radius:12px;border:1px solid var(–border);padding:0.9rem 1.1rem;margin-bottom:1.1rem;box-shadow:0 2px 8px var(–shadow);display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;}
-.departure-block .dep-label{font-family:‘Noto Serif TC’,serif;font-size:0.88rem;font-weight:600;color:var(–ink);display:flex;align-items:center;gap:0.5rem;white-space:nowrap;}
+.departure-block{background:#fff;border-radius:12px;border:1px solid var(--border);padding:0.9rem 1.1rem;margin-bottom:1.1rem;box-shadow:0 2px 8px var(--shadow);display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;}
+.departure-block .dep-label{font-family:'Noto Serif TC',serif;font-size:0.88rem;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:0.5rem;white-space:nowrap;}
 .departure-block .dep-icon{width:32px;height:32px;border-radius:7px;background:#e8f5e9;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
 .dep-time-wrap{display:flex;align-items:center;gap:0.6rem;flex:1;min-width:160px;}
-.dep-time-input{padding:0.4rem 0.7rem;border:1.5px solid var(–border);border-radius:8px;font-family:‘Ma Shan Zheng’,cursive;font-size:1.5rem;color:var(–terracotta);width:100px;text-align:center;background:var(–parchment);transition:border-color 0.2s;}
-.dep-time-input:focus{outline:none;border-color:var(–terracotta);background:#fff;}
-.dep-time-input::placeholder{color:var(–border);font-size:1rem;}
+.dep-time-input{padding:0.4rem 0.7rem;border:1.5px solid var(--border);border-radius:8px;font-family:'Ma Shan Zheng',cursive;font-size:1.5rem;color:var(--terracotta);width:100px;text-align:center;background:var(--parchment);transition:border-color 0.2s;}
+.dep-time-input:focus{outline:none;border-color:var(--terracotta);background:#fff;}
+.dep-time-input::placeholder{color:var(--border);font-size:1rem;}
 body.view-mode .dep-time-input{pointer-events:none;border-color:transparent;background:transparent;}
-.dep-note{font-family:‘Noto Sans TC’,sans-serif;font-size:0.78rem;color:var(–text-muted);}
+.dep-note{font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;color:var(--text-muted);}
 /* Departure marker on timeline bar */
 .tl-dep-marker{position:absolute;top:0;bottom:0;width:3px;background:#e74c3c;z-index:5;cursor:default;}
-.tl-dep-marker::before{content:‘出門’;position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-family:‘Noto Sans TC’,sans-serif;font-size:0.6rem;color:#e74c3c;white-space:nowrap;font-weight:600;}
-.tl-dep-marker::after{content:‘▼’;position:absolute;top:0;left:50%;transform:translateX(-50%);font-size:0.55rem;color:#e74c3c;}
+.tl-dep-marker::before{content:'出門';position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-family:'Noto Sans TC',sans-serif;font-size:0.6rem;color:#e74c3c;white-space:nowrap;font-weight:600;}
+.tl-dep-marker::after{content:'▼';position:absolute;top:0;left:50%;transform:translateX(-50%);font-size:0.55rem;color:#e74c3c;}
 
 /* NEW TWO-COLUMN LAYOUT */
 .day-layout{display:grid;grid-template-columns:300px 1fr;gap:1.2rem;align-items:start;}
 @media(max-width:900px){
-.day-layout{grid-template-columns:1fr;}
-.day-left{min-height:unset;}
-.tl-v-wrap{min-height:220px;}
-.tl-bar-v{min-height:220px;}
+  .day-layout{grid-template-columns:1fr;}
+  .day-left{min-height:unset;}
+  .tl-v-wrap{min-height:220px;}
+  .tl-bar-v{min-height:220px;}
 }
 .day-left{background:linear-gradient(180deg,#f0f8ff,#e8f4fc);border-radius:14px;border:1px solid #b8d8f0;padding:1rem;box-shadow:0 3px 16px rgba(0,100,180,0.1);}
 .tl-vertical-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.7rem;}
@@ -194,17 +192,17 @@ body.view-mode .dep-time-input{pointer-events:none;border-color:transparent;back
 .info-row-3{display:grid;grid-template-columns:repeat(3,1fr);gap:0.8rem;}
 .info-row-2{display:grid;grid-template-columns:repeat(2,1fr);gap:0.8rem;}
 @media(max-width:600px){.info-row-3{grid-template-columns:1fr;}.info-row-2{grid-template-columns:1fr;}}
-.info-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 10px var(–shadow);border:1px solid var(–border);}
-.info-card-head{padding:0.45rem 0.8rem;font-family:‘Noto Serif TC’,serif;font-size:0.8rem;font-weight:700;color:#fff;letter-spacing:0.03em;}
-.info-card textarea{width:100%;border:none;background:#fafafa;padding:0.6rem 0.8rem;font-family:‘Noto Sans TC’,sans-serif;font-size:0.82rem;color:var(–text);resize:vertical;min-height:80px;line-height:1.7;box-sizing:border-box;}
+.info-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 10px var(--shadow);border:1px solid var(--border);}
+.info-card-head{padding:0.45rem 0.8rem;font-family:'Noto Serif TC',serif;font-size:0.8rem;font-weight:700;color:#fff;letter-spacing:0.03em;}
+.info-card textarea{width:100%;border:none;background:#fafafa;padding:0.6rem 0.8rem;font-family:'Noto Sans TC',sans-serif;font-size:0.82rem;color:var(--text);resize:vertical;min-height:80px;line-height:1.7;box-sizing:border-box;}
 .info-card textarea:focus{outline:none;background:#fff;}
 .info-card textarea::placeholder{color:#ccc;}
 .meal-card textarea{min-height:70px;}
 .sights-card textarea{min-height:90px;}
 
 /* ACTIONS BAR */
-.actions-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(255,248,240,0.97);backdrop-filter:blur(10px);border-top:2px solid var(–border);padding:0.65rem 2rem;display:flex;align-items:center;justify-content:center;gap:0.7rem;z-index:100;flex-wrap:wrap;}
-.btn{padding:0.55rem 1.3rem;border-radius:8px;font-family:‘Noto Serif TC’,serif;font-size:0.86rem;cursor:pointer;transition:all 0.2s;border:2px solid transparent;display:flex;align-items:center;gap:0.4rem;}
+.actions-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(255,248,240,0.97);backdrop-filter:blur(10px);border-top:2px solid var(--border);padding:0.65rem 2rem;display:flex;align-items:center;justify-content:center;gap:0.7rem;z-index:100;flex-wrap:wrap;}
+.btn{padding:0.55rem 1.3rem;border-radius:8px;font-family:'Noto Serif TC',serif;font-size:0.86rem;cursor:pointer;transition:all 0.2s;border:2px solid transparent;display:flex;align-items:center;gap:0.4rem;}
 .btn-jade{background:#00b87a;color:#fff;border-color:#00b87a;box-shadow:0 3px 12px rgba(0,184,122,0.35);}
 .btn-jade:hover{background:#009960;transform:translateY(-1px);}
 .btn-gold{background:#ffb300;color:#fff;border-color:#ffb300;box-shadow:0 3px 12px rgba(255,179,0,0.35);}
@@ -215,110 +213,111 @@ body.view-mode .dep-time-input{pointer-events:none;border-color:transparent;back
 .btn-sky:hover{background:#1a5276;transform:translateY(-1px);}
 /* FLIGHT MODAL */
 .flight-modal{max-width:600px!important;}
-.flight-tabs{display:flex;gap:0;margin-bottom:1rem;border-bottom:2px solid var(–border);}
-.flight-tab{padding:0.5rem 1.2rem;border:none;background:transparent;font-family:‘Noto Sans TC’,sans-serif;font-size:0.85rem;color:var(–text-muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all 0.2s;}
-.flight-tab.active{color:var(–sky,#2471a3);border-bottom-color:var(–sky,#2471a3);font-weight:600;}
-.flight-drop-zone{border:2px dashed var(–border);border-radius:10px;padding:2rem 1rem;text-align:center;cursor:pointer;transition:all 0.2s;background:var(–parchment);margin-bottom:0.8rem;}
-.flight-drop-zone:hover,.flight-drop-zone.drag-over{border-color:var(–jade);background:#f0f9f5;}
+.flight-tabs{display:flex;gap:0;margin-bottom:1rem;border-bottom:2px solid var(--border);}
+.flight-tab{padding:0.5rem 1.2rem;border:none;background:transparent;font-family:'Noto Sans TC',sans-serif;font-size:0.85rem;color:var(--text-muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all 0.2s;}
+.flight-tab.active{color:var(--sky,#2471a3);border-bottom-color:var(--sky,#2471a3);font-weight:600;}
+.flight-drop-zone{border:2px dashed var(--border);border-radius:10px;padding:2rem 1rem;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--parchment);margin-bottom:0.8rem;}
+.flight-drop-zone:hover,.flight-drop-zone.drag-over{border-color:var(--jade);background:#f0f9f5;}
 .flight-drop-zone .dz-icon{font-size:2rem;display:block;margin-bottom:0.5rem;}
-.flight-drop-zone p{font-family:‘Noto Sans TC’,sans-serif;font-size:0.83rem;color:var(–text-muted);}
-.flight-textarea{width:100%;height:140px;padding:0.7rem;border:1.5px solid var(–border);border-radius:8px;font-family:‘Noto Sans TC’,sans-serif;font-size:0.82rem;color:var(–text);background:var(–parchment);resize:vertical;line-height:1.6;margin-bottom:0.8rem;}
-.flight-textarea:focus{outline:none;border-color:var(–jade);background:#fff;}
+.flight-drop-zone p{font-family:'Noto Sans TC',sans-serif;font-size:0.83rem;color:var(--text-muted);}
+.flight-textarea{width:100%;height:140px;padding:0.7rem;border:1.5px solid var(--border);border-radius:8px;font-family:'Noto Sans TC',sans-serif;font-size:0.82rem;color:var(--text);background:var(--parchment);resize:vertical;line-height:1.6;margin-bottom:0.8rem;}
+.flight-textarea:focus{outline:none;border-color:var(--jade);background:#fff;}
 .flight-result{background:#f0f9f5;border:1px solid #b2dfcc;border-radius:8px;padding:0.9rem;margin-bottom:0.8rem;display:none;}
-.flight-result h4{font-family:‘Noto Serif TC’,serif;font-size:0.9rem;font-weight:700;color:var(–jade);margin-bottom:0.6rem;}
-.flight-item{display:flex;align-items:flex-start;gap:0.6rem;padding:0.5rem 0;border-bottom:1px solid #d4eedf;font-family:‘Noto Sans TC’,sans-serif;font-size:0.82rem;}
+.flight-result h4{font-family:'Noto Serif TC',serif;font-size:0.9rem;font-weight:700;color:var(--jade);margin-bottom:0.6rem;}
+.flight-item{display:flex;align-items:flex-start;gap:0.6rem;padding:0.5rem 0;border-bottom:1px solid #d4eedf;font-family:'Noto Sans TC',sans-serif;font-size:0.82rem;}
 .flight-item:last-child{border-bottom:none;}
-.flight-item-dot{width:10px;height:10px;border-radius:50%;background:var(–jade);flex-shrink:0;margin-top:3px;}
+.flight-item-dot{width:10px;height:10px;border-radius:50%;background:var(--jade);flex-shrink:0;margin-top:3px;}
 .flight-item-body{flex:1;}
-.flight-item-body strong{display:block;color:var(–ink);margin-bottom:2px;}
-.flight-item-body span{color:var(–text-muted);}
-.flight-item-warn{color:var(–crimson)!important;}
-.flight-loading{text-align:center;padding:1.5rem;font-family:‘Noto Sans TC’,sans-serif;font-size:0.85rem;color:var(–text-muted);display:none;}
+.flight-item-body strong{display:block;color:var(--ink);margin-bottom:2px;}
+.flight-item-body span{color:var(--text-muted);}
+.flight-item-warn{color:var(--crimson)!important;}
+.flight-loading{text-align:center;padding:1.5rem;font-family:'Noto Sans TC',sans-serif;font-size:0.85rem;color:var(--text-muted);display:none;}
 .flight-loading .spin{display:inline-block;animation:spin 1s linear infinite;margin-right:0.5rem;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
+
 /* TOAST */
-.toast{position:fixed;top:1.1rem;right:1.4rem;background:var(–jade);color:#fff;padding:0.55rem 1rem;border-radius:8px;font-family:‘Noto Sans TC’,sans-serif;font-size:0.81rem;opacity:0;transform:translateY(-10px);transition:all 0.3s;z-index:9999;pointer-events:none;}
+.toast{position:fixed;top:1.1rem;right:1.4rem;background:var(--jade);color:#fff;padding:0.55rem 1rem;border-radius:8px;font-family:'Noto Sans TC',sans-serif;font-size:0.81rem;opacity:0;transform:translateY(-10px);transition:all 0.3s;z-index:9999;pointer-events:none;}
 .toast.show{opacity:1;transform:translateY(0);}
-.toast.err{background:var(–crimson);}
+.toast.err{background:var(--crimson);}
 
 /* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9990;display:flex;align-items:center;justify-content:center;padding:1rem;}
-.modal-box{background:#fff;border-radius:14px;padding:1.8rem;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.3);font-family:‘Noto Serif TC’,serif;}
-.modal-box h3{font-size:1.15rem;font-weight:700;margin-bottom:1.1rem;color:var(–ink);}
-.modal-field-label{font-family:‘Noto Sans TC’,sans-serif;font-size:0.8rem;color:var(–text-muted);display:block;margin-bottom:0.28rem;}
-.modal-input{width:100%;padding:0.55rem 0.85rem;border:1.5px solid var(–border);border-radius:7px;font-family:‘Noto Sans TC’,sans-serif;font-size:0.88rem;color:var(–ink);background:var(–parchment);margin-bottom:0.75rem;}
-.modal-input:focus{outline:none;border-color:var(–terracotta);background:#fff;}
-.modal-err{color:var(–crimson);font-family:‘Noto Sans TC’,sans-serif;font-size:0.79rem;margin-top:-0.4rem;margin-bottom:0.5rem;min-height:1.1em;}
+.modal-box{background:#fff;border-radius:14px;padding:1.8rem;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.3);font-family:'Noto Serif TC',serif;}
+.modal-box h3{font-size:1.15rem;font-weight:700;margin-bottom:1.1rem;color:var(--ink);}
+.modal-field-label{font-family:'Noto Sans TC',sans-serif;font-size:0.8rem;color:var(--text-muted);display:block;margin-bottom:0.28rem;}
+.modal-input{width:100%;padding:0.55rem 0.85rem;border:1.5px solid var(--border);border-radius:7px;font-family:'Noto Sans TC',sans-serif;font-size:0.88rem;color:var(--ink);background:var(--parchment);margin-bottom:0.75rem;}
+.modal-input:focus{outline:none;border-color:var(--terracotta);background:#fff;}
+.modal-err{color:var(--crimson);font-family:'Noto Sans TC',sans-serif;font-size:0.79rem;margin-top:-0.4rem;margin-bottom:0.5rem;min-height:1.1em;}
 .modal-btns{display:flex;gap:0.6rem;margin-top:0.9rem;justify-content:flex-end;}
-.modal-btns button{padding:0.5rem 1.3rem;border-radius:7px;font-family:‘Noto Serif TC’,serif;font-size:0.88rem;cursor:pointer;border:2px solid transparent;transition:all 0.18s;}
-.modal-confirm{background:var(–terracotta);color:#fff;border-color:var(–terracotta);}
+.modal-btns button{padding:0.5rem 1.3rem;border-radius:7px;font-family:'Noto Serif TC',serif;font-size:0.88rem;cursor:pointer;border:2px solid transparent;transition:all 0.18s;}
+.modal-confirm{background:var(--terracotta);color:#fff;border-color:var(--terracotta);}
 .modal-confirm:hover{background:#a84f22;}
-.modal-cancel{background:transparent;color:var(–text-muted);border-color:var(–border);}
-.modal-cancel:hover{border-color:var(–text-muted);}
-.trip-preview{font-family:‘Noto Sans TC’,sans-serif;font-size:0.78rem;color:var(–jade);margin-bottom:0.4rem;margin-top:-0.3rem;min-height:1.2em;}
-.trip-warn{font-family:‘Noto Sans TC’,sans-serif;font-size:0.78rem;color:var(–crimson);background:#fff5f5;border-radius:6px;padding:0.5rem 0.7rem;margin-bottom:0.5rem;}
+.modal-cancel{background:transparent;color:var(--text-muted);border-color:var(--border);}
+.modal-cancel:hover{border-color:var(--text-muted);}
+.trip-preview{font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;color:var(--jade);margin-bottom:0.4rem;margin-top:-0.3rem;min-height:1.2em;}
+.trip-warn{font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;color:var(--crimson);background:#fff5f5;border-radius:6px;padding:0.5rem 0.7rem;margin-bottom:0.5rem;}
 
 /* WEBSITES PANEL */
 .websites-panel{display:none;}
 .websites-panel.active{display:block;animation:fadeIn 0.3s ease;}
-.websites-section{background:#fff;border-radius:12px;border:1px solid var(–border);padding:1.2rem;box-shadow:0 2px 8px var(–shadow);margin-bottom:1rem;}
-.websites-section h3{font-family:‘Noto Serif TC’,serif;font-size:1rem;font-weight:700;color:var(–ink);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;}
+.websites-section{background:#fff;border-radius:12px;border:1px solid var(--border);padding:1.2rem;box-shadow:0 2px 8px var(--shadow);margin-bottom:1rem;}
+.websites-section h3{font-family:'Noto Serif TC',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;}
 .website-list{display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1rem;}
 .website-item{display:flex;align-items:center;gap:0.6rem;}
-.website-link{flex:1;display:flex;align-items:center;gap:0.6rem;padding:0.6rem 0.9rem;background:var(–parchment);border-radius:8px;border:1px solid var(–border);text-decoration:none;color:var(–ink);font-family:‘Noto Sans TC’,sans-serif;font-size:0.85rem;transition:all 0.2s;overflow:hidden;}
-.website-link:hover{background:var(–jade);color:#fff;border-color:var(–jade);transform:translateX(3px);}
+.website-link{flex:1;display:flex;align-items:center;gap:0.6rem;padding:0.6rem 0.9rem;background:var(--parchment);border-radius:8px;border:1px solid var(--border);text-decoration:none;color:var(--ink);font-family:'Noto Sans TC',sans-serif;font-size:0.85rem;transition:all 0.2s;overflow:hidden;}
+.website-link:hover{background:var(--jade);color:#fff;border-color:var(--jade);transform:translateX(3px);}
 .website-link .ws-icon{font-size:1.1rem;flex-shrink:0;}
 .website-link .ws-info{flex:1;overflow:hidden;}
 .website-link .ws-name{font-weight:600;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .website-link .ws-url{font-size:0.72rem;opacity:0.6;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .ws-del-btn{width:26px;height:26px;border-radius:50%;border:1px solid #ddd;background:transparent;color:#bbb;cursor:pointer;font-size:0.75rem;flex-shrink:0;transition:all 0.2s;display:flex;align-items:center;justify-content:center;padding:0;}
-.ws-del-btn:hover{border-color:var(–crimson);color:var(–crimson);}
-.ws-add-form{display:none;background:var(–parchment);border-radius:10px;padding:1rem;border:1px dashed var(–border);margin-top:0.5rem;}
+.ws-del-btn:hover{border-color:var(--crimson);color:var(--crimson);}
+.ws-add-form{display:none;background:var(--parchment);border-radius:10px;padding:1rem;border:1px dashed var(--border);margin-top:0.5rem;}
 .ws-add-form.open{display:block;}
-.ws-add-form input{width:100%;padding:0.5rem 0.75rem;border:1.5px solid var(–border);border-radius:7px;font-family:‘Noto Sans TC’,sans-serif;font-size:0.85rem;color:var(–ink);background:#fff;margin-bottom:0.5rem;}
-.ws-add-form input:focus{outline:none;border-color:var(–jade);}
+.ws-add-form input{width:100%;padding:0.5rem 0.75rem;border:1.5px solid var(--border);border-radius:7px;font-family:'Noto Sans TC',sans-serif;font-size:0.85rem;color:var(--ink);background:#fff;margin-bottom:0.5rem;}
+.ws-add-form input:focus{outline:none;border-color:var(--jade);}
 .ws-form-btns{display:flex;gap:0.5rem;justify-content:flex-end;}
-.ws-form-btns button{padding:0.45rem 1.1rem;border-radius:7px;font-family:‘Noto Serif TC’,serif;font-size:0.85rem;cursor:pointer;border:2px solid transparent;transition:all 0.18s;}
-.ws-btn-add-open{padding:0.35rem 1rem;border-radius:20px;border:1px solid var(–jade);background:transparent;color:var(–jade);font-size:0.75rem;font-family:‘Noto Sans TC’,sans-serif;cursor:pointer;transition:all 0.2s;}
-.ws-btn-add-open:hover{background:var(–jade);color:#fff;}
+.ws-form-btns button{padding:0.45rem 1.1rem;border-radius:7px;font-family:'Noto Serif TC',serif;font-size:0.85rem;cursor:pointer;border:2px solid transparent;transition:all 0.18s;}
+.ws-btn-add-open{padding:0.35rem 1rem;border-radius:20px;border:1px solid var(--jade);background:transparent;color:var(--jade);font-size:0.75rem;font-family:'Noto Sans TC',sans-serif;cursor:pointer;transition:all 0.2s;}
+.ws-btn-add-open:hover{background:var(--jade);color:#fff;}
 body.view-mode .ws-del-btn{display:none;}
 body.view-mode .ws-btn-add-open{display:none;}
 body.view-mode .ws-add-form{display:none!important;}
-.ws-empty{font-family:‘Noto Sans TC’,sans-serif;font-size:0.8rem;color:var(–border);padding:0.5rem 0;}
+.ws-empty{font-family:'Noto Sans TC',sans-serif;font-size:0.8rem;color:var(--border);padding:0.5rem 0;}
 
 /* PWA / MOBILE */
 @media(max-width:480px){
-.main{padding:0.8rem 0.75rem 6rem;}
-/* Header */
-.site-header{padding:calc(1rem + env(safe-area-inset-top)) 1rem 0;}
-.header-title{font-size:2.4rem!important;}
-.header-dates{font-size:0.72rem;}
-.header-erhai{width:220px;opacity:0.4;}
-.header-admin-btns{gap:0.35rem;}
-.btn-header{padding:0.3rem 0.7rem;font-size:0.7rem;}
-/* Day header */
-.day-header{flex-wrap:wrap;gap:0.6rem;margin-bottom:0.8rem;}
-.day-num-big{font-size:2.8rem;}
-.day-title-input{font-size:0.88rem;}
-/* Timeline on mobile: shorter */
-.tl-v-wrap{min-height:180px;padding-left:1.8rem;}
-.tl-bar-v{min-height:180px;width:26px;}
-.day-left{padding:0.8rem;}
-/* Info cards */
-.info-row-3{grid-template-columns:1fr;}
-.info-row-2{grid-template-columns:1fr;}
-/* Actions */
-.actions-bar{padding:0.55rem 0.7rem;gap:0.4rem;}
-.btn{padding:0.5rem 0.8rem;font-size:0.78rem;}
-/* Tabs */
-.tab-btn{padding:0.4rem 0.65rem;}
-.tab-btn .day-num{font-size:1.5rem;}
-.tab-btn .day-date{font-size:0.58rem;}
-.tab-btn .day-week{font-size:0.55rem;}
+  .main{padding:0.8rem 0.75rem 6rem;}
+  /* Header */
+  .site-header{padding:calc(1rem + env(safe-area-inset-top)) 1rem 0;}
+  .header-title{font-size:2.4rem!important;}
+  .header-dates{font-size:0.72rem;}
+  .header-erhai{width:220px;opacity:0.4;}
+  .header-admin-btns{gap:0.35rem;}
+  .btn-header{padding:0.3rem 0.7rem;font-size:0.7rem;}
+  /* Day header */
+  .day-header{flex-wrap:wrap;gap:0.6rem;margin-bottom:0.8rem;}
+  .day-num-big{font-size:2.8rem;}
+  .day-title-input{font-size:0.88rem;}
+  /* Timeline on mobile: shorter */
+  .tl-v-wrap{min-height:180px;padding-left:1.8rem;}
+  .tl-bar-v{min-height:180px;width:26px;}
+  .day-left{padding:0.8rem;}
+  /* Info cards */
+  .info-row-3{grid-template-columns:1fr;}
+  .info-row-2{grid-template-columns:1fr;}
+  /* Actions */
+  .actions-bar{padding:0.55rem 0.7rem;gap:0.4rem;}
+  .btn{padding:0.5rem 0.8rem;font-size:0.78rem;}
+  /* Tabs */
+  .tab-btn{padding:0.4rem 0.65rem;}
+  .tab-btn .day-num{font-size:1.5rem;}
+  .tab-btn .day-date{font-size:0.58rem;}
+  .tab-btn .day-week{font-size:0.55rem;}
 }
 @media(max-width:380px){
-.btn span,.btn-text{display:none;}
+  .btn span,.btn-text{display:none;}
 }
 /* Safe area for notch phones */
 .tab-nav-wrap{top:0;}
@@ -326,19 +325,18 @@ body.view-mode .ws-add-form{display:none!important;}
 /* PRINT */
 .print-cover{display:none;}
 @media print{
-body{background:#fff;}
-.site-header,.tab-nav-wrap,.actions-bar,.day-panel:not(.print-include){display:none!important;}
-.day-panel.print-include{display:block!important;page-break-after:always;}
-.main{max-width:100%;padding:0;}
-.print-cover{display:flex!important;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;text-align:center;page-break-after:always;}
-.print-cover h1{font-family:‘Ma Shan Zheng’,cursive;font-size:4rem;color:var(–terracotta);margin-bottom:1rem;}
-.card{break-inside:avoid;box-shadow:none;border:1px solid #ddd;}
-.card textarea,.notes-row textarea{background:transparent;min-height:unset;resize:none;}
-.tl-entries{display:none;}
-*{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  body{background:#fff;}
+  .site-header,.tab-nav-wrap,.actions-bar,.day-panel:not(.print-include){display:none!important;}
+  .day-panel.print-include{display:block!important;page-break-after:always;}
+  .main{max-width:100%;padding:0;}
+  .print-cover{display:flex!important;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;text-align:center;page-break-after:always;}
+  .print-cover h1{font-family:'Ma Shan Zheng',cursive;font-size:4rem;color:var(--terracotta);margin-bottom:1rem;}
+  .card{break-inside:avoid;box-shadow:none;border:1px solid #ddd;}
+  .card textarea,.notes-row textarea{background:transparent;min-height:unset;resize:none;}
+  .tl-entries{display:none;}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
 }
 </style>
-
 </head>
 <body class="view-mode">
 
@@ -378,85 +376,82 @@ body{background:#fff;}
             </filter>
           </defs>
 
-```
-      <!-- Sky -->
-      <rect width="420" height="180" fill="url(#skyGrad)"/>
+          <!-- Sky -->
+          <rect width="420" height="180" fill="url(#skyGrad)"/>
 
-      <!-- Distant clouds -->
-      <ellipse cx="80" cy="30" rx="40" ry="14" fill="white" opacity="0.25"/>
-      <ellipse cx="110" cy="24" rx="28" ry="10" fill="white" opacity="0.2"/>
-      <ellipse cx="280" cy="20" rx="50" ry="15" fill="white" opacity="0.2"/>
-      <ellipse cx="320" cy="14" rx="35" ry="11" fill="white" opacity="0.18"/>
-      <ellipse cx="380" cy="35" rx="30" ry="10" fill="white" opacity="0.15"/>
+          <!-- Distant clouds -->
+          <ellipse cx="80" cy="30" rx="40" ry="14" fill="white" opacity="0.25"/>
+          <ellipse cx="110" cy="24" rx="28" ry="10" fill="white" opacity="0.2"/>
+          <ellipse cx="280" cy="20" rx="50" ry="15" fill="white" opacity="0.2"/>
+          <ellipse cx="320" cy="14" rx="35" ry="11" fill="white" opacity="0.18"/>
+          <ellipse cx="380" cy="35" rx="30" ry="10" fill="white" opacity="0.15"/>
 
-      <!-- Cangshan Mountains (蒼山) — layered ranges -->
-      <path d="M0,110 Q40,40 90,70 Q130,30 170,65 Q210,20 250,60 Q290,15 330,55 Q360,25 420,50 L420,130 L0,130 Z"
-            fill="url(#mountainGrad)" opacity="0.55"/>
-      <path d="M0,120 Q50,70 100,90 Q150,55 200,85 Q250,50 300,80 Q350,60 420,75 L420,135 L0,135 Z"
-            fill="#3a6a8a" opacity="0.5"/>
-      <!-- Snow caps -->
-      <path d="M88,42 Q90,35 92,42 Z" fill="white" opacity="0.7"/>
-      <path d="M168,38 Q170,30 172,38 Z" fill="white" opacity="0.6"/>
-      <path d="M248,33 Q250,24 252,33 Z" fill="white" opacity="0.7"/>
-      <path d="M328,28 Q330,20 332,28 Z" fill="white" opacity="0.6"/>
+          <!-- Cangshan Mountains (蒼山) — layered ranges -->
+          <path d="M0,110 Q40,40 90,70 Q130,30 170,65 Q210,20 250,60 Q290,15 330,55 Q360,25 420,50 L420,130 L0,130 Z"
+                fill="url(#mountainGrad)" opacity="0.55"/>
+          <path d="M0,120 Q50,70 100,90 Q150,55 200,85 Q250,50 300,80 Q350,60 420,75 L420,135 L0,135 Z"
+                fill="#3a6a8a" opacity="0.5"/>
+          <!-- Snow caps -->
+          <path d="M88,42 Q90,35 92,42 Z" fill="white" opacity="0.7"/>
+          <path d="M168,38 Q170,30 172,38 Z" fill="white" opacity="0.6"/>
+          <path d="M248,33 Q250,24 252,33 Z" fill="white" opacity="0.7"/>
+          <path d="M328,28 Q330,20 332,28 Z" fill="white" opacity="0.6"/>
 
-      <!-- Erhai Lake horizon line -->
-      <path d="M0,132 Q105,128 210,130 Q315,132 420,129 L420,180 L0,180 Z"
-            fill="url(#waterGrad)"/>
+          <!-- Erhai Lake horizon line -->
+          <path d="M0,132 Q105,128 210,130 Q315,132 420,129 L420,180 L0,180 Z"
+                fill="url(#waterGrad)"/>
 
-      <!-- Water reflections - shimmering lines -->
-      <line x1="10" y1="145" x2="80" y2="143" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" stroke-linecap="round"/>
-      <line x1="100" y1="150" x2="190" y2="148" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-linecap="round"/>
-      <line x1="210" y1="142" x2="290" y2="144" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" stroke-linecap="round"/>
-      <line x1="310" y1="155" x2="410" y2="153" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-linecap="round"/>
-      <line x1="50" y1="160" x2="140" y2="158" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-linecap="round"/>
-      <line x1="240" y1="165" x2="360" y2="163" stroke="rgba(255,255,255,0.1)" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Water reflections - shimmering lines -->
+          <line x1="10" y1="145" x2="80" y2="143" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="100" y1="150" x2="190" y2="148" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-linecap="round"/>
+          <line x1="210" y1="142" x2="290" y2="144" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="310" y1="155" x2="410" y2="153" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-linecap="round"/>
+          <line x1="50" y1="160" x2="140" y2="158" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-linecap="round"/>
+          <line x1="240" y1="165" x2="360" y2="163" stroke="rgba(255,255,255,0.1)" stroke-width="1.5" stroke-linecap="round"/>
 
-      <!-- Mountain reflections in water -->
-      <path d="M0,135 Q50,155 100,140 Q150,160 200,142 Q250,158 300,143 Q350,155 420,138 L420,165 L0,165 Z"
-            fill="#0a4060" opacity="0.25"/>
+          <!-- Mountain reflections in water -->
+          <path d="M0,135 Q50,155 100,140 Q150,160 200,142 Q250,158 300,143 Q350,155 420,138 L420,165 L0,165 Z"
+                fill="#0a4060" opacity="0.25"/>
 
-      <!-- Small sailboat -->
-      <polygon points="200,133 206,133 203,118" fill="white" opacity="0.5"/>
-      <rect x="202" y="133" width="4" height="2" rx="1" fill="#8ab4c8" opacity="0.6"/>
+          <!-- Small sailboat -->
+          <polygon points="200,133 206,133 203,118" fill="white" opacity="0.5"/>
+          <rect x="202" y="133" width="4" height="2" rx="1" fill="#8ab4c8" opacity="0.6"/>
 
-      <!-- Another boat -->
-      <polygon points="310,136 315,136 312,124" fill="white" opacity="0.4"/>
-      <rect x="309" y="136" width="5" height="1.5" rx="1" fill="#7aa8c0" opacity="0.5"/>
+          <!-- Another boat -->
+          <polygon points="310,136 315,136 312,124" fill="white" opacity="0.4"/>
+          <rect x="309" y="136" width="5" height="1.5" rx="1" fill="#7aa8c0" opacity="0.5"/>
 
-      <!-- Distant islet / 南詔風情島 hint -->
-      <ellipse cx="355" cy="131" rx="18" ry="4" fill="#2a6040" opacity="0.4"/>
+          <!-- Distant islet / 南詔風情島 hint -->
+          <ellipse cx="355" cy="131" rx="18" ry="4" fill="#2a6040" opacity="0.4"/>
 
-      <!-- Sun glow on water -->
-      <ellipse cx="380" cy="135" rx="35" ry="8" fill="#ffd060" opacity="0.12"/>
-      <ellipse cx="380" cy="150" rx="25" ry="5" fill="#ffd060" opacity="0.08"/>
+          <!-- Sun glow on water -->
+          <ellipse cx="380" cy="135" rx="35" ry="8" fill="#ffd060" opacity="0.12"/>
+          <ellipse cx="380" cy="150" rx="25" ry="5" fill="#ffd060" opacity="0.08"/>
 
-      <!-- Foreground gentle wave ripples -->
-      <path d="M0,170 Q30,167 60,170 Q90,173 120,170 Q150,167 180,170 Q210,173 240,170 Q270,167 300,170 Q330,173 360,170 Q390,167 420,170" 
-            stroke="rgba(255,255,255,0.12)" stroke-width="1.5" fill="none"/>
-      <path d="M0,176 Q40,173 80,176 Q120,179 160,176 Q200,173 240,176 Q280,179 320,176 Q360,173 420,176"
-            stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"/>
-    </svg>
-  </div>
-  <div class="header-right">
-    <div class="header-admin-btns">
-      <button class="btn-header btn-member" id="memberBtn" onclick="showMemberLogin()">👥 團員登入</button>
-      <button class="btn-header btn-lock" id="editBtn" onclick="showLoginModal()">🔒 編輯模式</button>
-      <button class="btn-header btn-unlock" id="logoutBtn" onclick="exitEdit()" style="display:none">🔓 結束編輯</button>
-      <button class="btn-header btn-trip-settings" id="tripSettingsBtn" onclick="showTripSettings()" style="display:none">⚙️ 行程設定</button>
+          <!-- Foreground gentle wave ripples -->
+          <path d="M0,170 Q30,167 60,170 Q90,173 120,170 Q150,167 180,170 Q210,173 240,170 Q270,167 300,170 Q330,173 360,170 Q390,167 420,170" 
+                stroke="rgba(255,255,255,0.12)" stroke-width="1.5" fill="none"/>
+          <path d="M0,176 Q40,173 80,176 Q120,179 160,176 Q200,173 240,176 Q280,179 320,176 Q360,173 420,176"
+                stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"/>
+        </svg>
+      </div>
+      <div class="header-right">
+        <div class="header-admin-btns">
+          <button class="btn-header btn-member" id="memberBtn" onclick="showMemberLogin()">👥 團員登入</button>
+          <button class="btn-header btn-lock" id="editBtn" onclick="showLoginModal()">🔒 編輯模式</button>
+          <button class="btn-header btn-unlock" id="logoutBtn" onclick="exitEdit()" style="display:none">🔓 結束編輯</button>
+          <button class="btn-header btn-trip-settings" id="tripSettingsBtn" onclick="showTripSettings()" style="display:none">⚙️ 行程設定</button>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-<div class="settings-bar" id="settingsBar" style="display:none">
-  <label>🔗 Apps Script URL</label>
-  <input type="text" id="scriptUrl" placeholder="貼上 Google Apps Script 網址...">
-  <button class="btn-connect" onclick="connectSheets()">連接試算表</button>
-  <button class="btn-connect" style="border-color:#adf;color:#adf" onclick="showSetupGuide()">📋 設定教學</button>
-  <button class="btn-connect" style="border-color:#f96;color:#f96" onclick="runDiagnostic()">🔬 診斷連線</button>
-  <span class="sync-status" id="syncStatus">尚未連接</span>
-</div>
-```
-
+    <div class="settings-bar" id="settingsBar" style="display:none">
+      <label>🔗 Apps Script URL</label>
+      <input type="text" id="scriptUrl" placeholder="貼上 Google Apps Script 網址...">
+      <button class="btn-connect" onclick="connectSheets()">連接試算表</button>
+      <button class="btn-connect" style="border-color:#adf;color:#adf" onclick="showSetupGuide()">📋 設定教學</button>
+      <button class="btn-connect" style="border-color:#f96;color:#f96" onclick="runDiagnostic()">🔬 診斷連線</button>
+      <span class="sync-status" id="syncStatus">尚未連接</span>
+    </div>
   </div>
 </header>
 
@@ -850,84 +845,95 @@ function buildUI(oldData){
           <div class="info-card sights-card">
             <div class="info-card-head" style="background:linear-gradient(135deg,#0288d1,#01579b);">🏛️ 主要景點</div>
             <textarea id="sights-${i}" placeholder="今日景點...&#10;例：洱海、崇聖寺三塔" oninput="markDirty();syncViewDiv(this)"></textarea><div class="card-view" id="sights-view-${i}" data-placeholder="今日景點..."></div>
+          </div>
+          <div class="info-row-3">
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#ff9800,#f57c00);">🌅 早餐</div>
+              <textarea id="breakfast-${i}" placeholder="早餐..." oninput="markDirty();syncViewDiv(this)"></textarea><div class="card-view" id="breakfast-view-${i}" data-placeholder="早餐..."></div>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#43a047,#2e7d32);">☀️ 午餐</div>
+              <textarea id="lunch-${i}" placeholder="午餐..." oninput="markDirty();syncViewDiv(this)"></textarea><div class="card-view" id="lunch-view-${i}" data-placeholder="午餐..."></div>
+            </div>
+            <div class="info-card meal-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#7c3aed,#5b21b6);">🌙 晚餐</div>
+              <textarea id="dinner-${i}" placeholder="晚餐..." oninput="markDirty();syncViewDiv(this)"></textarea><div class="card-view" id="dinner-view-${i}" data-placeholder="晚餐..."></div>
+            </div>
+          </div>
+          <div class="info-row-2">
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#e53935,#b71c1c);">🏨 住宿</div>
+              <textarea id="hotel-${i}" placeholder="住宿名稱、地址..." oninput="markDirty();syncViewDiv(this)"></textarea><div class="card-view" id="hotel-view-${i}" data-placeholder="住宿名稱、地址..."></div>
+            </div>
+            <div class="info-card">
+              <div class="info-card-head" style="background:linear-gradient(135deg,#00897b,#00695c);">🚗 交通說明</div>
+              <textarea id="transport-${i}" placeholder="交通方式、車次..." oninput="markDirty();syncViewDiv(this)"></textarea><div class="card-view" id="transport-view-${i}" data-placeholder="交通方式、車次..."></div>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-head" style="background:linear-gradient(135deg,#f57f17,#e65100);">📝 備注 / 小叮嚀</div>
+            <textarea id="notes-${i}" placeholder="備注、注意事項、貼心提醒..." oninput="markDirty();syncViewDiv(this)"></textarea><div class="card-view" id="notes-view-${i}" data-placeholder="備注、注意事項、貼心提醒..."></div>
+          </div>
+        </div>
+      </div>`;
+    mc.appendChild(panel);
+  });
+  // ── WEBSITES TAB ──
+  const wsBtn = document.createElement('button');
+  wsBtn.className = 'tab-btn';
+  wsBtn.id = 'tab-btn-ws';
+  wsBtn.onclick = () => switchTab('ws');
+  wsBtn.innerHTML = '<span class="day-num">🔗</span><span class="day-date">網站</span>';
+  tabNav.appendChild(wsBtn);
 
-```
-      </div>
-      <div class="info-row-3">
-        <div class="info-card meal-card">
-          <div class="info-card-head" style="background:linear-gradient(135deg,#ff9800,#f57c00);">🌅 早餐</div>
-          <textarea id="breakfast-${i}" placeholder="早餐..." oninput="markDirty();syncViewDiv(this)"></textarea><div class="card-view" id="breakfast-view-${i}" data-placeholder="早餐..."></div>
-        </div>
-        <div class="info-card meal-card">
-          <div class="info-card-head" style="background:linear-gradient(135deg,#43a047,#2e7d32);">☀️ 午餐</div>
-          <textarea id="lunch-${i}" placeholder="午餐..." oninput="markDirty();syncViewDiv(this)"></textarea><div class="card-view" id="lunch-view-${i}" data-placeholder="午餐..."></div>
-        </div>
-        <div class="info-card meal-card">
-          <div class="info-card-head" style="background:linear-gradient(135deg,#7c3aed,#5b21b6);">🌙 晚餐</div>
-          <textarea id="dinner-${i}" placeholder="晚餐..." oninput="markDirty();syncViewDiv(this)"></textarea><div class="card-view" id="dinner-view-${i}" data-placeholder="晚餐..."></div>
-        </div>
-      </div>
-      <div class="info-row-2">
-        <div class="info-card">
-          <div class="info-card-head" style="background:linear-gradient(135deg,#e53935,#b71c1c);">🏨 住宿</div>
-          <textarea id="hotel-${i}" placeholder="住宿名稱、地址..." oninput="markDirty();syncViewDiv(this)"></textarea><div class="card-view" id="hotel-view-${i}" data-placeholder="住宿名稱、地址..."></div>
-        </div>
-        <div class="info-card">
-          <div class="info-card-head" style="background:linear-gradient(135deg,#00897b,#00695c);">🚗 交通說明</div>
-          <textarea id="transport-${i}" placeholder="交通方式、車次..." oninput="markDirty();syncViewDiv(this)"></textarea><div class="card-view" id="transport-view-${i}" data-placeholder="交通方式、車次..."></div>
+  const wsPanel = document.createElement('div');
+  wsPanel.className = 'websites-panel';
+  wsPanel.id = 'panel-ws';
+  wsPanel.innerHTML = `
+    <div class="websites-section">
+      <h3>🔗 常用網站</h3>
+      <div class="website-list" id="websiteList"></div>
+      <div class="ws-empty" id="wsEmpty" style="display:none">尚無網站，點「新增網站」加入</div>
+      <button class="ws-btn-add-open" onclick="toggleWsForm()">＋ 新增網站</button>
+      <div class="ws-add-form" id="wsAddForm">
+        <input type="text" id="wsName" placeholder="網站名稱（例：住宿訂單）">
+        <input type="url"  id="wsUrl"  placeholder="網址（例：https://booking.com/...）">
+        <input type="text" id="wsIcon" placeholder="圖示 Emoji（選填，例：🏨）">
+        <div class="ws-form-btns">
+          <button style="background:transparent;color:var(--text-muted);border-color:var(--border);" onclick="toggleWsForm()">取消</button>
+          <button style="background:var(--jade);color:#fff;border-color:var(--jade);" onclick="addWebsite()">新增</button>
         </div>
       </div>
-      <div class="info-card">
-        <div class="info-card-head" style="background:linear-gradient(135deg,#f57f17,#e65100);">📝 備注 / 小叮嚀</div>
-        <textarea id="notes-${i}" placeholder="備注、注意事項、貼心提醒..." oninput="markDirty();syncViewDiv(this)"></textarea><div class="card-view" id="notes-view-${i}" data-placeholder="備注、注意事項、貼心提醒..."></div>
-      </div>
-    </div>
-  </div>`;
-mc.appendChild(panel);
-```
+    </div>`;
+  mc.appendChild(wsPanel);
 
-});
-// ── WEBSITES TAB ──
-const wsBtn = document.createElement(‘button’);
-wsBtn.className = ‘tab-btn’;
-wsBtn.id = ‘tab-btn-ws’;
-wsBtn.onclick = () => switchTab(‘ws’);
-wsBtn.innerHTML = ‘<span class="day-num">🔗</span><span class="day-date">網站</span>’;
-tabNav.appendChild(wsBtn);
-
-const wsPanel = document.createElement(‘div’);
-wsPanel.className = ‘websites-panel’;
-wsPanel.id = ‘panel-ws’;
-wsPanel.innerHTML = ` <div class="websites-section"> <h3>🔗 常用網站</h3> <div class="website-list" id="websiteList"></div> <div class="ws-empty" id="wsEmpty" style="display:none">尚無網站，點「新增網站」加入</div> <button class="ws-btn-add-open" onclick="toggleWsForm()">＋ 新增網站</button> <div class="ws-add-form" id="wsAddForm"> <input type="text" id="wsName" placeholder="網站名稱（例：住宿訂單）"> <input type="url"  id="wsUrl"  placeholder="網址（例：https://booking.com/...）"> <input type="text" id="wsIcon" placeholder="圖示 Emoji（選填，例：🏨）"> <div class="ws-form-btns"> <button style="background:transparent;color:var(--text-muted);border-color:var(--border);" onclick="toggleWsForm()">取消</button> <button style="background:var(--jade);color:#fff;border-color:var(--jade);" onclick="addWebsite()">新增</button> </div> </div> </div>`;
-mc.appendChild(wsPanel);
-
-if(oldData) setData(oldData);
-if(currentTab!==‘ws’ && (currentTab>=DAYS.length || currentTab<0)) currentTab=0;
-switchTab(currentTab);
+  if(oldData) setData(oldData);
+  if(currentTab!=='ws' && (currentTab>=DAYS.length || currentTab<0)) currentTab=0;
+  switchTab(currentTab);
 }
 function updateHeaderDates(){
-const d=buildDays();
-if(!d.length) return;
-const s=d[0],e=d[d.length-1];
-document.getElementById(‘headerDates’).textContent=
-`${s.getFullYear()}年${s.getMonth()+1}月${s.getDate()}日 — ${e.getMonth()+1}月${e.getDate()}日（${d.length}天）`;
+  const d=buildDays();
+  if(!d.length) return;
+  const s=d[0],e=d[d.length-1];
+  document.getElementById('headerDates').textContent=
+    `${s.getFullYear()}年${s.getMonth()+1}月${s.getDate()}日 — ${e.getMonth()+1}月${e.getDate()}日（${d.length}天）`;
 }
-function rebuildUI(old){ currentTab = (currentTab===‘ws’||currentTab<DAYS.length) ? currentTab : 0; buildUI(old); }
+function rebuildUI(old){ currentTab = (currentTab==='ws'||currentTab<DAYS.length) ? currentTab : 0; buildUI(old); }
 
 // ─── TAB SWITCH ───
 function switchTab(i){
-currentTab=i;
-// Tab buttons
-document.querySelectorAll(’.tab-btn’).forEach((b,j)=>{
-const isWs = i===‘ws’ && b.id===‘tab-btn-ws’;
-const isDay = i!==‘ws’ && j===i;
-b.classList.toggle(‘active’, isWs||isDay);
-});
-// Day panels
-document.querySelectorAll(’.day-panel’).forEach((p,j)=>p.classList.toggle(‘active’,i!==‘ws’&&j===i));
-// Websites panel
-const wp=document.getElementById(‘panel-ws’);
-if(wp) wp.classList.toggle(‘active’,i===‘ws’);
+  currentTab=i;
+  // Tab buttons
+  document.querySelectorAll('.tab-btn').forEach((b,j)=>{
+    const isWs = i==='ws' && b.id==='tab-btn-ws';
+    const isDay = i!=='ws' && j===i;
+    b.classList.toggle('active', isWs||isDay);
+  });
+  // Day panels
+  document.querySelectorAll('.day-panel').forEach((p,j)=>p.classList.toggle('active',i!=='ws'&&j===i));
+  // Websites panel
+  const wp=document.getElementById('panel-ws');
+  if(wp) wp.classList.toggle('active',i==='ws');
 }
 
 // ─── DIRTY ───
@@ -935,331 +941,341 @@ function markDirty(){ dirty=true; }
 
 // ─── WEBSITES ───
 function getWebsites(){
-try{ return JSON.parse(localStorage.getItem(‘yunnan_websites’)||’[]’); }catch{ return []; }
+  try{ return JSON.parse(localStorage.getItem('yunnan_websites')||'[]'); }catch{ return []; }
 }
 function saveWebsites(list){
-localStorage.setItem(‘yunnan_websites’, JSON.stringify(list));
-markDirty();
+  localStorage.setItem('yunnan_websites', JSON.stringify(list));
+  markDirty();
 }
 function renderWebsites(){
-const list = getWebsites();
-const el = document.getElementById(‘websiteList’);
-const empty = document.getElementById(‘wsEmpty’);
-if(!el) return;
-if(!list.length){
-el.innerHTML=’’;
-if(empty) empty.style.display=’’;
-return;
-}
-if(empty) empty.style.display=‘none’;
-el.innerHTML = list.map((w,k)=>` <div class="website-item"> <a class="website-link" href="${w.url}" target="_blank" rel="noopener"> <span class="ws-icon">${w.icon||'🌐'}</span> <span class="ws-info"> <span class="ws-name">${w.name}</span> <span class="ws-url">${w.url}</span> </span> </a> <button class="ws-del-btn" onclick="delWebsite(${k})">✕</button> </div>`).join(’’);
+  const list = getWebsites();
+  const el = document.getElementById('websiteList');
+  const empty = document.getElementById('wsEmpty');
+  if(!el) return;
+  if(!list.length){
+    el.innerHTML='';
+    if(empty) empty.style.display='';
+    return;
+  }
+  if(empty) empty.style.display='none';
+  el.innerHTML = list.map((w,k)=>`
+    <div class="website-item">
+      <a class="website-link" href="${w.url}" target="_blank" rel="noopener">
+        <span class="ws-icon">${w.icon||'🌐'}</span>
+        <span class="ws-info">
+          <span class="ws-name">${w.name}</span>
+          <span class="ws-url">${w.url}</span>
+        </span>
+      </a>
+      <button class="ws-del-btn" onclick="delWebsite(${k})">✕</button>
+    </div>`).join('');
 }
 function toggleWsForm(){
-const f=document.getElementById(‘wsAddForm’);
-if(!f) return;
-f.classList.toggle(‘open’);
-if(f.classList.contains(‘open’)) document.getElementById(‘wsName’).focus();
+  const f=document.getElementById('wsAddForm');
+  if(!f) return;
+  f.classList.toggle('open');
+  if(f.classList.contains('open')) document.getElementById('wsName').focus();
 }
 function addWebsite(){
-const name=(document.getElementById(‘wsName’)?.value||’’).trim();
-const url =(document.getElementById(‘wsUrl’)?.value||’’).trim();
-const icon=(document.getElementById(‘wsIcon’)?.value||’’).trim();
-if(!name){ document.getElementById(‘wsName’).focus(); return; }
-if(!url || !url.startsWith(‘http’)){ document.getElementById(‘wsUrl’).focus(); return; }
-const list=getWebsites();
-list.push({name,url,icon:icon||‘🌐’});
-saveWebsites(list);
-renderWebsites();
-// Clear form
-document.getElementById(‘wsName’).value=’’;
-document.getElementById(‘wsUrl’).value=’’;
-document.getElementById(‘wsIcon’).value=’’;
-toggleWsForm();
-toast(‘✅ 網站已新增’);
+  const name=(document.getElementById('wsName')?.value||'').trim();
+  const url =(document.getElementById('wsUrl')?.value||'').trim();
+  const icon=(document.getElementById('wsIcon')?.value||'').trim();
+  if(!name){ document.getElementById('wsName').focus(); return; }
+  if(!url || !url.startsWith('http')){ document.getElementById('wsUrl').focus(); return; }
+  const list=getWebsites();
+  list.push({name,url,icon:icon||'🌐'});
+  saveWebsites(list);
+  renderWebsites();
+  // Clear form
+  document.getElementById('wsName').value='';
+  document.getElementById('wsUrl').value='';
+  document.getElementById('wsIcon').value='';
+  toggleWsForm();
+  toast('✅ 網站已新增');
 }
 function delWebsite(k){
-const list=getWebsites();
-list.splice(k,1);
-saveWebsites(list);
-renderWebsites();
+  const list=getWebsites();
+  list.splice(k,1);
+  saveWebsites(list);
+  renderWebsites();
 }
 
 // ─── DATA ───
 function getData(){
-return DAYS.map((_,i)=>({
-title:     document.getElementById(`title-${i}`)?.value||’’,
-breakfast: document.getElementById(`breakfast-${i}`)?.value||’’,
-lunch:     document.getElementById(`lunch-${i}`)?.value||’’,
-dinner:    document.getElementById(`dinner-${i}`)?.value||’’,
-sights:    document.getElementById(`sights-${i}`)?.value||’’,
-transport: document.getElementById(`transport-${i}`)?.value||’’,
-hotel:     document.getElementById(`hotel-${i}`)?.value||’’,
-notes:     document.getElementById(`notes-${i}`)?.value||’’,
-departure: document.getElementById(`dep-${i}`)?.value||’’,
-timeline:  getTimelineEntries(i),
-}));
+  return DAYS.map((_,i)=>({
+    title:     document.getElementById(`title-${i}`)?.value||'',
+    breakfast: document.getElementById(`breakfast-${i}`)?.value||'',
+    lunch:     document.getElementById(`lunch-${i}`)?.value||'',
+    dinner:    document.getElementById(`dinner-${i}`)?.value||'',
+    sights:    document.getElementById(`sights-${i}`)?.value||'',
+    transport: document.getElementById(`transport-${i}`)?.value||'',
+    hotel:     document.getElementById(`hotel-${i}`)?.value||'',
+    notes:     document.getElementById(`notes-${i}`)?.value||'',
+    departure: document.getElementById(`dep-${i}`)?.value||'',
+    timeline:  getTimelineEntries(i),
+  }));
 }
 function setData(arr){
-if(!arr) return;
-arr.forEach((row,i)=>{
-if(i>=DAYS.length) return;
-const set=(id,v)=>{ const el=document.getElementById(id); if(el) el.value=v||’’; };
-set(`title-${i}`,row.title);
-set(`breakfast-${i}`,row.breakfast);
-set(`lunch-${i}`,row.lunch);
-set(`dinner-${i}`,row.dinner);
-set(`sights-${i}`,row.sights);
-set(`transport-${i}`,row.transport);
-set(`hotel-${i}`,row.hotel);
-set(`notes-${i}`,row.notes);
-set(`dep-${i}`,row.departure||’’);
-if(row.timeline?.length) setTimelineEntries(i,sortEntries(row.timeline));
-renderTimeline(i);
-});
-setTimeout(()=>{ expandAllTextareas(); syncAllViewDivs(); }, 50);
+  if(!arr) return;
+  arr.forEach((row,i)=>{
+    if(i>=DAYS.length) return;
+    const set=(id,v)=>{ const el=document.getElementById(id); if(el) el.value=v||''; };
+    set(`title-${i}`,row.title);
+    set(`breakfast-${i}`,row.breakfast);
+    set(`lunch-${i}`,row.lunch);
+    set(`dinner-${i}`,row.dinner);
+    set(`sights-${i}`,row.sights);
+    set(`transport-${i}`,row.transport);
+    set(`hotel-${i}`,row.hotel);
+    set(`notes-${i}`,row.notes);
+    set(`dep-${i}`,row.departure||'');
+    if(row.timeline?.length) setTimelineEntries(i,sortEntries(row.timeline));
+    renderTimeline(i);
+  });
+  setTimeout(()=>{ expandAllTextareas(); syncAllViewDivs(); }, 50);
 }
 
 // ─── LOCAL SAVE ───
 function saveToLocal(){
-localStorage.setItem(‘yunnan_2026’,JSON.stringify(getData()));
-dirty=false; toast(‘✅ 已儲存至本地’);
+  localStorage.setItem('yunnan_2026',JSON.stringify(getData()));
+  dirty=false; toast('✅ 已儲存至本地');
 }
 function loadFromLocal(){
-const r=localStorage.getItem(‘yunnan_2026’);
-if(r) try{ setData(JSON.parse(r)); }catch(e){}
+  const r=localStorage.getItem('yunnan_2026');
+  if(r) try{ setData(JSON.parse(r)); }catch(e){}
 }
 
 // ─── SHEETS SYNC ───
 function connectSheets(){
-scriptUrl=document.getElementById(‘scriptUrl’).value.trim();
-if(!scriptUrl||!scriptUrl.startsWith(‘https://script.google.com’)){ toast(‘❌ Apps Script URL 格式不正確’,true); return; }
-localStorage.setItem(‘yunnan_scripturl’,scriptUrl);
-document.getElementById(‘syncErrorBox’)?.remove();
-loadFromSheets();
+  scriptUrl=document.getElementById('scriptUrl').value.trim();
+  if(!scriptUrl||!scriptUrl.startsWith('https://script.google.com')){ toast('❌ Apps Script URL 格式不正確',true); return; }
+  localStorage.setItem('yunnan_scripturl',scriptUrl);
+  document.getElementById('syncErrorBox')?.remove();
+  loadFromSheets();
 }
 async function syncToSheets(){
-if(!scriptUrl){ toast(‘請先連接試算表’,true); return; }
-setSyncStatus(‘同步中…’,’’);
-try{
-const rows=getData().map((row,i)=>({
-day:`第${i+1}天`,date:fmtDate(DAYS[i]),
-title:row.title,breakfast:row.breakfast,lunch:row.lunch,
-dinner:row.dinner,sights:row.sights,transport:row.transport,
-hotel:row.hotel,notes:row.notes,
-departure:row.departure||’’,
-timeline:JSON.stringify(row.timeline||[]),
-}));
-const websites = getWebsites();
-const payload = {action:‘write’,rows,config:tripConfig,websites};
-console.log(‘同步資料：’, JSON.stringify(payload).slice(0,200));
-const res=await fetch(scriptUrl,{method:‘POST’,headers:{‘Content-Type’:‘text/plain’},body:JSON.stringify(payload)});
-let result; try{ result=await res.json(); }catch{ result={ok:res.ok}; }
-console.log(‘同步回應：’, JSON.stringify(result));
-if(!res.ok||result.error) throw new Error(result.error||`HTTP ${res.status}`);
-dirty=false;
-const wsCount = websites.length;
-setSyncStatus(‘✓ 已同步 ‘+nowTime(),‘ok’);
-toast(`✅ 已同步（行程 ${rows.length} 天，網站 ${wsCount} 筆）`);
-document.getElementById(‘syncErrorBox’)?.remove();
-}catch(e){ setSyncStatus(‘✗ 同步失敗’,‘err’); toast(‘❌ 同步失敗：’+e.message,true); showSyncError(‘sync’,e,’’); }
+  if(!scriptUrl){ toast('請先連接試算表',true); return; }
+  setSyncStatus('同步中...','');
+  try{
+    const rows=getData().map((row,i)=>({
+      day:`第${i+1}天`,date:fmtDate(DAYS[i]),
+      title:row.title,breakfast:row.breakfast,lunch:row.lunch,
+      dinner:row.dinner,sights:row.sights,transport:row.transport,
+      hotel:row.hotel,notes:row.notes,
+      departure:row.departure||'',
+      timeline:JSON.stringify(row.timeline||[]),
+    }));
+    const websites = getWebsites();
+    const payload = {action:'write',rows,config:tripConfig,websites};
+    console.log('同步資料：', JSON.stringify(payload).slice(0,200));
+    const res=await fetch(scriptUrl,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(payload)});
+    let result; try{ result=await res.json(); }catch{ result={ok:res.ok}; }
+    console.log('同步回應：', JSON.stringify(result));
+    if(!res.ok||result.error) throw new Error(result.error||`HTTP ${res.status}`);
+    dirty=false;
+    const wsCount = websites.length;
+    setSyncStatus('✓ 已同步 '+nowTime(),'ok');
+    toast(`✅ 已同步（行程 ${rows.length} 天，網站 ${wsCount} 筆）`);
+    document.getElementById('syncErrorBox')?.remove();
+  }catch(e){ setSyncStatus('✗ 同步失敗','err'); toast('❌ 同步失敗：'+e.message,true); showSyncError('sync',e,''); }
 }
 async function loadFromSheets(){
-if(!scriptUrl){ toast(‘請先填入 Apps Script 網址’,true); return; }
-setSyncStatus(‘載入中…’,’’);
-let rawText=’’;
-try{
-let res;
-try{ res=await fetch(scriptUrl+’?action=read&t=’+Date.now()); }
-catch(netErr){ throw new Error(‘網路連線失敗（可能是 CORS 問題）：’+netErr.message); }
-rawText=await res.text();
-if(!res.ok){
-const hint = res.status===403?’ — 存取被拒，請確認部署時「存取權限」設為「任何人」’
-: res.status===404?’ — 找不到，請確認 URL 是否正確’
-: ‘’;
-throw new Error(`伺服器回傳 HTTP ${res.status}${hint}`);
-}
-let result;
-try{ result=JSON.parse(rawText); }
-catch{ throw new Error(‘回應不是合法 JSON，Script 可能有語法錯誤或尚未部署。\n收到：’+rawText.slice(0,300)); }
-if(result.error) throw new Error(‘Script 回傳錯誤：’+result.error);
-document.getElementById(‘syncErrorBox’)?.remove();
-// Parse all data first
-const incomingWebsites = (result.websites && Array.isArray(result.websites)) ? result.websites : null;
-if(incomingWebsites) localStorage.setItem(‘yunnan_websites’, JSON.stringify(incomingWebsites));
+  if(!scriptUrl){ toast('請先填入 Apps Script 網址',true); return; }
+  setSyncStatus('載入中...','');
+  let rawText='';
+  try{
+    let res;
+    try{ res=await fetch(scriptUrl+'?action=read&t='+Date.now()); }
+    catch(netErr){ throw new Error('網路連線失敗（可能是 CORS 問題）：'+netErr.message); }
+    rawText=await res.text();
+    if(!res.ok){
+      const hint = res.status===403?' — 存取被拒，請確認部署時「存取權限」設為「任何人」'
+                 : res.status===404?' — 找不到，請確認 URL 是否正確'
+                 : '';
+      throw new Error(`伺服器回傳 HTTP ${res.status}${hint}`);
+    }
+    let result;
+    try{ result=JSON.parse(rawText); }
+    catch{ throw new Error('回應不是合法 JSON，Script 可能有語法錯誤或尚未部署。\n收到：'+rawText.slice(0,300)); }
+    if(result.error) throw new Error('Script 回傳錯誤：'+result.error);
+    document.getElementById('syncErrorBox')?.remove();
+    // Parse all data first
+    const incomingWebsites = (result.websites && Array.isArray(result.websites)) ? result.websites : null;
+    if(incomingWebsites) localStorage.setItem('yunnan_websites', JSON.stringify(incomingWebsites));
 
-```
-if(!result.rows?.length){
-  // No row data - just update config and websites
-  if(result.config){ tripConfig={...DEFAULT_CONFIG,...result.config}; saveTripConfig(); rebuildUI(null); }
-  renderWebsites();
-  setSyncStatus('✓ 已連接（試算表為空）','ok');
-  toast('✅ 連線成功！試算表目前無資料，填寫後按「☁️ 同步試算表」即可存入。');
-  return;
-}
+    if(!result.rows?.length){
+      // No row data - just update config and websites
+      if(result.config){ tripConfig={...DEFAULT_CONFIG,...result.config}; saveTripConfig(); rebuildUI(null); }
+      renderWebsites();
+      setSyncStatus('✓ 已連接（試算表為空）','ok');
+      toast('✅ 連線成功！試算表目前無資料，填寫後按「☁️ 同步試算表」即可存入。');
+      return;
+    }
 
-// Parse row data
-const parsed=result.rows.slice(0,DAYS.length).map(r=>({
-  title:r.title||'',breakfast:r.breakfast||'',lunch:r.lunch||'',
-  dinner:r.dinner||'',sights:r.sights||'',transport:r.transport||'',
-  hotel:r.hotel||'',notes:r.notes||'',
-  departure:r.departure||'',
-  timeline:(()=>{ try{ return JSON.parse(r.timeline||'[]'); }catch{ return []; } })(),
-}));
+    // Parse row data
+    const parsed=result.rows.slice(0,DAYS.length).map(r=>({
+      title:r.title||'',breakfast:r.breakfast||'',lunch:r.lunch||'',
+      dinner:r.dinner||'',sights:r.sights||'',transport:r.transport||'',
+      hotel:r.hotel||'',notes:r.notes||'',
+      departure:r.departure||'',
+      timeline:(()=>{ try{ return JSON.parse(r.timeline||'[]'); }catch{ return []; } })(),
+    }));
 
-// If config changed, rebuild UI with data; otherwise just setData
-if(result.config){
-  tripConfig={...DEFAULT_CONFIG,...result.config};
-  saveTripConfig();
-  rebuildUI(parsed); // pass data directly so rebuildUI fills it in
-} else {
-  setData(parsed);
-}
+    // If config changed, rebuild UI with data; otherwise just setData
+    if(result.config){
+      tripConfig={...DEFAULT_CONFIG,...result.config};
+      saveTripConfig();
+      rebuildUI(parsed); // pass data directly so rebuildUI fills it in
+    } else {
+      setData(parsed);
+    }
 
-// Always render websites last, after UI is fully built
-renderWebsites();
-setSyncStatus('✓ 已載入 '+nowTime(),'ok');
-toast('✅ 已載入 '+parsed.length+' 天資料');
-```
+    // Always render websites last, after UI is fully built
+    renderWebsites();
+    setSyncStatus('✓ 已載入 '+nowTime(),'ok');
+    toast('✅ 已載入 '+parsed.length+' 天資料');
+  }catch(e){
+    setSyncStatus('✗ 載入失敗','err');
+    toast('❌ '+e.message.split('\n')[0],true);
+    showSyncError('load',e,rawText);
+    console.error('loadFromSheets:',e,'raw:',rawText);
+  }
+}
+function setSyncStatus(msg,cls){ const el=document.getElementById('syncStatus'); el.textContent=msg; el.className='sync-status '+(cls||''); }
 
-}catch(e){
-setSyncStatus(‘✗ 載入失敗’,‘err’);
-toast(‘❌ ‘+e.message.split(’\n’)[0],true);
-showSyncError(‘load’,e,rawText);
-console.error(‘loadFromSheets:’,e,‘raw:’,rawText);
-}
-}
-function setSyncStatus(msg,cls){ const el=document.getElementById(‘syncStatus’); el.textContent=msg; el.className=‘sync-status ‘+(cls||’’); }
 
 // ─── DIAGNOSTIC TOOL ───
 async function runDiagnostic(){
-const url = document.getElementById(‘scriptUrl’).value.trim();
-const ov = document.createElement(‘div’);
-ov.id = ‘diagModal’;
-ov.style.cssText = ‘position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:99999;display:flex;align-items:center;justify-content:center;padding:1rem;’;
-ov.innerHTML = `<div style="background:#0d1f0d;color:#c8f0c8;border-radius:12px;max-width:620px;width:100%;max-height:88vh;overflow-y:auto;padding:1.8rem;font-family:'Noto Sans TC',sans-serif;font-size:0.83rem;">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem;">
-<strong style="font-size:1rem;color:#6effa0;">🔬 Apps Script 連線診斷</strong>
-<button onclick="document.getElementById('diagModal').remove()" style="background:transparent;border:none;color:#6effa0;cursor:pointer;font-size:1.2rem;">✕</button>
-</div>
-<div id="diagLog" style="line-height:2.2;"></div>
-
+  const url = document.getElementById('scriptUrl').value.trim();
+  const ov = document.createElement('div');
+  ov.id = 'diagModal';
+  ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:99999;display:flex;align-items:center;justify-content:center;padding:1rem;';
+  ov.innerHTML = `<div style="background:#0d1f0d;color:#c8f0c8;border-radius:12px;max-width:620px;width:100%;max-height:88vh;overflow-y:auto;padding:1.8rem;font-family:'Noto Sans TC',sans-serif;font-size:0.83rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem;">
+      <strong style="font-size:1rem;color:#6effa0;">🔬 Apps Script 連線診斷</strong>
+      <button onclick="document.getElementById('diagModal').remove()" style="background:transparent;border:none;color:#6effa0;cursor:pointer;font-size:1.2rem;">✕</button>
+    </div>
+    <div id="diagLog" style="line-height:2.2;"></div>
   </div>`;
   document.body.appendChild(ov);
   ov.addEventListener('click', e=>{ if(e.target===ov) ov.remove(); });
 
-const log = document.getElementById(‘diagLog’);
-const write = (msg, color=’#c8f0c8’) => {
-log.innerHTML += `<div style="color:${color};">${msg}</div>`;
-log.scrollTop = log.scrollHeight;
-};
-const ok  = msg => write(’✅ ’ + msg, ‘#6effa0’);
-const err = msg => write(’❌ ’ + msg, ‘#ff8080’);
-const info= msg => write(’ℹ️ ’ + msg, ‘#aaddff’);
-const warn= msg => write(’⚠️ ’ + msg, ‘#ffd080’);
+  const log = document.getElementById('diagLog');
+  const write = (msg, color='#c8f0c8') => {
+    log.innerHTML += `<div style="color:${color};">${msg}</div>`;
+    log.scrollTop = log.scrollHeight;
+  };
+  const ok  = msg => write('✅ ' + msg, '#6effa0');
+  const err = msg => write('❌ ' + msg, '#ff8080');
+  const info= msg => write('ℹ️ ' + msg, '#aaddff');
+  const warn= msg => write('⚠️ ' + msg, '#ffd080');
 
-write(‘開始診斷…’, ‘#888’);
+  write('開始診斷...', '#888');
 
-// Step 1: URL format
-if(!url){ err(‘未填入 Apps Script URL，請先貼上網址’); return; }
-if(!url.startsWith(‘https://script.google.com/macros/s/’)){
-err(‘URL 格式錯誤 — 正確格式應為：<code style="color:#adf">https://script.google.com/macros/s/AKfy…/exec</code>’);
-warn(‘你填入的是：’ + url.slice(0,80));
-return;
-}
-ok(‘URL 格式正確’);
+  // Step 1: URL format
+  if(!url){ err('未填入 Apps Script URL，請先貼上網址'); return; }
+  if(!url.startsWith('https://script.google.com/macros/s/')){
+    err('URL 格式錯誤 — 正確格式應為：<code style="color:#adf">https://script.google.com/macros/s/AKfy.../exec</code>');
+    warn('你填入的是：' + url.slice(0,80));
+    return;
+  }
+  ok('URL 格式正確');
 
-// Step 2: fetch test
-info(‘嘗試連線中…’);
-let res, rawText;
-try{
-res = await fetch(url + ‘?action=read&t=’ + Date.now());
-rawText = await res.text();
-} catch(netErr) {
-err(‘網路請求失敗：’ + netErr.message);
-warn(‘可能原因：① 網路問題 ② Apps Script 尚未部署 ③ CORS 被拒’);
-return;
-}
+  // Step 2: fetch test
+  info('嘗試連線中...');
+  let res, rawText;
+  try{
+    res = await fetch(url + '?action=read&t=' + Date.now());
+    rawText = await res.text();
+  } catch(netErr) {
+    err('網路請求失敗：' + netErr.message);
+    warn('可能原因：① 網路問題 ② Apps Script 尚未部署 ③ CORS 被拒');
+    return;
+  }
 
-info(`伺服器回應狀態：HTTP ${res.status}`);
+  info(`伺服器回應狀態：HTTP ${res.status}`);
 
-// Step 3: HTTP status
-if(res.status === 403){
-err(‘HTTP 403 — 存取被拒’);
-warn(‘請回到 Apps Script → 部署 → 管理部署作業 → 編輯（鉛筆圖示）→ 「存取誰可以使用此應用程式」改為<strong style="color:#ffd">「任何人」</strong> → 部署’);
-write(’<div style="background:#1a1a0a;padding:0.6rem 0.8rem;border-radius:6px;margin-top:0.3rem;color:#ffd;font-size:0.77rem;">注意：改完設定後需要重新部署，並複製<strong>新的 URL</strong> 回來貼上</div>’);
-return;
-}
-if(res.status === 404){
-err(‘HTTP 404 — 找不到此 URL’);
-warn(‘請確認 URL 末尾是 <code style="color:#adf">/exec</code> 而不是 <code style="color:#f96">/dev</code>’);
-return;
-}
-if(!res.ok){
-err(`HTTP ${res.status} 錯誤`);
-write(‘原始回應：<pre style="background:#111;padding:0.5rem;border-radius:4px;font-size:0.7rem;color:#aaa;white-space:pre-wrap;margin-top:0.3rem;">’ + rawText.slice(0,400).replace(/</g,’<’) + ‘</pre>’);
-return;
-}
-ok(‘HTTP 200 — 伺服器有回應’);
+  // Step 3: HTTP status
+  if(res.status === 403){
+    err('HTTP 403 — 存取被拒');
+    warn('請回到 Apps Script → 部署 → 管理部署作業 → 編輯（鉛筆圖示）→ 「存取誰可以使用此應用程式」改為<strong style="color:#ffd">「任何人」</strong> → 部署');
+    write('<div style="background:#1a1a0a;padding:0.6rem 0.8rem;border-radius:6px;margin-top:0.3rem;color:#ffd;font-size:0.77rem;">注意：改完設定後需要重新部署，並複製<strong>新的 URL</strong> 回來貼上</div>');
+    return;
+  }
+  if(res.status === 404){
+    err('HTTP 404 — 找不到此 URL');
+    warn('請確認 URL 末尾是 <code style="color:#adf">/exec</code> 而不是 <code style="color:#f96">/dev</code>');
+    return;
+  }
+  if(!res.ok){
+    err(`HTTP ${res.status} 錯誤`);
+    write('原始回應：<pre style="background:#111;padding:0.5rem;border-radius:4px;font-size:0.7rem;color:#aaa;white-space:pre-wrap;margin-top:0.3rem;">' + rawText.slice(0,400).replace(/</g,'&lt;') + '</pre>');
+    return;
+  }
+  ok('HTTP 200 — 伺服器有回應');
 
-// Step 4: JSON parse
-let parsed;
-try{
-parsed = JSON.parse(rawText);
-} catch(je) {
-err(‘回應不是合法 JSON — Apps Script 程式碼有誤或尚未正確部署’);
-write(‘收到的原始內容：<pre style="background:#111;padding:0.5rem;border-radius:4px;font-size:0.7rem;color:#f96;white-space:pre-wrap;margin-top:0.3rem;">’ + rawText.slice(0,600).replace(/</g,’<’) + ‘</pre>’);
-warn(‘請回 Apps Script 確認：① 程式碼完整貼上 ② 儲存後重新部署 ③ 沒有語法錯誤’);
-return;
-}
-ok(‘回應為合法 JSON’);
+  // Step 4: JSON parse
+  let parsed;
+  try{
+    parsed = JSON.parse(rawText);
+  } catch(je) {
+    err('回應不是合法 JSON — Apps Script 程式碼有誤或尚未正確部署');
+    write('收到的原始內容：<pre style="background:#111;padding:0.5rem;border-radius:4px;font-size:0.7rem;color:#f96;white-space:pre-wrap;margin-top:0.3rem;">' + rawText.slice(0,600).replace(/</g,'&lt;') + '</pre>');
+    warn('請回 Apps Script 確認：① 程式碼完整貼上 ② 儲存後重新部署 ③ 沒有語法錯誤');
+    return;
+  }
+  ok('回應為合法 JSON');
 
-// Step 5: content check
-if(parsed.error){
-err(‘Script 回傳錯誤：’ + parsed.error);
-warn(‘請確認 SHEET_ID 是否正確，以及試算表是否可被存取’);
-return;
-}
-if(Array.isArray(parsed.rows) && parsed.rows.length === 0){
-ok(‘連線完全成功！試算表目前無資料（rows 為空陣列）’);
-info(‘這是正常狀態 — 請在網頁填寫資料後，按「☁️ 同步試算表」把資料寫入，之後再載入即可看到資料’);
-} else if(Array.isArray(parsed.rows)){
-ok(`連線成功！試算表有 ${parsed.rows.length} 筆資料，可以正常載入`);
-} else {
-warn(‘回應格式異常，缺少 rows 欄位’);
-write(‘收到：<pre style="background:#111;padding:0.5rem;border-radius:4px;font-size:0.7rem;color:#aaa;white-space:pre-wrap;margin-top:0.3rem;">’ + JSON.stringify(parsed).slice(0,300).replace(/</g,’<’) + ‘</pre>’);
-}
+  // Step 5: content check
+  if(parsed.error){
+    err('Script 回傳錯誤：' + parsed.error);
+    warn('請確認 SHEET_ID 是否正確，以及試算表是否可被存取');
+    return;
+  }
+  if(Array.isArray(parsed.rows) && parsed.rows.length === 0){
+    ok('連線完全成功！試算表目前無資料（rows 為空陣列）');
+    info('這是正常狀態 — 請在網頁填寫資料後，按「☁️ 同步試算表」把資料寫入，之後再載入即可看到資料');
+  } else if(Array.isArray(parsed.rows)){
+    ok(`連線成功！試算表有 ${parsed.rows.length} 筆資料，可以正常載入`);
+  } else {
+    warn('回應格式異常，缺少 rows 欄位');
+    write('收到：<pre style="background:#111;padding:0.5rem;border-radius:4px;font-size:0.7rem;color:#aaa;white-space:pre-wrap;margin-top:0.3rem;">' + JSON.stringify(parsed).slice(0,300).replace(/</g,'&lt;') + '</pre>');
+  }
 
-write(‘──────────────────’, ‘#444’);
-write(‘──────────────────’, ‘#444’);
-if(location.protocol === ‘file:’){
-write(’’, ‘#444’);
-write(‘⚠️ 目前以本地檔案（file://）開啟，所有跨來源請求都會被瀏覽器封鎖’, ‘#ffd080’);
-write(‘✅ 請將此檔案上傳至 <strong>GitHub Pages</strong> 後再使用同步功能’, ‘#6effa0’);
-write(‘→ 上傳後以 <code>https://你的帳號.github.io/倉庫名/</code> 開啟’, ‘#aaddff’);
-}
-write(‘診斷完成’, ‘#888’);
+  write('──────────────────', '#444');
+  write('──────────────────', '#444');
+  if(location.protocol === 'file:'){
+    write('', '#444');
+    write('⚠️ 目前以本地檔案（file://）開啟，所有跨來源請求都會被瀏覽器封鎖', '#ffd080');
+    write('✅ 請將此檔案上傳至 <strong>GitHub Pages</strong> 後再使用同步功能', '#6effa0');
+    write('→ 上傳後以 <code>https://你的帳號.github.io/倉庫名/</code> 開啟', '#aaddff');
+  }
+  write('診斷完成', '#888');
 }
 
 function showSyncError(type,err,raw){
-document.getElementById(‘syncErrorBox’)?.remove();
-const bar=document.getElementById(‘settingsBar’);
-if(!bar) return;
-const tips=[
-‘① 部署時「存取誰可以使用此應用程式」必須選 <strong style="color:#ffd">任何人</strong>（不是「僅限自己」）’,
-‘② 每次<strong style="color:#ffd">修改 Script 後需重新部署</strong>，並複製新 URL（舊 URL 指向舊版本）’,
-‘③ SHEET_ID 是試算表網址中 <code style="color:#adf">/d/</code> 和 <code style="color:#adf">/edit</code> 之間那一段長字串’,
-‘④ 試算表需有名為「<strong style="color:#ffd">雲南行程</strong>」的工作表（第一次同步後自動建立）’,
-‘⑤ 第一次使用：先填寫資料 → 按「☁️ 同步試算表」→ 再按「🔄 從試算表載入」’,
-];
-const box=document.createElement(‘div’);
-box.id=‘syncErrorBox’;
-box.style.cssText=“background:#1e0a0a;color:#ffb8b8;border-radius:0 0 8px 8px;padding:1rem 1.2rem;font-family:‘Noto Sans TC’,sans-serif;font-size:0.79rem;line-height:2;border-top:1px solid #5a1a1a;max-width:1100px;margin:0 auto;”;
-const rawHtml = raw ? `<details style="margin-top:0.6rem;"><summary style="cursor:pointer;color:#888;font-size:0.74rem;">▶ 伺服器原始回應（偵錯用，可截圖給開發者）</summary><pre style="background:#111;padding:0.6rem;border-radius:4px;font-size:0.68rem;color:#aaa;white-space:pre-wrap;margin-top:0.4rem;max-height:130px;overflow-y:auto;">${raw.slice(0,600).replace(/</g,'&lt;')}</pre></details>` : ‘’;
-box.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;"> <div style="flex:1;"> <strong style="color:#ff8080;font-size:0.88rem;">❌ 連線失敗 — 請依序確認以下事項：</strong> <div style="color:#ffcca0;margin-top:0.3rem;font-size:0.8rem;">錯誤訊息：${err.message.replace(/\n/g,'<br>').replace(/</g,'&lt;')}</div> <ol style="padding-left:1.3rem;margin-top:0.5rem;color:#ffcca0;">${tips.map(t=>`<li>${t}</li>`).join(’’)}</ol>
-${rawHtml}
-</div>
-<button onclick="document.getElementById('syncErrorBox').remove()" style="background:transparent;border:none;color:#ff8080;cursor:pointer;font-size:1.1rem;flex-shrink:0;padding:0;">✕</button>
-
+  document.getElementById('syncErrorBox')?.remove();
+  const bar=document.getElementById('settingsBar');
+  if(!bar) return;
+  const tips=[
+    '① 部署時「存取誰可以使用此應用程式」必須選 <strong style="color:#ffd">任何人</strong>（不是「僅限自己」）',
+    '② 每次<strong style="color:#ffd">修改 Script 後需重新部署</strong>，並複製新 URL（舊 URL 指向舊版本）',
+    '③ SHEET_ID 是試算表網址中 <code style="color:#adf">/d/</code> 和 <code style="color:#adf">/edit</code> 之間那一段長字串',
+    '④ 試算表需有名為「<strong style="color:#ffd">雲南行程</strong>」的工作表（第一次同步後自動建立）',
+    '⑤ 第一次使用：先填寫資料 → 按「☁️ 同步試算表」→ 再按「🔄 從試算表載入」',
+  ];
+  const box=document.createElement('div');
+  box.id='syncErrorBox';
+  box.style.cssText="background:#1e0a0a;color:#ffb8b8;border-radius:0 0 8px 8px;padding:1rem 1.2rem;font-family:'Noto Sans TC',sans-serif;font-size:0.79rem;line-height:2;border-top:1px solid #5a1a1a;max-width:1100px;margin:0 auto;";
+  const rawHtml = raw ? `<details style="margin-top:0.6rem;"><summary style="cursor:pointer;color:#888;font-size:0.74rem;">▶ 伺服器原始回應（偵錯用，可截圖給開發者）</summary><pre style="background:#111;padding:0.6rem;border-radius:4px;font-size:0.68rem;color:#aaa;white-space:pre-wrap;margin-top:0.4rem;max-height:130px;overflow-y:auto;">${raw.slice(0,600).replace(/</g,'&lt;')}</pre></details>` : '';
+  box.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;">
+    <div style="flex:1;">
+      <strong style="color:#ff8080;font-size:0.88rem;">❌ 連線失敗 — 請依序確認以下事項：</strong>
+      <div style="color:#ffcca0;margin-top:0.3rem;font-size:0.8rem;">錯誤訊息：${err.message.replace(/\n/g,'<br>').replace(/</g,'&lt;')}</div>
+      <ol style="padding-left:1.3rem;margin-top:0.5rem;color:#ffcca0;">${tips.map(t=>`<li>${t}</li>`).join('')}</ol>
+      ${rawHtml}
+    </div>
+    <button onclick="document.getElementById('syncErrorBox').remove()" style="background:transparent;border:none;color:#ff8080;cursor:pointer;font-size:1.1rem;flex-shrink:0;padding:0;">✕</button>
   </div>`;
   // Insert after settings bar's parent
   bar.closest('.header-inner').insertAdjacentElement('afterend', box);
@@ -1267,461 +1283,449 @@ ${rawHtml}
 
 // ─── SETUP GUIDE ───
 function copyGuideCode(btn){
-const code = window._guideCode || ‘’;
-if(navigator.clipboard && navigator.clipboard.writeText){
-navigator.clipboard.writeText(code).then(()=>{
-btn.textContent=‘✅ 已複製！’;
-setTimeout(()=>btn.textContent=‘📋 複製程式碼’,2500);
-}).catch(()=> fallbackCopy(code, btn));
-} else {
-fallbackCopy(code, btn);
-}
+  const code = window._guideCode || '';
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(code).then(()=>{
+      btn.textContent='✅ 已複製！';
+      setTimeout(()=>btn.textContent='📋 複製程式碼',2500);
+    }).catch(()=> fallbackCopy(code, btn));
+  } else {
+    fallbackCopy(code, btn);
+  }
 }
 function fallbackCopy(text, btn){
-const ta = document.createElement(‘textarea’);
-ta.value = text;
-ta.style.cssText = ‘position:fixed;top:-9999px;left:-9999px;opacity:0;’;
-document.body.appendChild(ta);
-ta.focus(); ta.select();
-try{
-document.execCommand(‘copy’);
-if(btn){ btn.textContent=‘✅ 已複製！’; setTimeout(()=>btn.textContent=‘📋 複製程式碼’,2500); }
-}catch(e){
-alert(‘請手動選取程式碼框內文字後複製（Ctrl+A, Ctrl+C）’);
-}
-document.body.removeChild(ta);
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;';
+  document.body.appendChild(ta);
+  ta.focus(); ta.select();
+  try{
+    document.execCommand('copy');
+    if(btn){ btn.textContent='✅ 已複製！'; setTimeout(()=>btn.textContent='📋 複製程式碼',2500); }
+  }catch(e){
+    alert('請手動選取程式碼框內文字後複製（Ctrl+A, Ctrl+C）');
+  }
+  document.body.removeChild(ta);
 }
 function showSetupGuide(){
-const code=`// ============================================================
+  const code=`// ============================================================
 // 雲南旅遊計劃 - Google Apps Script 後端
 // 使用說明：把 SHEET_ID 換成你的試算表 ID 後貼入 Apps Script
 // ============================================================
-const SHEET_ID   = ‘貼上你的試算表ID’;
-const SHEET_NAME = ‘雲南行程’;
-const COLS = [‘天數’,‘日期’,‘今日主題’,‘早餐’,‘午餐’,‘晚餐’,‘主要景點’,‘交通’,‘住宿’,‘備注’,‘出門時間’,‘時間軸’];
-const KEYS = [‘day’,‘date’,‘title’,‘breakfast’,‘lunch’,‘dinner’,‘sights’,‘transport’,‘hotel’,‘notes’,‘departure’,‘timeline’];
+const SHEET_ID   = '貼上你的試算表ID';
+const SHEET_NAME = '雲南行程';
+const COLS = ['天數','日期','今日主題','早餐','午餐','晚餐','主要景點','交通','住宿','備注','出門時間','時間軸'];
+const KEYS = ['day','date','title','breakfast','lunch','dinner','sights','transport','hotel','notes','departure','timeline'];
 
 function doGet(e) {
-const action = (e && e.parameter && e.parameter.action) ? e.parameter.action : ‘read’;
-if (action === ‘read’) return readData();
-return ok({ rows: [] });
+  const action = (e && e.parameter && e.parameter.action) ? e.parameter.action : 'read';
+  if (action === 'read') return readData();
+  return ok({ rows: [] });
 }
 
 function doPost(e) {
-try {
-const b = JSON.parse(e.postData.contents);
-if (b.action === ‘write’)    return writeData(b.rows, b.config, b.websites);
-if (b.action === ‘parseAI’) return proxyClaudeAI(b.apiKey, b.system, b.content);
-return ok({ error: ‘未知操作：’ + b.action });
-} catch(err) {
-return ok({ error: ‘doPost 錯誤：’ + err.message });
-}
+  try {
+    const b = JSON.parse(e.postData.contents);
+    if (b.action === 'write')    return writeData(b.rows, b.config, b.websites);
+    if (b.action === 'parseAI') return proxyClaudeAI(b.apiKey, b.system, b.content);
+    return ok({ error: '未知操作：' + b.action });
+  } catch(err) {
+    return ok({ error: 'doPost 錯誤：' + err.message });
+  }
 }
 
 function readData() {
-try {
-const ss = SpreadsheetApp.openById(SHEET_ID);
-const sh = ss.getSheetByName(SHEET_NAME);
-if (!sh || sh.getLastRow() < 2) return ok({ rows: [] });
-const vals = sh.getRange(2, 1, sh.getLastRow() - 1, COLS.length).getValues();
-const rows = vals.map(function(r) {
-var o = {};
-KEYS.forEach(function(k, i) { o[k] = r[i] ? String(r[i]) : ‘’; });
-return o;
-});
-var config = null, websites = null;
-try {
-var cs = ss.getSheetByName(’_config’);
-if (cs) config = JSON.parse(cs.getRange(1,1).getValue() || ‘null’);
-} catch(e) {}
-try {
-var wss = ss.getSheetByName(’_websites’);
-if (wss) websites = JSON.parse(wss.getRange(1,1).getValue() || ‘null’);
-} catch(e) {}
-return ok({ rows: rows, config: config, websites: websites });
-} catch(err) {
-return ok({ error: ‘readData 錯誤：’ + err.message });
-}
+  try {
+    const ss = SpreadsheetApp.openById(SHEET_ID);
+    const sh = ss.getSheetByName(SHEET_NAME);
+    if (!sh || sh.getLastRow() < 2) return ok({ rows: [] });
+    const vals = sh.getRange(2, 1, sh.getLastRow() - 1, COLS.length).getValues();
+    const rows = vals.map(function(r) {
+      var o = {};
+      KEYS.forEach(function(k, i) { o[k] = r[i] ? String(r[i]) : ''; });
+      return o;
+    });
+    var config = null, websites = null;
+    try {
+      var cs = ss.getSheetByName('_config');
+      if (cs) config = JSON.parse(cs.getRange(1,1).getValue() || 'null');
+    } catch(e) {}
+    try {
+      var wss = ss.getSheetByName('_websites');
+      if (wss) websites = JSON.parse(wss.getRange(1,1).getValue() || 'null');
+    } catch(e) {}
+    return ok({ rows: rows, config: config, websites: websites });
+  } catch(err) {
+    return ok({ error: 'readData 錯誤：' + err.message });
+  }
 }
 
 function writeData(rows, config, websites) {
-try {
-if (!rows || !Array.isArray(rows)) {
-return ok({ error: ‘rows 格式錯誤，收到：’ + typeof rows });
-}
-const ss = SpreadsheetApp.openById(SHEET_ID);
-var sh = ss.getSheetByName(SHEET_NAME);
-if (!sh) sh = ss.insertSheet(SHEET_NAME);
-sh.clearContents();
-sh.appendRow(COLS);
-rows.forEach(function(r) {
-if (!r) return;
-sh.appendRow(KEYS.map(function(k) { return r[k] ? String(r[k]) : ‘’; }));
-});
-if (config) {
-var cs = ss.getSheetByName(’_config’);
-if (!cs) cs = ss.insertSheet(’_config’);
-cs.getRange(1, 1).setValue(JSON.stringify(config));
-}
-if (websites) {
-var ws = ss.getSheetByName(’_websites’);
-if (!ws) ws = ss.insertSheet(’_websites’);
-ws.getRange(1, 1).setValue(JSON.stringify(websites));
-}
-return ok({ ok: true, count: rows.length });
-} catch(err) {
-return ok({ error: ‘writeData 錯誤：’ + err.message });
-}
+  try {
+    if (!rows || !Array.isArray(rows)) {
+      return ok({ error: 'rows 格式錯誤，收到：' + typeof rows });
+    }
+    const ss = SpreadsheetApp.openById(SHEET_ID);
+    var sh = ss.getSheetByName(SHEET_NAME);
+    if (!sh) sh = ss.insertSheet(SHEET_NAME);
+    sh.clearContents();
+    sh.appendRow(COLS);
+    rows.forEach(function(r) {
+      if (!r) return;
+      sh.appendRow(KEYS.map(function(k) { return r[k] ? String(r[k]) : ''; }));
+    });
+    if (config) {
+      var cs = ss.getSheetByName('_config');
+      if (!cs) cs = ss.insertSheet('_config');
+      cs.getRange(1, 1).setValue(JSON.stringify(config));
+    }
+    if (websites) {
+      var ws = ss.getSheetByName('_websites');
+      if (!ws) ws = ss.insertSheet('_websites');
+      ws.getRange(1, 1).setValue(JSON.stringify(websites));
+    }
+    return ok({ ok: true, count: rows.length });
+  } catch(err) {
+    return ok({ error: 'writeData 錯誤：' + err.message });
+  }
 }
 
 function proxyClaudeAI(apiKey, system, content) {
-try {
-if (!apiKey) return ok({ error: ‘API Key 未提供’ });
-var body = {
-model: ‘claude-sonnet-4-6’,
-max_tokens: 1024,
-system: system,
-messages: [{ role: ‘user’, content: content }]
-};
-var resp = UrlFetchApp.fetch(‘https://api.anthropic.com/v1/messages’, {
-method: ‘post’,
-contentType: ‘application/json’,
-headers: {
-‘x-api-key’: apiKey,
-‘anthropic-version’: ‘2023-06-01’
-},
-payload: JSON.stringify(body),
-muteHttpExceptions: true
-});
-var json = JSON.parse(resp.getContentText());
-if (json.error) return ok({ error: ‘Claude API 錯誤：’ + json.error.message });
-var text = (json.content || []).map(function(b) { return b.text || ‘’; }).join(’’);
-return ok({ result: text });
-} catch(err) {
-return ok({ error: ‘proxyClaudeAI 錯誤：’ + err.message });
-}
+  try {
+    if (!apiKey) return ok({ error: 'API Key 未提供' });
+    var body = {
+      model: 'claude-sonnet-4-6',
+      max_tokens: 1024,
+      system: system,
+      messages: [{ role: 'user', content: content }]
+    };
+    var resp = UrlFetchApp.fetch('https://api.anthropic.com/v1/messages', {
+      method: 'post',
+      contentType: 'application/json',
+      headers: {
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01'
+      },
+      payload: JSON.stringify(body),
+      muteHttpExceptions: true
+    });
+    var json = JSON.parse(resp.getContentText());
+    if (json.error) return ok({ error: 'Claude API 錯誤：' + json.error.message });
+    var text = (json.content || []).map(function(b) { return b.text || ''; }).join('');
+    return ok({ result: text });
+  } catch(err) {
+    return ok({ error: 'proxyClaudeAI 錯誤：' + err.message });
+  }
 }
 
 function ok(obj) {
-return ContentService
-.createTextOutput(JSON.stringify(obj))
-.setMimeType(ContentService.MimeType.JSON);
+  return ContentService
+    .createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
 }`;
 
-window._guideCode = code;
-const ov=document.createElement(‘div’);
-ov.className=‘modal-overlay’; ov.id=‘guideModal’; ov.style.zIndex=‘99999’;
-ov.innerHTML=`<div style="background:#1e2d1e;color:#d4e8d4;border-radius:12px;max-width:700px;width:100%;max-height:90vh;overflow-y:auto;padding:1.8rem;font-family:'Noto Sans TC',sans-serif;">
-<h2 style="color:#6effa0;margin-bottom:0.9rem;font-size:1.05rem;">📋 Google Apps Script 設定教學</h2>
-<ol style="line-height:2.3;font-size:0.83rem;margin-bottom:0.9rem;padding-left:1.4rem;">
-<li>開啟 Google 試算表 → 「擴充功能 → Apps Script」</li>
-<li>清空編輯器，貼入程式碼，<strong style="color:#ffd;">把 SHEET_ID 換成你的試算表 ID</strong></li>
-<li>儲存 → 「部署 → 新增部署作業」→ 類型：<strong style="color:#ffd;">網頁應用程式</strong></li>
-<li>執行身分：<strong style="color:#ffd;">我</strong>；存取權限：<strong style="color:#ffd;">任何人</strong> → 部署</li>
-<li>複製「網頁應用程式 URL」貼到本頁的欄位，按「連接試算表」</li>
-</ol>
-<pre id="guideCode" style="background:#111;padding:0.9rem;border-radius:8px;font-size:0.68rem;overflow-x:auto;white-space:pre-wrap;color:#b8ffb8;line-height:1.55;">${code.replace(/</g,’<’)}</pre>
-<div style="margin-top:0.9rem;display:flex;gap:0.7rem;">
-<button onclick="copyGuideCode(this)" style="padding:0.45rem 0.9rem;border-radius:6px;border:1px solid #6effa0;background:transparent;color:#6effa0;cursor:pointer;font-size:0.8rem;">📋 複製程式碼</button>
-<button onclick="document.getElementById('guideModal').remove()" style="padding:0.45rem 0.9rem;border-radius:6px;border:1px solid #888;background:transparent;color:#aaa;cursor:pointer;font-size:0.8rem;">關閉</button>
-</div>
-
+  window._guideCode = code;
+  const ov=document.createElement('div');
+  ov.className='modal-overlay'; ov.id='guideModal'; ov.style.zIndex='99999';
+  ov.innerHTML=`<div style="background:#1e2d1e;color:#d4e8d4;border-radius:12px;max-width:700px;width:100%;max-height:90vh;overflow-y:auto;padding:1.8rem;font-family:'Noto Sans TC',sans-serif;">
+    <h2 style="color:#6effa0;margin-bottom:0.9rem;font-size:1.05rem;">📋 Google Apps Script 設定教學</h2>
+    <ol style="line-height:2.3;font-size:0.83rem;margin-bottom:0.9rem;padding-left:1.4rem;">
+      <li>開啟 Google 試算表 → 「擴充功能 → Apps Script」</li>
+      <li>清空編輯器，貼入程式碼，<strong style="color:#ffd;">把 SHEET_ID 換成你的試算表 ID</strong></li>
+      <li>儲存 → 「部署 → 新增部署作業」→ 類型：<strong style="color:#ffd;">網頁應用程式</strong></li>
+      <li>執行身分：<strong style="color:#ffd;">我</strong>；存取權限：<strong style="color:#ffd;">任何人</strong> → 部署</li>
+      <li>複製「網頁應用程式 URL」貼到本頁的欄位，按「連接試算表」</li>
+    </ol>
+    <pre id="guideCode" style="background:#111;padding:0.9rem;border-radius:8px;font-size:0.68rem;overflow-x:auto;white-space:pre-wrap;color:#b8ffb8;line-height:1.55;">${code.replace(/</g,'&lt;')}</pre>
+    <div style="margin-top:0.9rem;display:flex;gap:0.7rem;">
+      <button onclick="copyGuideCode(this)" style="padding:0.45rem 0.9rem;border-radius:6px;border:1px solid #6effa0;background:transparent;color:#6effa0;cursor:pointer;font-size:0.8rem;">📋 複製程式碼</button>
+      <button onclick="document.getElementById('guideModal').remove()" style="padding:0.45rem 0.9rem;border-radius:6px;border:1px solid #888;background:transparent;color:#aaa;cursor:pointer;font-size:0.8rem;">關閉</button>
+    </div>
   </div>`;
   document.body.appendChild(ov);
   ov.addEventListener('click',e=>{ if(e.target===ov) ov.remove(); });
 }
 
+
 // ─── FLIGHT IMPORT ───
-let flightTab = ‘text’; // ‘text’ | ‘file’
+let flightTab = 'text'; // 'text' | 'file'
 let parsedFlights = [];
 
 function showFlightImport(){
-const tripStart = DAYS[0];
-const tripEnd   = DAYS[DAYS.length-1];
-const ov = mkModal(`
-<h3>✈️ 匯入航班資訊</h3>
-<div class="flight-tabs">
-<button class="flight-tab active" id="ftab-text" onclick="switchFlightTab('text')">📋 貼上文字</button>
-<button class="flight-tab" id="ftab-file" onclick="switchFlightTab('file')">📎 上傳檔案 / 截圖</button>
-</div>
+  const tripStart = DAYS[0];
+  const tripEnd   = DAYS[DAYS.length-1];
+  const ov = mkModal(`
+    <h3>✈️ 匯入航班資訊</h3>
+    <div class="flight-tabs">
+      <button class="flight-tab active" id="ftab-text" onclick="switchFlightTab('text')">📋 貼上文字</button>
+      <button class="flight-tab" id="ftab-file" onclick="switchFlightTab('file')">📎 上傳檔案 / 截圖</button>
+    </div>
 
-```
-<!-- TEXT TAB -->
-<div id="ftab-text-panel">
-  <p style="font-family:'Noto Sans TC',sans-serif;font-size:0.79rem;color:var(--text-muted);margin-bottom:0.6rem;">
-    將航班確認信、行程表或訂位記錄貼入下方，AI 自動解析起降時間：
-  </p>
-  <textarea class="flight-textarea" id="flightText" placeholder="例：
-```
-
-## BR195 台北桃園(TPE) → 昆明長水(KMG)
+    <!-- TEXT TAB -->
+    <div id="ftab-text-panel">
+      <p style="font-family:'Noto Sans TC',sans-serif;font-size:0.79rem;color:var(--text-muted);margin-bottom:0.6rem;">
+        將航班確認信、行程表或訂位記錄貼入下方，AI 自動解析起降時間：
+      </p>
+      <textarea class="flight-textarea" id="flightText" placeholder="例：
+BR195 台北桃園(TPE) → 昆明長水(KMG)
 出發：2026-07-28 09:35
 抵達：2026-07-28 12:50
+---
+或 Booking confirmation / 行程確認信 任意格式均可"></textarea>
+    </div>
 
-或 Booking confirmation / 行程確認信 任意格式均可”></textarea>
-</div>
+    <!-- FILE TAB -->
+    <div id="ftab-file-panel" style="display:none">
+      <div class="flight-drop-zone" id="dropZone" onclick="document.getElementById('flightFileInput').click()"
+           ondragover="event.preventDefault();this.classList.add('drag-over')"
+           ondragleave="this.classList.remove('drag-over')"
+           ondrop="handleFileDrop(event)">
+        <span class="dz-icon">📄</span>
+        <p>點擊或拖曳上傳<br><strong>圖片（截圖）、PDF、文字檔</strong></p>
+        <p style="margin-top:0.4rem;font-size:0.74rem;opacity:0.7;">支援 JPG / PNG / PDF / TXT</p>
+      </div>
+      <input type="file" id="flightFileInput" accept="image/*,.pdf,.txt" style="display:none" onchange="handleFileSelect(this)">
+      <div id="filePreview" style="font-family:'Noto Sans TC',sans-serif;font-size:0.8rem;color:var(--jade);margin-bottom:0.5rem;"></div>
+    </div>
 
-```
-<!-- FILE TAB -->
-<div id="ftab-file-panel" style="display:none">
-  <div class="flight-drop-zone" id="dropZone" onclick="document.getElementById('flightFileInput').click()"
-       ondragover="event.preventDefault();this.classList.add('drag-over')"
-       ondragleave="this.classList.remove('drag-over')"
-       ondrop="handleFileDrop(event)">
-    <span class="dz-icon">📄</span>
-    <p>點擊或拖曳上傳<br><strong>圖片（截圖）、PDF、文字檔</strong></p>
-    <p style="margin-top:0.4rem;font-size:0.74rem;opacity:0.7;">支援 JPG / PNG / PDF / TXT</p>
-  </div>
-  <input type="file" id="flightFileInput" accept="image/*,.pdf,.txt" style="display:none" onchange="handleFileSelect(this)">
-  <div id="filePreview" style="font-family:'Noto Sans TC',sans-serif;font-size:0.8rem;color:var(--jade);margin-bottom:0.5rem;"></div>
-</div>
+    <!-- LOADING -->
+    <div class="flight-loading" id="flightLoading">
+      <span class="spin">✈️</span> AI 解析中，請稍候...
+    </div>
 
-<!-- LOADING -->
-<div class="flight-loading" id="flightLoading">
-  <span class="spin">✈️</span> AI 解析中，請稍候...
-</div>
+    <!-- RESULT -->
+    <div class="flight-result" id="flightResult">
+      <h4>✅ 解析結果（確認後按「加入行程」）</h4>
+      <div id="flightResultList"></div>
+    </div>
 
-<!-- RESULT -->
-<div class="flight-result" id="flightResult">
-  <h4>✅ 解析結果（確認後按「加入行程」）</h4>
-  <div id="flightResultList"></div>
-</div>
+    <div style="font-family:'Noto Sans TC',sans-serif;font-size:0.74rem;color:var(--text-muted);margin-bottom:0.3rem;">
+      行程範圍：${fmtDate(tripStart)} ─ ${fmtDate(tripEnd)}
+    </div>
 
-<div style="font-family:'Noto Sans TC',sans-serif;font-size:0.74rem;color:var(--text-muted);margin-bottom:0.3rem;">
-  行程範圍：${fmtDate(tripStart)} ─ ${fmtDate(tripEnd)}
-</div>
-
-<div class="modal-btns">
-  <button class="modal-cancel" onclick="closeMod()">取消</button>
-  <button class="modal-confirm" id="flightParseBtn" onclick="parseFlights()">🔍 解析航班</button>
-  <button class="modal-confirm" id="flightAddBtn" onclick="addFlightsToSchedule()" style="display:none;background:var(--jade);border-color:var(--jade);">✅ 加入行程</button>
-</div>
-```
-
-`);
-// widen modal
-ov.querySelector(’.modal-box’).style.maxWidth = ‘600px’;
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closeMod()">取消</button>
+      <button class="modal-confirm" id="flightParseBtn" onclick="parseFlights()">🔍 解析航班</button>
+      <button class="modal-confirm" id="flightAddBtn" onclick="addFlightsToSchedule()" style="display:none;background:var(--jade);border-color:var(--jade);">✅ 加入行程</button>
+    </div>
+  `);
+  // widen modal
+  ov.querySelector('.modal-box').style.maxWidth = '600px';
 }
 
 function switchFlightTab(tab){
-flightTab = tab;
-document.getElementById(‘ftab-text-panel’).style.display = tab===‘text’ ? ‘’ : ‘none’;
-document.getElementById(‘ftab-file-panel’).style.display = tab===‘file’ ? ‘’ : ‘none’;
-document.querySelectorAll(’.flight-tab’).forEach(b=>b.classList.remove(‘active’));
-document.getElementById(‘ftab-’+tab).classList.add(‘active’);
+  flightTab = tab;
+  document.getElementById('ftab-text-panel').style.display = tab==='text' ? '' : 'none';
+  document.getElementById('ftab-file-panel').style.display = tab==='file' ? '' : 'none';
+  document.querySelectorAll('.flight-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('ftab-'+tab).classList.add('active');
 }
 
 let flightFileData = null; // {type, base64, mimeType}
 
 function handleFileDrop(e){
-e.preventDefault();
-document.getElementById(‘dropZone’).classList.remove(‘drag-over’);
-const file = e.dataTransfer.files[0];
-if(file) processFlightFile(file);
+  e.preventDefault();
+  document.getElementById('dropZone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if(file) processFlightFile(file);
 }
 function handleFileSelect(input){
-const file = input.files[0];
-if(file) processFlightFile(file);
+  const file = input.files[0];
+  if(file) processFlightFile(file);
 }
 function processFlightFile(file){
-const allowed = [‘image/jpeg’,‘image/png’,‘image/gif’,‘image/webp’,‘application/pdf’,‘text/plain’];
-if(!allowed.includes(file.type)){
-toast(‘不支援此格式，請上傳圖片、PDF 或 TXT’,true); return;
-}
-const reader = new FileReader();
-reader.onload = e => {
-const base64 = e.target.result.split(’,’)[1];
-flightFileData = { mimeType: file.type, base64, name: file.name };
-const prev = document.getElementById(‘filePreview’);
-if(prev) prev.textContent = ‘✅ 已選擇：’ + file.name + ’ (’ + (file.size/1024).toFixed(0) + ’ KB)’;
-};
-reader.readAsDataURL(file);
+  const allowed = ['image/jpeg','image/png','image/gif','image/webp','application/pdf','text/plain'];
+  if(!allowed.includes(file.type)){
+    toast('不支援此格式，請上傳圖片、PDF 或 TXT',true); return;
+  }
+  const reader = new FileReader();
+  reader.onload = e => {
+    const base64 = e.target.result.split(',')[1];
+    flightFileData = { mimeType: file.type, base64, name: file.name };
+    const prev = document.getElementById('filePreview');
+    if(prev) prev.textContent = '✅ 已選擇：' + file.name + ' (' + (file.size/1024).toFixed(0) + ' KB)';
+  };
+  reader.readAsDataURL(file);
 }
 
 async function parseFlights(){
-const loading  = document.getElementById(‘flightLoading’);
-const result   = document.getElementById(‘flightResult’);
-const parseBtn = document.getElementById(‘flightParseBtn’);
-const addBtn   = document.getElementById(‘flightAddBtn’);
+  const loading  = document.getElementById('flightLoading');
+  const result   = document.getElementById('flightResult');
+  const parseBtn = document.getElementById('flightParseBtn');
+  const addBtn   = document.getElementById('flightAddBtn');
 
-// Build prompt content
-let userContent = [];
-if(flightTab === ‘file’ && flightFileData){
-if(flightFileData.mimeType === ‘text/plain’){
-// decode as text
-const txt = atob(flightFileData.base64);
-userContent = [{ type:‘text’, text: ‘以下是航班文件內容：\n’ + txt }];
-} else if(flightFileData.mimeType === ‘application/pdf’){
-userContent = [
-{ type:‘document’, source:{ type:‘base64’, media_type:‘application/pdf’, data: flightFileData.base64 } },
-{ type:‘text’, text:‘請從此 PDF 中找出所有航班資訊。’ }
-];
-} else {
-// image
-userContent = [
-{ type:‘image’, source:{ type:‘base64’, media_type: flightFileData.mimeType, data: flightFileData.base64 } },
-{ type:‘text’, text:‘請從此圖片中找出所有航班資訊。’ }
-];
-}
-} else {
-const txt = document.getElementById(‘flightText’)?.value?.trim();
-if(!txt){ toast(‘請先貼上航班資訊或上傳檔案’,true); return; }
-userContent = [{ type:‘text’, text: txt }];
-}
+  // Build prompt content
+  let userContent = [];
+  if(flightTab === 'file' && flightFileData){
+    if(flightFileData.mimeType === 'text/plain'){
+      // decode as text
+      const txt = atob(flightFileData.base64);
+      userContent = [{ type:'text', text: '以下是航班文件內容：\n' + txt }];
+    } else if(flightFileData.mimeType === 'application/pdf'){
+      userContent = [
+        { type:'document', source:{ type:'base64', media_type:'application/pdf', data: flightFileData.base64 } },
+        { type:'text', text:'請從此 PDF 中找出所有航班資訊。' }
+      ];
+    } else {
+      // image
+      userContent = [
+        { type:'image', source:{ type:'base64', media_type: flightFileData.mimeType, data: flightFileData.base64 } },
+        { type:'text', text:'請從此圖片中找出所有航班資訊。' }
+      ];
+    }
+  } else {
+    const txt = document.getElementById('flightText')?.value?.trim();
+    if(!txt){ toast('請先貼上航班資訊或上傳檔案',true); return; }
+    userContent = [{ type:'text', text: txt }];
+  }
 
-const tripStart = DAYS[0];
-const tripEnd   = DAYS[DAYS.length-1];
-const systemPrompt = `你是一個航班資訊解析助手。
+  const tripStart = DAYS[0];
+  const tripEnd   = DAYS[DAYS.length-1];
+  const systemPrompt = `你是一個航班資訊解析助手。
 用戶會提供航班確認信、截圖或行程文字，你需要：
-
 1. 找出所有航班（包含搭乘日期、航班號、出發地、目的地、出發時間、抵達時間）
-1. 日期格式統一輸出為 YYYY-MM-DD，時間為 HH:MM（24小時制）
-1. 若年份不明，推斷在行程範圍 ${tripStart.toISOString().split(‘T’)[0]} 至 ${tripEnd.toISOString().split(‘T’)[0]} 內
-1. 只回傳 JSON，不要任何說明文字或 Markdown 符號
+2. 日期格式統一輸出為 YYYY-MM-DD，時間為 HH:MM（24小時制）
+3. 若年份不明，推斷在行程範圍 ${tripStart.toISOString().split('T')[0]} 至 ${tripEnd.toISOString().split('T')[0]} 內
+4. 只回傳 JSON，不要任何說明文字或 Markdown 符號
 
 回傳格式（陣列）：
 [
-{
-“date”: “2026-07-28”,
-“flightNo”: “BR195”,
-“from”: “台北桃園(TPE)”,
-“to”: “昆明長水(KMG)”,
-“depTime”: “09:35”,
-“arrTime”: “12:50”,
-“label”: “BR195 台北→昆明”,
-“inRange”: true
-}
+  {
+    "date": "2026-07-28",
+    "flightNo": "BR195",
+    "from": "台北桃園(TPE)",
+    "to": "昆明長水(KMG)",
+    "depTime": "09:35",
+    "arrTime": "12:50",
+    "label": "BR195 台北→昆明",
+    "inRange": true
+  }
 ]
 inRange 為 true 表示此日期在行程範圍內。若日期不在行程內，仍輸出但 inRange 設 false。`;
 
-loading.style.display = ‘block’;
-result.style.display = ‘none’;
-parseBtn.style.display = ‘none’;
+  loading.style.display = 'block';
+  result.style.display = 'none';
+  parseBtn.style.display = 'none';
 
-try{
-const claudeKey = localStorage.getItem(‘yunnan_claude_key’);
-if(!claudeKey) throw new Error(‘請先設定 Claude API Key（進入編輯模式 → ⚙️ 行程設定 → Claude API Key）’);
-if(!scriptUrl)  throw new Error(‘請先連接 Apps Script 試算表（航班解析需透過 Apps Script 中繼）’);
+  try{
+    const claudeKey = localStorage.getItem('yunnan_claude_key');
+    if(!claudeKey) throw new Error('請先設定 Claude API Key（進入編輯模式 → ⚙️ 行程設定 → Claude API Key）');
+    if(!scriptUrl)  throw new Error('請先連接 Apps Script 試算表（航班解析需透過 Apps Script 中繼）');
 
-```
-// Build Claude messages content
-const claudeContent = Array.isArray(userContent) ? userContent : [{type:'text',text:userContent}];
+    // Build Claude messages content
+    const claudeContent = Array.isArray(userContent) ? userContent : [{type:'text',text:userContent}];
 
-// Call Claude via Apps Script proxy (avoids CORS from GitHub Pages)
-const resp = await fetch(scriptUrl, {
-  method: 'POST',
-  headers: {'Content-Type': 'text/plain'},
-  body: JSON.stringify({
-    action:  'parseAI',
-    apiKey:  claudeKey,
-    system:  systemPrompt,
-    content: claudeContent
-  })
-});
-const data = await resp.json();
-if(data.error) throw new Error(data.error);
+    // Call Claude via Apps Script proxy (avoids CORS from GitHub Pages)
+    const resp = await fetch(scriptUrl, {
+      method: 'POST',
+      headers: {'Content-Type': 'text/plain'},
+      body: JSON.stringify({
+        action:  'parseAI',
+        apiKey:  claudeKey,
+        system:  systemPrompt,
+        content: claudeContent
+      })
+    });
+    const data = await resp.json();
+    if(data.error) throw new Error(data.error);
 
-const raw = (data.result||'').trim();
-const clean = raw.replace(/^```[a-z]*\n?/,'').replace(/```$/,'').trim();
-parsedFlights = JSON.parse(clean);
+    const raw = (data.result||'').trim();
+    const clean = raw.replace(/^```[a-z]*\n?/,'').replace(/```$/,'').trim();
+    parsedFlights = JSON.parse(clean);
 
-// Render result
-const list = document.getElementById('flightResultList');
-list.innerHTML = parsedFlights.map(f=>{
-  const warn = !f.inRange ? ' flight-item-warn' : '';
-  const tag  = !f.inRange ? ' ⚠️ 日期不在行程範圍內' : '';
-  return `<div class="flight-item">
-    <div class="flight-item-dot" style="${!f.inRange?'background:var(--crimson)':''}"></div>
-    <div class="flight-item-body">
-      <strong>${f.date} &nbsp;${f.flightNo||''}</strong>
-      <span class="${warn}">${f.from} → ${f.to}　${f.depTime}─${f.arrTime}${tag}</span>
-    </div>
-  </div>`;
-}).join('');
+    // Render result
+    const list = document.getElementById('flightResultList');
+    list.innerHTML = parsedFlights.map(f=>{
+      const warn = !f.inRange ? ' flight-item-warn' : '';
+      const tag  = !f.inRange ? ' ⚠️ 日期不在行程範圍內' : '';
+      return `<div class="flight-item">
+        <div class="flight-item-dot" style="${!f.inRange?'background:var(--crimson)':''}"></div>
+        <div class="flight-item-body">
+          <strong>${f.date} &nbsp;${f.flightNo||''}</strong>
+          <span class="${warn}">${f.from} → ${f.to}　${f.depTime}─${f.arrTime}${tag}</span>
+        </div>
+      </div>`;
+    }).join('');
 
-result.style.display = 'block';
-addBtn.style.display = '';
-toast('✅ 解析完成，共 '+parsedFlights.length+' 筆航班');
-```
-
-}catch(e){
-toast(‘❌ 解析失敗：’+e.message,true);
-parseBtn.style.display = ‘’;
-console.error(e);
-} finally {
-loading.style.display = ‘none’;
-}
+    result.style.display = 'block';
+    addBtn.style.display = '';
+    toast('✅ 解析完成，共 '+parsedFlights.length+' 筆航班');
+  }catch(e){
+    toast('❌ 解析失敗：'+e.message,true);
+    parseBtn.style.display = '';
+    console.error(e);
+  } finally {
+    loading.style.display = 'none';
+  }
 }
 
 function addFlightsToSchedule(){
-if(!parsedFlights.length){ toast(‘沒有可加入的航班’,true); return; }
-let addedCount = 0;
-let skipCount  = 0;
+  if(!parsedFlights.length){ toast('沒有可加入的航班',true); return; }
+  let addedCount = 0;
+  let skipCount  = 0;
 
-parsedFlights.forEach(f => {
-if(!f.inRange){ skipCount++; return; }
-// Find which day index matches
-const fDate = new Date(f.date + ‘T00:00:00’);
-const dayIdx = DAYS.findIndex(d =>
-d.getFullYear()===fDate.getFullYear() &&
-d.getMonth()===fDate.getMonth() &&
-d.getDate()===fDate.getDate()
-);
-if(dayIdx < 0){ skipCount++; return; }
+  parsedFlights.forEach(f => {
+    if(!f.inRange){ skipCount++; return; }
+    // Find which day index matches
+    const fDate = new Date(f.date + 'T00:00:00');
+    const dayIdx = DAYS.findIndex(d =>
+      d.getFullYear()===fDate.getFullYear() &&
+      d.getMonth()===fDate.getMonth() &&
+      d.getDate()===fDate.getDate()
+    );
+    if(dayIdx < 0){ skipCount++; return; }
 
-```
-// Add to that day's timeline
-const entries = getTimelineEntries(dayIdx);
-entries.push({ from: f.depTime, to: f.arrTime, label: f.label || (f.flightNo+' '+f.from+'→'+f.to) });
-setTimelineEntries(dayIdx, entries);
+    // Add to that day's timeline
+    const entries = getTimelineEntries(dayIdx);
+    entries.push({ from: f.depTime, to: f.arrTime, label: f.label || (f.flightNo+' '+f.from+'→'+f.to) });
+    setTimelineEntries(dayIdx, entries);
 
-// Also append to transport textarea
-const ta = document.getElementById('transport-'+dayIdx);
-if(ta){
-  const existing = ta.value.trim();
-  const newLine = `${f.flightNo} ${f.from}→${f.to} ${f.depTime}─${f.arrTime}`;
-  ta.value = existing ? existing + '\n' + newLine : newLine;
-}
-addedCount++;
-```
+    // Also append to transport textarea
+    const ta = document.getElementById('transport-'+dayIdx);
+    if(ta){
+      const existing = ta.value.trim();
+      const newLine = `${f.flightNo} ${f.from}→${f.to} ${f.depTime}─${f.arrTime}`;
+      ta.value = existing ? existing + '\n' + newLine : newLine;
+    }
+    addedCount++;
+  });
 
-});
+  markDirty();
+  closeMod();
 
-markDirty();
-closeMod();
-
-if(addedCount){
-// Switch to the first day that has a new flight
-const firstFlight = parsedFlights.find(f=>f.inRange);
-if(firstFlight){
-const fDate = new Date(firstFlight.date+‘T00:00:00’);
-const idx = DAYS.findIndex(d=>d.getFullYear()===fDate.getFullYear()&&d.getMonth()===fDate.getMonth()&&d.getDate()===fDate.getDate());
-if(idx>=0) switchTab(idx);
-}
-toast(‘✅ 已加入 ‘+addedCount+’ 筆航班到行程中’+(skipCount?’ （’+skipCount+’ 筆超出範圍略過）’:’’));
-} else {
-toast(‘⚠️ 所有航班日期均超出行程範圍，未加入’,true);
-}
+  if(addedCount){
+    // Switch to the first day that has a new flight
+    const firstFlight = parsedFlights.find(f=>f.inRange);
+    if(firstFlight){
+      const fDate = new Date(firstFlight.date+'T00:00:00');
+      const idx = DAYS.findIndex(d=>d.getFullYear()===fDate.getFullYear()&&d.getMonth()===fDate.getMonth()&&d.getDate()===fDate.getDate());
+      if(idx>=0) switchTab(idx);
+    }
+    toast('✅ 已加入 '+addedCount+' 筆航班到行程中'+(skipCount?' （'+skipCount+' 筆超出範圍略過）':''));
+  } else {
+    toast('⚠️ 所有航班日期均超出行程範圍，未加入',true);
+  }
 }
 
 // ─── PRINT ───
 function printPDF(){
-const d=buildDays();
-const s=d[0],e=d[d.length-1];
-document.getElementById(‘printRange’).textContent=`${s.getFullYear()}年${s.getMonth()+1}月${s.getDate()}日 ─ ${e.getMonth()+1}月${e.getDate()}日`;
-document.getElementById(‘printDate’).textContent=new Date().toLocaleDateString(‘zh-TW’);
-document.querySelectorAll(’.day-panel’).forEach(p=>p.classList.add(‘print-include’));
-window.print();
-setTimeout(()=>document.querySelectorAll(’.day-panel’).forEach(p=>p.classList.remove(‘print-include’)),1500);
+  const d=buildDays();
+  const s=d[0],e=d[d.length-1];
+  document.getElementById('printRange').textContent=`${s.getFullYear()}年${s.getMonth()+1}月${s.getDate()}日 ─ ${e.getMonth()+1}月${e.getDate()}日`;
+  document.getElementById('printDate').textContent=new Date().toLocaleDateString('zh-TW');
+  document.querySelectorAll('.day-panel').forEach(p=>p.classList.add('print-include'));
+  window.print();
+  setTimeout(()=>document.querySelectorAll('.day-panel').forEach(p=>p.classList.remove('print-include')),1500);
 }
 
 // ─── TOAST ───
 let toastTimer;
 function toast(msg,isErr=false){
-const el=document.getElementById(‘toast’);
-el.textContent=msg; el.className=‘toast show’+(isErr?’ err’:’’);
-clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove(‘show’),3200);
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.className='toast show'+(isErr?' err':'');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove('show'),3200);
 }
+
 
 // ─── LOCAL FILE DETECTION (removed) ───
 
@@ -1731,29 +1735,29 @@ setInterval(()=>{ if(dirty&&scriptUrl) syncToSheets(); },120_000);
 
 // ─── SYNC VIEW DIV (for read-only display) ───
 function syncViewDiv(ta){
-const viewId = ta.id.replace(/^(\w+)-(\d+)$/, ‘$1-view-$2’);
-const div = document.getElementById(viewId);
-if(div) div.textContent = ta.value;
+  const viewId = ta.id.replace(/^(\w+)-(\d+)$/, '$1-view-$2');
+  const div = document.getElementById(viewId);
+  if(div) div.textContent = ta.value;
 }
 function syncAllViewDivs(){
-document.querySelectorAll(’.info-card textarea’).forEach(ta=>{
-syncViewDiv(ta);
-});
+  document.querySelectorAll('.info-card textarea').forEach(ta=>{
+    syncViewDiv(ta);
+  });
 }
 // ─── AUTO-EXPAND TEXTAREA ───
 function autoExpand(el){
-el.style.height=‘auto’;
-el.style.height=Math.max(el.scrollHeight, 70)+‘px’;
+  el.style.height='auto';
+  el.style.height=Math.max(el.scrollHeight, 70)+'px';
 }
-document.addEventListener(‘input’, e=>{
-if(e.target.tagName===‘TEXTAREA’ && e.target.closest(’.info-card’)){
-autoExpand(e.target);
-}
+document.addEventListener('input', e=>{
+  if(e.target.tagName==='TEXTAREA' && e.target.closest('.info-card')){
+    autoExpand(e.target);
+  }
 });
 function expandAllTextareas(){
-document.querySelectorAll(’.info-card textarea’).forEach(ta=>{
-autoExpand(ta);
-});
+  document.querySelectorAll('.info-card textarea').forEach(ta=>{
+    autoExpand(ta);
+  });
 }
 
 // ─── INIT ───
@@ -1762,90 +1766,93 @@ buildUI();
 loadFromLocal();
 // Pre-fill scriptUrl silently (URL is fixed, no auto-load without password)
 scriptUrl = SCRIPT_URL;
-document.getElementById(‘scriptUrl’).value = SCRIPT_URL;
+document.getElementById('scriptUrl').value = SCRIPT_URL;
 
 // ─── PWA: SERVICE WORKER ───
-if(‘serviceWorker’ in navigator && location.protocol === ‘https:’ && !location.hostname.includes(‘claude’)){
-window.addEventListener(‘load’, ()=>{
-navigator.serviceWorker.register(’./sw.js’).catch(e=>console.log(‘SW reg failed:’,e));
-});
+if('serviceWorker' in navigator && location.protocol === 'https:' && !location.hostname.includes('claude')){
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('./sw.js').catch(e=>console.log('SW reg failed:',e));
+  });
 }
 
 // ─── PWA: JUMP TO TODAY ───
 (function(){
-const params = new URLSearchParams(location.search);
-if(params.get(‘today’)===‘1’){
-const today = new Date();
-const idx = DAYS.findIndex(d =>
-d.getFullYear()===today.getFullYear() &&
-d.getMonth()===today.getMonth() &&
-d.getDate()===today.getDate()
-);
-if(idx>=0) setTimeout(()=>switchTab(idx), 100);
-}
+  const params = new URLSearchParams(location.search);
+  if(params.get('today')==='1'){
+    const today = new Date();
+    const idx = DAYS.findIndex(d =>
+      d.getFullYear()===today.getFullYear() &&
+      d.getMonth()===today.getMonth() &&
+      d.getDate()===today.getDate()
+    );
+    if(idx>=0) setTimeout(()=>switchTab(idx), 100);
+  }
 })();
 
 // ─── PWA: INSTALL PROMPT ───
 let deferredPrompt = null;
-window.addEventListener(‘beforeinstallprompt’, e => {
-e.preventDefault();
-deferredPrompt = e;
-// Show install banner after 3 seconds if not standalone
-if(!window.matchMedia(’(display-mode: standalone)’).matches){
-setTimeout(showInstallBanner, 3000);
-}
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // Show install banner after 3 seconds if not standalone
+  if(!window.matchMedia('(display-mode: standalone)').matches){
+    setTimeout(showInstallBanner, 3000);
+  }
 });
 
 function showInstallBanner(){
-if(document.getElementById(‘installBanner’)) return;
-const banner = document.createElement(‘div’);
-banner.id = ‘installBanner’;
-banner.style.cssText = [
-‘position:fixed’,‘top:0’,‘left:0’,‘right:0’,
-‘background:linear-gradient(90deg,#1a3a2a,#1e4060)’,
-‘color:#fff’,‘padding:0.7rem 1rem’,
-‘display:flex’,‘align-items:center’,‘justify-content:space-between’,
-‘font-family:'Noto Sans TC',sans-serif’,‘font-size:0.82rem’,
-‘z-index:99999’,‘gap:0.8rem’,‘flex-wrap:wrap’,
-‘box-shadow:0 2px 12px rgba(0,0,0,0.3)’
-].join(’;’);
-banner.innerHTML = ` <span>⛰️ <strong>加到主畫面</strong>，像 App 一樣使用！</span> <div style="display:flex;gap:0.5rem;"> <button onclick="installApp()" style="padding:0.4rem 1rem;border-radius:20px;border:none;background:#e8b84b;color:#1a3a2a;font-weight:600;cursor:pointer;font-size:0.8rem;">安裝</button> <button onclick="document.getElementById('installBanner').remove()" style="padding:0.4rem 0.8rem;border-radius:20px;border:1px solid rgba(255,255,255,0.4);background:transparent;color:#fff;cursor:pointer;font-size:0.8rem;">略過</button> </div>`;
-document.body.prepend(banner);
+  if(document.getElementById('installBanner')) return;
+  const banner = document.createElement('div');
+  banner.id = 'installBanner';
+  banner.style.cssText = [
+    'position:fixed','top:0','left:0','right:0',
+    'background:linear-gradient(90deg,#1a3a2a,#1e4060)',
+    'color:#fff','padding:0.7rem 1rem',
+    'display:flex','align-items:center','justify-content:space-between',
+    'font-family:\'Noto Sans TC\',sans-serif','font-size:0.82rem',
+    'z-index:99999','gap:0.8rem','flex-wrap:wrap',
+    'box-shadow:0 2px 12px rgba(0,0,0,0.3)'
+  ].join(';');
+  banner.innerHTML = `
+    <span>⛰️ <strong>加到主畫面</strong>，像 App 一樣使用！</span>
+    <div style="display:flex;gap:0.5rem;">
+      <button onclick="installApp()" style="padding:0.4rem 1rem;border-radius:20px;border:none;background:#e8b84b;color:#1a3a2a;font-weight:600;cursor:pointer;font-size:0.8rem;">安裝</button>
+      <button onclick="document.getElementById('installBanner').remove()" style="padding:0.4rem 0.8rem;border-radius:20px;border:1px solid rgba(255,255,255,0.4);background:transparent;color:#fff;cursor:pointer;font-size:0.8rem;">略過</button>
+    </div>`;
+  document.body.prepend(banner);
 }
 
 async function installApp(){
-if(deferredPrompt){
-deferredPrompt.prompt();
-const {outcome} = await deferredPrompt.userChoice;
-deferredPrompt = null;
-document.getElementById(‘installBanner’)?.remove();
-} else {
-// iOS fallback instructions
-showIOSInstallGuide();
-}
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    const {outcome} = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    document.getElementById('installBanner')?.remove();
+  } else {
+    // iOS fallback instructions
+    showIOSInstallGuide();
+  }
 }
 
 function showIOSInstallGuide(){
-const ov = document.createElement(‘div’);
-ov.style.cssText = ‘position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:99999;display:flex;align-items:flex-end;justify-content:center;padding:1rem;’;
-ov.innerHTML = `<div style="background:#fff;border-radius:16px;padding:1.5rem;max-width:400px;width:100%;font-family:'Noto Sans TC',sans-serif;text-align:center;">
-<div style="font-size:2rem;margin-bottom:0.5rem;">📱</div>
-<h3 style="font-size:1rem;font-weight:700;margin-bottom:1rem;color:#1a3a2a;">加到 iPhone 主畫面</h3>
-<ol style="text-align:left;line-height:2.2;font-size:0.85rem;color:#444;padding-left:1.2rem;margin-bottom:1rem;">
-<li>點下方工具列的 <strong>「分享」</strong> 按鈕 <span style="font-size:1.1rem;">⬆️</span></li>
-<li>向下滑找到 <strong>「加入主畫面」</strong></li>
-<li>點右上角 <strong>「新增」</strong></li>
-</ol>
-<button onclick="this.closest('div[style*=fixed]').remove()" style="padding:0.6rem 2rem;border-radius:20px;border:none;background:#1a3a2a;color:#fff;font-size:0.9rem;cursor:pointer;">知道了</button>
-
+  const ov = document.createElement('div');
+  ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:99999;display:flex;align-items:flex-end;justify-content:center;padding:1rem;';
+  ov.innerHTML = `<div style="background:#fff;border-radius:16px;padding:1.5rem;max-width:400px;width:100%;font-family:'Noto Sans TC',sans-serif;text-align:center;">
+    <div style="font-size:2rem;margin-bottom:0.5rem;">📱</div>
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:1rem;color:#1a3a2a;">加到 iPhone 主畫面</h3>
+    <ol style="text-align:left;line-height:2.2;font-size:0.85rem;color:#444;padding-left:1.2rem;margin-bottom:1rem;">
+      <li>點下方工具列的 <strong>「分享」</strong> 按鈕 <span style="font-size:1.1rem;">⬆️</span></li>
+      <li>向下滑找到 <strong>「加入主畫面」</strong></li>
+      <li>點右上角 <strong>「新增」</strong></li>
+    </ol>
+    <button onclick="this.closest('div[style*=fixed]').remove()" style="padding:0.6rem 2rem;border-radius:20px;border:none;background:#1a3a2a;color:#fff;font-size:0.9rem;cursor:pointer;">知道了</button>
   </div>`;
   document.body.appendChild(ov);
   ov.addEventListener('click', e=>{ if(e.target===ov) ov.remove(); });
 }
 
 // ─── MOBILE: improve bottom bar padding for safe area ───
-document.querySelector(’.actions-bar’).style.paddingBottom = ‘calc(0.65rem + env(safe-area-inset-bottom))’;
+document.querySelector('.actions-bar').style.paddingBottom = 'calc(0.65rem + env(safe-area-inset-bottom))';
 </script>
-
 </body>
 </html>
