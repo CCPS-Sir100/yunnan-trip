@@ -910,6 +910,7 @@ function buildUI(oldData){
   if(oldData) setData(oldData);
   if(currentTab!=='ws' && (currentTab>=DAYS.length || currentTab<0)) currentTab=0;
   switchTab(currentTab);
+  renderWebsites();
 }
 function updateHeaderDates(){
   const d=buildDays();
