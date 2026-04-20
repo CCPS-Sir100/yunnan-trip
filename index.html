@@ -489,7 +489,10 @@ body.view-mode .ws-add-form{display:none!important;}
       <span class="wish-pool-title">🌟 團員許願池
         <span class="wish-name-badge" id="globalWishBadge" style="display:none"></span>
       </span>
-      <span style="font-family:'Noto Sans TC',sans-serif;font-size:0.72rem;color:#c8a83a;">全團共用・任何一天都看得到</span>
+      <div style="display:flex;align-items:center;gap:0.6rem;">
+        <span style="font-family:'Noto Sans TC',sans-serif;font-size:0.72rem;color:#c8a83a;">全團共用</span>
+        <button id="memberLogoutBtn" onclick="memberLogout()" style="display:none;background:transparent;border:none;font-family:'Noto Sans TC',sans-serif;font-size:0.68rem;color:#bbb;cursor:pointer;padding:0;text-decoration:underline;">登出</button>
+      </div>
     </div>
     <div class="wish-list" id="globalWishList">
       <div class="wish-empty">尚無許願，登入後可新增想去的景點 ✨</div>
@@ -570,23 +573,22 @@ function doMemberLogin(){
 }
 function enterMemberMode(){
   memberUnlocked=true;
+  localStorage.setItem('yunnan_member_logged','1'); // 記住登入狀態
   document.getElementById('memberBtn').style.display='none';
-  // Auto-connect with hardcoded URL
   scriptUrl = SCRIPT_URL;
   localStorage.setItem('yunnan_scripturl', SCRIPT_URL);
   document.getElementById('scriptUrl').value = SCRIPT_URL;
   setSyncStatus('已連接，載入中...','ok');
-  // Ask for member name
+  // Ask for member name (first time only)
   const savedName = localStorage.getItem('yunnan_member_name');
   if(!savedName){
-    const name = prompt('請輸入你的名字（顯示在許願池）：','') || '團員';
+    const name = prompt('請輸入你的名字（顯示在許願池，只需輸入一次）：','') || '團員';
     localStorage.setItem('yunnan_member_name', name.trim()||'團員');
   }
   showWishInputs();
   closeMod();
   loadFromSheets();
   toast('✅ 登入成功，載入行程中...');
-  // Scroll wish pool into view
   setTimeout(()=>{
     const wp = document.getElementById('globalWishWrap');
     if(wp){ wp.scrollIntoView({behavior:'smooth',block:'start'}); }
@@ -1063,17 +1065,29 @@ function delWish(k){
 function showWishInputs(){
   const row = document.getElementById('globalWishInputRow');
   const badge = document.getElementById('globalWishBadge');
+  const logoutBtn = document.getElementById('memberLogoutBtn');
   if(row) row.style.display='flex';
   if(badge){
     badge.textContent = localStorage.getItem('yunnan_member_name')||'團員';
     badge.style.display='';
   }
+  if(logoutBtn) logoutBtn.style.display='';
 }
 function hideWishInputs(){
   const row = document.getElementById('globalWishInputRow');
   const badge = document.getElementById('globalWishBadge');
+  const logoutBtn = document.getElementById('memberLogoutBtn');
   if(row) row.style.display='none';
   if(badge) badge.style.display='none';
+  if(logoutBtn) logoutBtn.style.display='none';
+}
+function memberLogout(){
+  if(!confirm('確定要登出團員模式嗎？')) return;
+  localStorage.removeItem('yunnan_member_logged');
+  memberUnlocked = false;
+  hideWishInputs();
+  document.getElementById('memberBtn').style.display='';
+  toast('已登出團員模式');
 }
 async function syncWishesToSheets(){
   if(!scriptUrl) return;
@@ -1934,9 +1948,17 @@ try {
   loadTripConfig();
   buildUI();
   loadFromLocal();
-  // Pre-fill scriptUrl silently (URL is fixed, no auto-load without password)
   scriptUrl = SCRIPT_URL;
   document.getElementById('scriptUrl').value = SCRIPT_URL;
+
+  // Auto-restore member login
+  if(localStorage.getItem('yunnan_member_logged')==='1'){
+    memberUnlocked = true;
+    document.getElementById('memberBtn').style.display='none';
+    showWishInputs();
+    setSyncStatus('已連接，載入中...','ok');
+    setTimeout(loadFromSheets, 600);
+  }
 } catch(initErr) {
   console.error('Init error:', initErr);
   document.getElementById('headerDates').textContent = '載入錯誤，請重新整理';
