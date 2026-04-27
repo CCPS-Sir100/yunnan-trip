@@ -564,7 +564,10 @@ async function cloudLoad(){
     if(!r.ok) throw new Error('HTTP '+r.status);
     const j = await r.json();
     if(j && j.days){
-      data=mergeData(j);localSave();
+      data=mergeData(j);
+      // 載入後對每天交通排序
+      for(let i=1;i<=14;i++) sortSegs('d'+i);
+      localSave();
     }
     // 不管有沒有雲端資料，都算成功
     syncStatus='ok';
@@ -812,6 +815,14 @@ function selSegType(key,type){
     el.classList.toggle('sel',el.dataset.t===type);
   });
 }
+function sortSegs(key){
+  data.days[key].segments.sort((a,b)=>{
+    const ta=a.departTime||'00:00';
+    const tb=b.departTime||'00:00';
+    return ta.localeCompare(tb);
+  });
+}
+
 function confirmAddSeg(key){
   const id='asf_'+key;
   const type=addSegState[key]||'car';
@@ -822,6 +833,7 @@ function confirmAddSeg(key){
   const note=document.getElementById(id+'_note').value.trim();
   if(!from&&!to){showToast('請至少填寫出發地或目的地');return;}
   data.days[key].segments.push({type,from,to,departTime:dep,arriveTime:arr,note});
+  sortSegs(key);
   saveData();renderDay(key);
 }
 function removeSeg(key,idx){data.days[key].segments.splice(idx,1);saveData();renderDay(key);}
