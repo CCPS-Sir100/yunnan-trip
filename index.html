@@ -520,55 +520,53 @@ function fmtNow(){return new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',m
 // ═══ CLOUD SYNC ═══════════════════════════════════
 async function cloudSave(){
   if(!USE_CLOUD){localSave();return;}
-  setSyncUI('syncing');
   localSave();
+  await chunkUpload();
+}
+
+// 分批 GET 上傳，每批 500 字元，完全避開 CORS 和 URL 長度問題
+async function chunkUpload(){
+  setSyncUI('syncing');
   try{
-    const dataStr=JSON.stringify(data);
-    // 用 no-cors POST 送出（GAS 收得到，但瀏覽器看不到回應）
-    await fetch(GAS_URL,{
-      method:'POST',
-      mode:'no-cors',
-      body:dataStr,
-      headers:{'Content-Type':'text/plain'}
-    });
+    const encoded = encodeURIComponent(JSON.stringify(data));
+    const CHUNK   = 500; // 每批字元數
+    const chunks  = [];
+    for(let i=0;i<encoded.length;i+=CHUNK){
+      chunks.push(encoded.slice(i,i+CHUNK));
+    }
+    const total = chunks.length;
+
+    // 逐批送出
+    for(let i=0;i<total;i++){
+      const url = GAS_URL+'?action=chunk&idx='+i+'&total='+total+'&part='+chunks[i];
+      const r   = await fetch(url,{redirect:'follow',cache:'no-cache'});
+      const j   = await r.json();
+      if(!j.ok) throw new Error('chunk '+i+' failed: '+j.error);
+    }
+
+    // 全部送完，叫 GAS 組合寫入
+    const r2 = await fetch(GAS_URL+'?action=commit',{redirect:'follow',cache:'no-cache'});
+    const j2 = await r2.json();
+    if(!j2.ok) throw new Error('commit failed: '+j2.error);
+
     setSyncUI('ok');
+    showToast('已同步到雲端 ☁️');
   }catch(e){
     setSyncUI('error');
-    console.error('cloudSave error:',e);
+    showToast('同步失敗：'+e.message);
+    console.error('chunkUpload error:',e);
   }
 }
 
-// 強制把本機資料上傳雲端，並驗證是否成功
+// 強制把本機資料上傳雲端並驗證
 async function forceUpload(){
   localLoad();
   showToast('上傳中…');
-  setSyncUI('syncing');
-  const dataStr=JSON.stringify(data);
-  try{
-    // POST 送出
-    await fetch(GAS_URL,{
-      method:'POST',
-      mode:'no-cors',
-      body:dataStr,
-      headers:{'Content-Type':'text/plain'}
-    });
-    // 等 1.5 秒後用 GET 讀回來驗證
-    await new Promise(r=>setTimeout(r,1500));
-    const r2=await fetch(GAS_URL+'?action=load&t='+Date.now(),{redirect:'follow',cache:'no-cache'});
-    const j2=await r2.json();
-    if(j2.ok && j2.data){
-      setSyncUI('ok');
-      showToast('✅ 上傳成功！其他人重新整理即可看到');
-    } else {
-      setSyncUI('error');
-      showToast('⚠️ 上傳可能失敗，請再試一次');
-    }
-  }catch(e){
-    setSyncUI('error');
-    showToast('上傳失敗：'+e.message);
-    console.error('forceUpload error:',e);
+  await chunkUpload();
+  if(syncStatus==='ok'){
+    showToast('✅ 上傳成功！其他人重新整理即可看到');
+    renderCurrent();
   }
-  renderCurrent();
 }
 
 async function cloudLoad(){
