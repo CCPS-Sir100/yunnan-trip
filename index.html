@@ -518,36 +518,51 @@ function fmtL(d){return`${d.getMonth()+1}月${d.getDate()}日`;}
 function fmtNow(){return new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});}
 
 // ═══ CLOUD SYNC ═══════════════════════════════════
+// JSONP helper — 繞過 302 redirect，直接拿到 JSON
+function jsonp(url) {
+  return new Promise((resolve, reject) => {
+    const cb = 'cb_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+    window[cb] = (data) => {
+      delete window[cb];
+      document.head.removeChild(script);
+      resolve(data);
+    };
+    const script = document.createElement('script');
+    script.src = url + '&callback=' + cb;
+    script.onerror = () => {
+      delete window[cb];
+      document.head.removeChild(script);
+      reject(new Error('JSONP failed'));
+    };
+    document.head.appendChild(script);
+  });
+}
+
 async function cloudSave(){
   if(!USE_CLOUD){localSave();return;}
   localSave();
   await chunkUpload();
 }
 
-// 分批 GET 上傳，每批 500 字元，完全避開 CORS 和 URL 長度問題
 async function chunkUpload(){
   setSyncUI('syncing');
   try{
     const encoded = encodeURIComponent(JSON.stringify(data));
-    const CHUNK   = 500; // 每批字元數
+    const CHUNK   = 800;
     const chunks  = [];
-    for(let i=0;i<encoded.length;i+=CHUNK){
-      chunks.push(encoded.slice(i,i+CHUNK));
-    }
+    for(let i=0;i<encoded.length;i+=CHUNK) chunks.push(encoded.slice(i,i+CHUNK));
     const total = chunks.length;
 
     // 逐批送出
     for(let i=0;i<total;i++){
       const url = GAS_URL+'?action=chunk&idx='+i+'&total='+total+'&part='+chunks[i];
-      const r   = await fetch(url,{redirect:'follow',cache:'no-cache'});
-      const j   = await r.json();
-      if(!j.ok) throw new Error('chunk '+i+' failed: '+j.error);
+      const j   = await jsonp(url);
+      if(!j.ok) throw new Error('chunk '+i+' 失敗: '+j.error);
     }
 
-    // 全部送完，叫 GAS 組合寫入
-    const r2 = await fetch(GAS_URL+'?action=commit',{redirect:'follow',cache:'no-cache'});
-    const j2 = await r2.json();
-    if(!j2.ok) throw new Error('commit failed: '+j2.error);
+    // commit
+    const j2 = await jsonp(GAS_URL+'?action=commit');
+    if(!j2.ok) throw new Error('commit 失敗: '+j2.error);
 
     setSyncUI('ok');
     showToast('已同步到雲端 ☁️');
@@ -558,7 +573,6 @@ async function chunkUpload(){
   }
 }
 
-// 強制把本機資料上傳雲端並驗證
 async function forceUpload(){
   localLoad();
   showToast('上傳中…');
@@ -573,21 +587,11 @@ async function cloudLoad(){
   if(!USE_CLOUD){localLoad();renderCurrent();return;}
   setSyncUI('syncing');
   try{
-    const url=GAS_URL+'?action=load&t='+Date.now();
-    const r=await fetch(url,{
-      method:'GET',
-      redirect:'follow',
-      cache:'no-cache'
-    });
-    if(!r.ok) throw new Error('HTTP '+r.status);
-    const text=await r.text();
-    let j;
-    try{ j=JSON.parse(text); }
-    catch(pe){ throw new Error('回應格式錯誤: '+text.slice(0,80)); }
-    if(j.ok&&j.data){
+    const j = await jsonp(GAS_URL+'?action=load&t='+Date.now());
+    if(j.ok && j.data){
       data=mergeData(j.data);localSave();setSyncUI('ok');
       renderCurrent();showToast('已載入最新資料 ✅');
-    }else{
+    } else {
       setSyncUI('ok');localLoad();renderCurrent();
     }
   }catch(e){
@@ -596,6 +600,7 @@ async function cloudLoad(){
     console.error('cloudLoad error:',e);
   }
 }
+
 
 function mergeData(remote){
   const base=initData();
