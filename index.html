@@ -92,6 +92,13 @@ body {
 }
 .tab-btn.active { color:var(--primary); border-bottom-color:var(--primary); }
 .tab-btn:hover:not(.active) { color:var(--ink2); }
+.tab-sep {
+  width:1px; background:var(--border); margin:6px 4px; flex-shrink:0;
+}
+.tab-day {
+  font-size:0.68rem; padding:10px 11px; color:var(--ink2);
+}
+.tab-day.active { color:var(--primary); border-bottom-color:var(--primary); }
 
 /* MAIN */
 .main { padding:14px; max-width:680px; margin:0 auto; }
@@ -572,7 +579,9 @@ async function cloudLoad(){
     // 不管有沒有雲端資料，都算成功
     syncStatus='ok';
     lastSyncTime=fmtNow();
-    renderCurrent(); // render 之後 syncBar 會用 syncStatus='ok' 重畫
+    currentTab='overview'; // 載入後回到總覽
+    buildTabs();
+    renderCurrent();
   }catch(e){
     syncStatus='error';
     localLoad();renderCurrent();
@@ -643,14 +652,19 @@ function doLogout(){
 
 // ═══ TABS ═════════════════════════════════════════
 function buildTabs(){
-  const tabs=[
+  const mainTabs=[
     {id:'overview',label:'總覽'},
     {id:'expenses',label:'💰 花費'},
-    ...Array.from({length:TOTAL_DAYS},(_,i)=>({id:'d'+(i+1),label:`D${i+1} ${fmt(getDate(i))}`}))
   ];
-  document.getElementById('tabBar').innerHTML=tabs.map(t=>
+  const dayTabs=Array.from({length:TOTAL_DAYS},(_,i)=>({id:'d'+(i+1),label:`D${i+1} · ${fmt(getDate(i))}`}));
+  const mainHtml=mainTabs.map(t=>
     `<button class="tab-btn${t.id===currentTab?' active':''}" onclick="switchTab('${t.id}')">${t.label}</button>`
   ).join('');
+  const sep=`<div class="tab-sep"></div>`;
+  const dayHtml=dayTabs.map(t=>
+    `<button class="tab-btn tab-day${t.id===currentTab?' active':''}" onclick="switchTab('${t.id}')">${t.label}</button>`
+  ).join('');
+  document.getElementById('tabBar').innerHTML=mainHtml+sep+dayHtml;
 }
 function switchTab(id){currentTab=id;buildTabs();renderCurrent();window.scrollTo(0,0);}
 function renderCurrent(){
