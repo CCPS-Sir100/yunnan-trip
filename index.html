@@ -107,6 +107,12 @@ body {
   font-weight:500; font-family:'Noto Sans TC',sans-serif; transition:all 0.18s;
 }
 .btn-sync:hover { background:var(--primary); color:#fff; }
+.btn-upload {
+  background:var(--orange-l); color:var(--orange); border:1px solid #fcd9b0;
+  padding:3px 9px; border-radius:10px; font-size:0.65rem; cursor:pointer;
+  font-weight:500; font-family:'Noto Sans TC',sans-serif; transition:all 0.18s;
+}
+.btn-upload:hover { background:var(--orange); color:#fff; }
 
 /* DAY CARD */
 .day-card {
@@ -509,17 +515,31 @@ async function cloudSave(){
   if(!USE_CLOUD){localSave();return;}
   setSyncUI('syncing');
   try{
-    // 用 no-cors 的 POST 寫入（GAS 會接到），讀取用 GET
-    const r=await fetch(GAS_URL,{
-      method:'POST',
-      mode:'no-cors',
-      body:JSON.stringify({action:'save',data}),
-      headers:{'Content-Type':'text/plain'}
-    });
-    // no-cors 下無法讀 response，視為成功
-    setSyncUI('ok');localSave();showToast('已同步到雲端 ☁️');
+    // 用 GET 帶資料，分段避免 URL 過長
+    const dataStr=JSON.stringify(data);
+    const encoded=encodeURIComponent(dataStr);
+    const url=GAS_URL+'?action=save&data='+encoded;
+    const r=await fetch(url,{method:'GET',redirect:'follow',cache:'no-cache'});
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const text=await r.text();
+    const j=JSON.parse(text);
+    if(j.ok){setSyncUI('ok');localSave();showToast('已同步到雲端 ☁️');}
+    else throw new Error(j.error||'save failed');
   }catch(e){
-    setSyncUI('error');localSave();showToast('雲端同步失敗，已存本機');
+    setSyncUI('error');localSave();
+    showToast('同步失敗：'+e.message);
+    console.error('cloudSave error:',e);
+  }
+}
+
+// 強制把本機資料上傳雲端
+async function forceUpload(){
+  localLoad(); // 確保 data 是最新本機版本
+  showToast('上傳中…');
+  await cloudSave();
+  if(syncStatus==='ok'){
+    showToast('✅ 本機資料已上傳到雲端！');
+    renderCurrent();
   }
 }
 
@@ -631,11 +651,13 @@ function syncBar(){
   if(!USE_CLOUD)return'';
   const st=syncStatus==='syncing'?'同步中…':syncStatus==='error'?'同步失敗':'已同步';
   const dc=syncStatus==='syncing'?' syncing':syncStatus==='error'?' error':'';
+  const uploadBtn=isAdmin?`<button class="btn-upload" onclick="forceUpload()" title="把本機資料強制上傳到雲端">⬆️ 上傳本機</button>`:'';
   return`<div class="sync-bar">
     <div class="sync-dot${dc}" id="syncDot"></div>
     <div class="sync-lbl" id="syncLbl">${st}</div>
     <div class="sync-ts" id="syncTs">${lastSyncTime||''}</div>
-    <button class="btn-sync" onclick="cloudLoad()">重新整理</button>
+    ${uploadBtn}
+    <button class="btn-sync" onclick="cloudLoad()">↺ 重新整理</button>
   </div>`;
 }
 
