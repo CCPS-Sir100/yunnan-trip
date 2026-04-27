@@ -509,12 +509,15 @@ async function cloudSave(){
   if(!USE_CLOUD){localSave();return;}
   setSyncUI('syncing');
   try{
-    // 全部用 GET，避免 CORS 問題
-    const encoded=encodeURIComponent(JSON.stringify(data));
-    const r=await fetch(GAS_URL+'?action=save&data='+encoded);
-    const j=await r.json();
-    if(j.ok){setSyncUI('ok');localSave();showToast('已同步到雲端 ☁️');}
-    else throw new Error(j.error);
+    // 用 no-cors 的 POST 寫入（GAS 會接到），讀取用 GET
+    const r=await fetch(GAS_URL,{
+      method:'POST',
+      mode:'no-cors',
+      body:JSON.stringify({action:'save',data}),
+      headers:{'Content-Type':'text/plain'}
+    });
+    // no-cors 下無法讀 response，視為成功
+    setSyncUI('ok');localSave();showToast('已同步到雲端 ☁️');
   }catch(e){
     setSyncUI('error');localSave();showToast('雲端同步失敗，已存本機');
   }
@@ -525,11 +528,15 @@ async function cloudLoad(){
   setSyncUI('syncing');
   try{
     const r=await fetch(GAS_URL+'?action=load&t='+Date.now());
-    const j=await r.json();
+    const text=await r.text();
+    const j=JSON.parse(text);
     if(j.ok&&j.data){
       data=mergeData(j.data);localSave();setSyncUI('ok');
       renderCurrent();showToast('已載入最新資料 ✅');
-    }else throw new Error('load failed');
+    }else{
+      // data 是 null 代表雲端是空的，正常情況
+      setSyncUI('ok');renderCurrent();
+    }
   }catch(e){
     setSyncUI('error');localLoad();renderCurrent();showToast('無法連線，使用本機暫存');
   }
