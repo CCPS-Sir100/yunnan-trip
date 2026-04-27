@@ -34,8 +34,11 @@
   --t-metro:   #8b5cf6;
   --t-bus:     #22b87a;
   --t-walk:    #94a3b8;
+  --t-boat:    #06b6d4;
+  --t-other:   #64748b;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { font-size: 18px; }
 body {
   font-family: 'Noto Sans TC', sans-serif;
   background: var(--bg); color: var(--ink);
@@ -144,6 +147,7 @@ body {
 .seg-icon { width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.9rem; flex-shrink:0; }
 .si-fly{background:#e8f3ff;} .si-train{background:#fef2f2;} .si-car{background:#fffbeb;}
 .si-drive{background:#fffbeb;} .si-metro{background:#f5f3ff;} .si-bus{background:#ecfdf5;} .si-walk{background:#f8fafc;}
+.si-boat{background:#ecfeff;} .si-other{background:#f1f5f9;}
 .seg-times { display:flex; flex-direction:column; gap:2px; }
 .seg-tr { display:flex; align-items:center; gap:4px; font-family:'DM Mono',monospace; font-size:0.7rem; }
 .seg-lbl { color:var(--muted); font-size:0.58rem; width:14px; }
@@ -172,7 +176,7 @@ body {
   font-size:0.76rem; color:var(--ink); width:100%; transition:border-color 0.18s;
 }
 .form-inp:focus,.form-sel:focus { outline:none; border-color:var(--primary); }
-.type-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:4px; margin-bottom:7px; }
+.type-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:5px; margin-bottom:7px; }
 .type-chip {
   display:flex; flex-direction:column; align-items:center; justify-content:center;
   gap:2px; padding:6px 3px; border:1.5px solid #c8dfff; border-radius:8px;
@@ -391,7 +395,7 @@ body {
 .hidden { display:none !important; }
 @media(max-width:400px){
   .exp-cat-grid{grid-template-columns:repeat(3,1fr);}
-  .type-grid{grid-template-columns:repeat(4,1fr);}
+  .type-grid{grid-template-columns:repeat(3,1fr);}
   .form-row{grid-template-columns:1fr;}
 }
 </style>
@@ -454,7 +458,7 @@ const ADMIN_PASSWORD = 'CCcc7379403!';
 // 格式：'https://script.google.com/macros/s/AKfycb.../exec'
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbyPmGcQImOty_b79zolQ8RjmmFC1eHKXH5R1HMtsaU0QI3zGVeITgyP9yL3qYVZIbCR/exec';
 
-const USE_CLOUD = GAS_URL !== 'https://script.google.com/macros/s/AKfycbyPmGcQImOty_b79zolQ8RjmmFC1eHKXH5R1HMtsaU0QI3zGVeITgyP9yL3qYVZIbCR/exec';
+const USE_CLOUD = GAS_URL !== 'YOUR_GAS_URL_HERE';
 
 // ═══ CONSTANTS ═══════════════════════════════════
 const START_DATE = new Date(2026, 6, 27);
@@ -468,6 +472,8 @@ const TRANSPORT_TYPES = [
   {id:'metro', icon:'🚇', label:'地鐵'},
   {id:'bus',   icon:'🚌', label:'公車'},
   {id:'walk',  icon:'🚶', label:'步行'},
+  {id:'boat',  icon:'⛵', label:'搭船'},
+  {id:'other', icon:'🚐', label:'其他'},
 ];
 const EXPENSE_CATS = [
   {id:'transport', icon:'✈️', label:'交通', cls:'cd-transport'},
