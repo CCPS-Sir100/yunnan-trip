@@ -564,14 +564,16 @@ async function cloudLoad(){
     if(!r.ok) throw new Error('HTTP '+r.status);
     const j = await r.json();
     if(j && j.days){
-      data=mergeData(j);localSave();setSyncUI('ok');
-      renderCurrent();showToast('已載入最新資料 ✅');
-    } else {
-      setSyncUI('ok');localLoad();renderCurrent();
+      data=mergeData(j);localSave();
     }
+    // 不管有沒有雲端資料，都算成功
+    syncStatus='ok';
+    lastSyncTime=fmtNow();
+    renderCurrent(); // render 之後 syncBar 會用 syncStatus='ok' 重畫
   }catch(e){
-    setSyncUI('error');localLoad();renderCurrent();
-    showToast('同步失敗：'+e.message);
+    syncStatus='error';
+    localLoad();renderCurrent();
+    showToast('載入失敗：'+e.message);
     console.error('cloudLoad:',e);
   }
 }
