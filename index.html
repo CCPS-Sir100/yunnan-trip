@@ -469,9 +469,11 @@ const ADMIN_PASSWORD = 'CCcc7379403!';
 
 // 將 Google Apps Script 部署後的網址貼在這裡
 // 格式：'https://script.google.com/macros/s/AKfycb.../exec'
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbyPmGcQImOty_b79zolQ8RjmmFC1eHKXH5R1HMtsaU0QI3zGVeITgyP9yL3qYVZIbCR/exec';
-
-const USE_CLOUD = GAS_URL !== 'YOUR_GAS_URL_HERE';
+// ═══ Firebase 設定 ═══════════════════════════════
+// 免費，沒有 CORS 問題，即時同步
+// 使用你自己的 Firebase project URL
+const FIREBASE_URL = 'https://yunnan2026-ce09b-default-rtdb.asia-southeast1.firebasedatabase.app';
+const USE_CLOUD = true;
 
 // ═══ CONSTANTS ═══════════════════════════════════
 const START_DATE = new Date(2026, 6, 27);
@@ -518,65 +520,36 @@ function fmtL(d){return`${d.getMonth()+1}月${d.getDate()}日`;}
 function fmtNow(){return new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});}
 
 // ═══ CLOUD SYNC ═══════════════════════════════════
-// JSONP helper — 繞過 302 redirect，直接拿到 JSON
-function jsonp(url) {
-  return new Promise((resolve, reject) => {
-    const cb = 'cb_' + Date.now() + '_' + Math.random().toString(36).slice(2);
-    window[cb] = (data) => {
-      delete window[cb];
-      document.head.removeChild(script);
-      resolve(data);
-    };
-    const script = document.createElement('script');
-    script.src = url + '&callback=' + cb;
-    script.onerror = () => {
-      delete window[cb];
-      document.head.removeChild(script);
-      reject(new Error('JSONP failed'));
-    };
-    document.head.appendChild(script);
-  });
-}
+// ═══ Firebase 雲端同步 ════════════════════════════
+// Firebase Realtime Database — 完全沒有 CORS 問題
+// REST API：GET 讀，PUT 寫，不需要任何 SDK
 
 async function cloudSave(){
   if(!USE_CLOUD){localSave();return;}
   localSave();
-  await chunkUpload();
-}
-
-async function chunkUpload(){
   setSyncUI('syncing');
   try{
-    const encoded = encodeURIComponent(JSON.stringify(data));
-    const CHUNK   = 800;
-    const chunks  = [];
-    for(let i=0;i<encoded.length;i+=CHUNK) chunks.push(encoded.slice(i,i+CHUNK));
-    const total = chunks.length;
-
-    // 逐批送出
-    for(let i=0;i<total;i++){
-      const url = GAS_URL+'?action=chunk&idx='+i+'&total='+total+'&part='+chunks[i];
-      const j   = await jsonp(url);
-      if(!j.ok) throw new Error('chunk '+i+' 失敗: '+j.error);
-    }
-
-    // commit
-    const j2 = await jsonp(GAS_URL+'?action=commit');
-    if(!j2.ok) throw new Error('commit 失敗: '+j2.error);
-
+    const r = await fetch(FIREBASE_URL+'/tripData.json',{
+      method: 'PUT',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(data)
+    });
+    if(!r.ok) throw new Error('HTTP '+r.status);
     setSyncUI('ok');
     showToast('已同步到雲端 ☁️');
   }catch(e){
     setSyncUI('error');
     showToast('同步失敗：'+e.message);
-    console.error('chunkUpload error:',e);
+    console.error('cloudSave:',e);
   }
 }
+
+async function chunkUpload(){ await cloudSave(); }
 
 async function forceUpload(){
   localLoad();
   showToast('上傳中…');
-  await chunkUpload();
+  await cloudSave();
   if(syncStatus==='ok'){
     showToast('✅ 上傳成功！其他人重新整理即可看到');
     renderCurrent();
@@ -587,9 +560,11 @@ async function cloudLoad(){
   if(!USE_CLOUD){localLoad();renderCurrent();return;}
   setSyncUI('syncing');
   try{
-    const j = await jsonp(GAS_URL+'?action=load&t='+Date.now());
-    if(j.ok && j.data){
-      data=mergeData(j.data);localSave();setSyncUI('ok');
+    const r = await fetch(FIREBASE_URL+'/tripData.json?t='+Date.now());
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const j = await r.json();
+    if(j && j.days){
+      data=mergeData(j);localSave();setSyncUI('ok');
       renderCurrent();showToast('已載入最新資料 ✅');
     } else {
       setSyncUI('ok');localLoad();renderCurrent();
@@ -597,7 +572,7 @@ async function cloudLoad(){
   }catch(e){
     setSyncUI('error');localLoad();renderCurrent();
     showToast('同步失敗：'+e.message);
-    console.error('cloudLoad error:',e);
+    console.error('cloudLoad:',e);
   }
 }
 
