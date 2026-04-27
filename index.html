@@ -671,8 +671,10 @@ async function cloudSave(){
       headers:{'Content-Type':'application/json'},
       body
     });
-    const txt = await r.text();
-    if(!r.ok) throw new Error('HTTP '+r.status+': '+txt.slice(0,100));
+    if(!r.ok){
+      const txt = await r.text();
+      throw new Error('HTTP '+r.status+': '+txt.slice(0,80));
+    }
     setSyncUI('ok', now());
     showToast('✅ 已同步到雲端');
   }catch(e){
@@ -688,8 +690,7 @@ async function cloudLoad(){
     const url = FIREBASE_URL+'/tripData.json?t='+Date.now();
     const r = await fetch(url);
     if(!r.ok) throw new Error('HTTP '+r.status);
-    const txt = await r.text();
-    const j = JSON.parse(txt);
+    const j = await r.json();
     if(j && j.days){
       data = merge(j);
       sortAllSegs();
