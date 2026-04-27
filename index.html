@@ -109,9 +109,11 @@ body {
 
 /* ── TAB BAR ─────────────────────────────── */
 .tab-bar {
-  display: flex; overflow-x: auto; gap: 0;
+  display: flex; overflow-x: scroll; overflow-y: hidden; gap: 0;
   border-top: 1px solid var(--border);
   scrollbar-width: none; background: var(--card);
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
 }
 .tab-bar::-webkit-scrollbar { display: none; }
 .tab-main {
@@ -601,8 +603,31 @@ function merge(remote){
   const base=mkData();
   for(let i=1;i<=DAYS;i++){
     const k='d'+i;
-    if(remote.days?.[k]) base.days[k]={...base.days[k],...remote.days[k]};
-    if(remote.exp?.[k])  base.exp[k]=remote.exp[k];
+    if(remote.days?.[k]){
+      const rd = remote.days[k];
+      // 相容舊版欄位名稱 (segments/segs, departTime/dep, arriveTime/arr)
+      const segs = (rd.segs || rd.segments || []).map(s=>({
+        type: s.type||'car',
+        from: s.from||'',
+        to:   s.to||'',
+        dep:  s.dep || s.departTime || '',
+        arr:  s.arr || s.arriveTime || '',
+        note: s.note||''
+      }));
+      base.days[k] = {
+        segs,
+        hotel:    rd.hotel||'',
+        hotelDet: rd.hotelDet || rd.hotelDetail || '',
+        acts:     rd.acts || rd.activities || [],
+      };
+    }
+    if(remote.exp?.[k])       base.exp[k]=remote.exp[k];
+    // 相容舊版花費欄位 (expenses -> exp, amount -> amt)
+    if(remote.expenses?.[k])  base.exp[k]=(remote.expenses[k]||[]).map(e=>({
+      cat:  e.cat||'other',
+      amt:  e.amt || e.amount || 0,
+      desc: e.desc||''
+    }));
   }
   return base;
 }
@@ -639,41 +664,46 @@ async function cloudSave(){
   if(!FIREBASE_URL) return;
   setSyncUI('loading');
   try{
-    const r = await fetch(FIREBASE_URL+'/tripData.json',{
+    const url = FIREBASE_URL+'/tripData.json';
+    const body = JSON.stringify(data);
+    const r = await fetch(url,{
       method:'PUT',
       headers:{'Content-Type':'application/json'},
-      body: JSON.stringify(data)
+      body
     });
-    if(!r.ok) throw new Error('HTTP '+r.status);
+    const txt = await r.text();
+    if(!r.ok) throw new Error('HTTP '+r.status+': '+txt.slice(0,100));
     setSyncUI('ok', now());
     showToast('✅ 已同步到雲端');
   }catch(e){
     setSyncUI('err');
-    showToast('同步失敗，資料已存本機');
-    console.error('cloudSave:',e);
+    showToast('同步失敗：'+e.message.slice(0,40));
+    console.error('cloudSave error:',e);
   }
 }
 
 async function cloudLoad(){
   setSyncUI('loading');
   try{
-    const r = await fetch(FIREBASE_URL+'/tripData.json?t='+Date.now());
+    const url = FIREBASE_URL+'/tripData.json?t='+Date.now();
+    const r = await fetch(url);
     if(!r.ok) throw new Error('HTTP '+r.status);
-    const j = await r.json();
+    const txt = await r.text();
+    const j = JSON.parse(txt);
     if(j && j.days){
       data = merge(j);
       sortAllSegs();
       localSave();
+      showToast('✅ 已載入最新資料');
     }
-    syncSt = 'ok'; syncTs = now();
+    syncSt='ok'; syncTs=now();
     buildTabs(); renderCurrent();
     setSyncUI('ok', syncTs);
   }catch(e){
     setSyncUI('err');
-    localLoad();
     buildTabs(); renderCurrent();
-    showToast('載入失敗，顯示本機資料');
-    console.error('cloudLoad:',e);
+    showToast('載入失敗：'+e.message.slice(0,40));
+    console.error('cloudLoad error:',e);
   }
 }
 
@@ -694,7 +724,11 @@ function sortAllSegs(){
 }
 function sortSegs(k){
   if(!data.days[k]) return;
-  data.days[k].segs.sort((a,b)=>(a.dep||'00:00').localeCompare(b.dep||'00:00'));
+  data.days[k].segs.sort((a,b)=>{
+    const ta = a.dep || a.departTime || '00:00';
+    const tb = b.dep || b.departTime || '00:00';
+    return ta.localeCompare(tb);
+  });
 }
 
 function saveData(){ cloudSave(); }
@@ -898,8 +932,8 @@ function renderSeg(s,si,k){
         <span class="seg-place">📍 ${esc(s.to||'目的地')}</span>
       </div>
       <div class="seg-times">
-        <span class="seg-t"><span class="seg-t-lbl">出</span>${s.dep||'--:--'}</span>
-        <span class="seg-t"><span class="seg-t-lbl">抵</span>${s.arr||'--:--'}</span>
+        <span class="seg-t"><span class="seg-t-lbl">出</span>${s.dep||s.departTime||'--:--'}</span>
+        <span class="seg-t"><span class="seg-t-lbl">抵</span>${s.arr||s.arriveTime||'--:--'}</span>
       </div>
       ${s.note?`<div class="seg-note">${esc(s.note)}</div>`:''}
     </div>
@@ -1118,6 +1152,23 @@ localLoad();
 buildTabs();
 renderCurrent();
 cloudLoad(); // 非同步載入雲端，完成後自動更新
+
+// 全域除錯函式，可在 Console 執行
+window.testFirebase = async function(){
+  console.log('Testing Firebase:', FIREBASE_URL);
+  try{
+    const r = await fetch(FIREBASE_URL+'/tripData.json');
+    const t = await r.text();
+    console.log('GET status:', r.status, '| body:', t.slice(0,200));
+  }catch(e){ console.error('GET error:', e); }
+  try{
+    const r2 = await fetch(FIREBASE_URL+'/test.json',{
+      method:'PUT', headers:{'Content-Type':'application/json'}, body:'"ok"'
+    });
+    const t2 = await r2.text();
+    console.log('PUT status:', r2.status, '| body:', t2);
+  }catch(e){ console.error('PUT error:', e); }
+};
 </script>
 </body>
 </html>
