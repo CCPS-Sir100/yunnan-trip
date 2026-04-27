@@ -1,2060 +1,928 @@
-<!--
-  雲南旅遊計劃 2026
-  ==================
-  GitHub Pages 部署步驟：
-  1. 在 GitHub 建立新 repository（Public）
-  2. 上傳此檔案，改名為 index.html
-  3. Settings → Pages → Branch: main → Save
-  4. 用 https://你的帳號.github.io/倉庫名/ 開啟
-
-  Google Apps Script 設定：
-  - 點網頁內「📋 設定教學」按鈕查看完整說明
-  - 部署時存取權限必須選「任何人」
-
-  編輯密碼：CCcc7379403!
--->
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="description" content="雲南旅遊計劃 2026 — 團隊行程規劃">
-<link rel="manifest" href="manifest.json">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="雲南之旅">
-<link rel="apple-touch-icon" href="icon-192.svg">
-<meta name="msapplication-TileColor" content="#1a3a2a">
-<meta name="theme-color" content="#1a3a2a">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>雲南旅遊計劃 2026 ✈️</title>
-<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+TC:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>雲南旅行 2026 · 7/27–8/9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=DM+Mono:wght@400;500&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --ink:#1a0f00; --parchment:#fff8f0; --parchment-dark:#ffe8d0;
-  --terracotta:#f05a28; --jade:#00b87a; --jade-light:#00d48a;
-  --gold:#ffb300; --gold-light:#ffd54f; --crimson:#e53935;
-  --sky:#0288d1; --purple:#7c3aed;
-  --text:#2d1a0a; --text-muted:#8a6050; --border:#f0c8a0;
-  --shadow:rgba(200,100,40,0.12);
-  --c1:#f05a28; --c2:#0288d1; --c3:#00b87a; --c4:#7c3aed; --c5:#ffb300;
+  --bg:        #f0f7ff;
+  --surface:   #ffffff;
+  --surface2:  #f5faff;
+  --primary:   #2d8ef5;
+  --primary-d: #1a6fd4;
+  --primary-l: #e8f3ff;
+  --green:     #22b87a;
+  --green-l:   #e6f9f1;
+  --orange:    #f5832d;
+  --orange-l:  #fff3e8;
+  --purple:    #8b5cf6;
+  --red:       #ef4444;
+  --yellow:    #f59e0b;
+  --ink:       #1e293b;
+  --ink2:      #475569;
+  --muted:     #94a3b8;
+  --border:    #e2eaf4;
+  --shadow:    rgba(45,142,245,0.10);
+  --shadow2:   rgba(30,41,59,0.07);
+  --t-fly:     #2d8ef5;
+  --t-train:   #ef4444;
+  --t-car:     #f59e0b;
+  --t-drive:   #f59e0b;
+  --t-metro:   #8b5cf6;
+  --t-bus:     #22b87a;
+  --t-walk:    #94a3b8;
 }
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Noto Serif TC',serif;background:linear-gradient(180deg,#f0f8ff 0%,#e8f4fc 50%,#f0f8ff 100%);background-attachment:fixed;color:var(--text);min-height:100vh;}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: var(--bg); color: var(--ink);
+  min-height: 100vh; overflow-x: hidden;
+}
 
 /* HEADER */
-.site-header{background:linear-gradient(160deg,#1a4a6e 0%,#2272a8 45%,#3fa0d0 80%,#6dc8e8 100%);padding:1.6rem 2rem 0;position:relative;overflow:hidden;}
-.site-header::before{content:'';position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse at 30% 60%, rgba(255,220,100,0.18) 0%, transparent 55%),
-    radial-gradient(ellipse at 85% 20%, rgba(255,255,255,0.08) 0%, transparent 40%);
+.app-header {
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 12px 16px 11px; position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 2px 12px var(--shadow2);
 }
-.header-erhai{position:absolute;right:0;top:0;bottom:0;width:420px;pointer-events:none;overflow:hidden;opacity:0.55;}
-.header-erhai svg{position:absolute;right:0;bottom:0;height:100%;width:auto;}
-.header-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1;}
-.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;min-height:90px;}
-.header-title-area{flex:1;min-width:0;}
-.header-badge{font-family:'Noto Sans TC',sans-serif;font-size:0.7rem;letter-spacing:0.2em;color:#90d8f8;margin-bottom:0.35rem;}
-.header-title{font-family:'Ma Shan Zheng',cursive;font-size:clamp(2.2rem,5vw,4rem);color:#fff;line-height:1.1;text-shadow:2px 3px 12px rgba(0,0,0,0.4);}
-.header-title span{color:var(--gold-light);}
-.header-subtitle{font-size:0.88rem;color:rgba(255,255,255,0.65);margin-top:0.3rem;letter-spacing:0.05em;}
-.header-dates{font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;color:rgba(255,255,255,0.55);margin-top:0.2rem;line-height:1.5;}
-.header-right{display:flex;flex-direction:column;align-items:flex-end;gap:0.5rem;flex-shrink:0;}
-.header-mountain{opacity:0.1;font-size:4.5rem;line-height:1;color:#fff;user-select:none;}
-.header-admin-btns{display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:flex-end;}
-.btn-header{padding:0.38rem 0.95rem;border-radius:20px;font-family:'Noto Sans TC',sans-serif;font-size:0.76rem;cursor:pointer;transition:all 0.2s;border:1px solid;white-space:nowrap;}
-.btn-member{border-color:rgba(110,200,255,0.5);background:rgba(30,100,160,0.25);color:#90d0ff;}
-.btn-member:hover{background:rgba(30,100,160,0.4);}
-.btn-lock{border-color:rgba(255,255,255,0.3);background:transparent;color:rgba(255,255,255,0.7);}
-.btn-lock:hover{background:rgba(255,255,255,0.12);}
-.btn-unlock{border-color:var(--gold-light);background:rgba(201,150,42,0.2);color:var(--gold-light);}
-.btn-unlock:hover{background:rgba(201,150,42,0.35);}
-.btn-trip-settings{border-color:rgba(110,255,160,0.5);background:rgba(58,125,94,0.2);color:#6effa0;}
-.btn-trip-settings:hover{background:rgba(58,125,94,0.35);}
-
-/* SETTINGS BAR */
-.settings-bar{display:flex;align-items:center;gap:0.7rem;margin-top:1.1rem;padding:0.75rem 1.1rem;background:rgba(0,0,0,0.2);border-radius:8px 8px 0 0;flex-wrap:wrap;}
-.settings-bar label{font-family:'Noto Sans TC',sans-serif;font-size:0.76rem;color:rgba(255,255,255,0.65);white-space:nowrap;}
-.settings-bar input{flex:1;min-width:160px;padding:0.38rem 0.65rem;border-radius:5px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:#fff;font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;}
-.settings-bar input::placeholder{color:rgba(255,255,255,0.3);}
-.settings-bar input:focus{outline:none;border-color:var(--gold-light);}
-.btn-connect{padding:0.38rem 0.9rem;border-radius:5px;border:1px solid var(--gold-light);background:transparent;color:var(--gold-light);font-family:'Noto Sans TC',sans-serif;font-size:0.76rem;cursor:pointer;white-space:nowrap;transition:all 0.2s;}
-.btn-connect:hover{background:var(--gold-light);color:#1a3a2a;}
-.sync-status{font-family:'Noto Sans TC',sans-serif;font-size:0.7rem;color:rgba(255,255,255,0.45);white-space:nowrap;}
-.sync-status.ok{color:#6effa0;} .sync-status.err{color:#ff8080;}
+.hdr-left { display: flex; align-items: center; gap: 10px; }
+.hdr-logo {
+  width: 34px; height: 34px; border-radius: 10px;
+  background: linear-gradient(135deg, var(--primary), #5bb4ff);
+  display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+}
+.hdr-title { font-family:'Nunito',sans-serif; font-size:1.05rem; font-weight:800; color:var(--ink); }
+.hdr-sub { font-family:'DM Mono',monospace; font-size:0.6rem; color:var(--muted); margin-top:1px; }
+.hdr-right { display:flex; gap:7px; align-items:center; }
+.badge { font-family:'DM Mono',monospace; font-size:0.58rem; font-weight:500; padding:3px 8px; border-radius:20px; letter-spacing:0.04em; }
+.badge-admin { background:var(--orange); color:#fff; }
+.badge-view  { background:var(--primary-l); color:var(--primary); }
+.btn-hdr {
+  background:var(--primary-l); color:var(--primary); border:none;
+  padding:5px 11px; border-radius:20px; font-size:0.68rem;
+  font-family:'Noto Sans TC',sans-serif; cursor:pointer; font-weight:500; transition:all 0.18s;
+}
+.btn-hdr:hover { background:var(--primary); color:#fff; }
 
 /* TABS */
-.tab-nav-wrap{background:linear-gradient(90deg,#e8f4fc,#f0f8ff);border-bottom:2px solid #b8d8f0;position:sticky;top:0;z-index:50;}
-.tab-nav{max-width:1100px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none;padding:0 1rem;}
-.tab-nav::-webkit-scrollbar{display:none;}
-.tab-btn{flex-shrink:0;padding:0.5rem 0.9rem;border:none;background:transparent;font-family:'Noto Serif TC',serif;font-size:0.78rem;color:#4a7a9a;cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;white-space:nowrap;}
-.tab-btn:hover{color:#f05a28;}
-.tab-btn.active{color:#f05a28;border-bottom-color:#f05a28;font-weight:600;}
-.tab-btn .day-num{display:block;font-size:2rem;font-weight:700;font-family:'Ma Shan Zheng',cursive;line-height:1.1;}
-.tab-btn .day-date{display:block;font-size:0.62rem;opacity:0.75;letter-spacing:0.02em;}
-.tab-btn .day-week{display:block;font-size:0.6rem;opacity:0.6;font-family:'Noto Sans TC',sans-serif;}
+.tab-bar {
+  background:var(--surface); display:flex; overflow-x:auto;
+  scrollbar-width:none; border-bottom:2px solid var(--border);
+  box-shadow:0 1px 4px var(--shadow2);
+}
+.tab-bar::-webkit-scrollbar { display:none; }
+.tab-btn {
+  flex-shrink:0; background:transparent; border:none; color:var(--muted);
+  padding:10px 14px; font-family:'Noto Sans TC',sans-serif; font-size:0.73rem;
+  cursor:pointer; transition:all 0.18s; white-space:nowrap;
+  border-bottom:2px solid transparent; margin-bottom:-2px; font-weight:500;
+}
+.tab-btn.active { color:var(--primary); border-bottom-color:var(--primary); }
+.tab-btn:hover:not(.active) { color:var(--ink2); }
 
 /* MAIN */
-.main{max-width:1100px;margin:0 auto;padding:1.4rem 1.4rem 6rem;}
-.day-panel{display:none;}
-.day-panel.active{display:block;animation:fadeIn 0.3s ease;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.main { padding:14px; max-width:680px; margin:0 auto; }
 
-.day-header{display:flex;align-items:center;gap:1.1rem;margin-bottom:1.1rem;padding-bottom:0.9rem;border-bottom:2px solid var(--parchment-dark);}
-.day-num-big{font-family:'Ma Shan Zheng',cursive;font-size:4rem;color:#f05a28;line-height:1;flex-shrink:0;text-shadow:2px 3px 0 rgba(196,98,45,0.15);}
-.day-info h2{font-family:'Noto Serif TC',serif;font-size:1.2rem;font-weight:700;color:var(--ink);}
-.day-info .day-date-full{font-size:0.82rem;color:var(--text-muted);margin-top:0.15rem;}
-.day-title-input{flex:1;padding:0.45rem 0.75rem;border:1px dashed var(--border);border-radius:6px;background:transparent;font-family:'Noto Serif TC',serif;font-size:0.95rem;color:var(--ink);transition:border-color 0.2s;}
-.day-title-input:focus{outline:none;border-color:var(--terracotta);border-style:solid;}
-.day-title-input::placeholder{color:var(--border);}
-
-/* VIEW MODE */
-body.view-mode .day-title-input{pointer-events:none;border-color:transparent;background:transparent;}
-body.view-mode .info-card textarea{display:none;}
-body.view-mode .info-card .card-view{display:block;}
-.info-card .card-view{display:none;padding:0.6rem 0.8rem;font-family:'Noto Sans TC',sans-serif;font-size:0.82rem;color:var(--text);line-height:1.8;min-height:2.5rem;white-space:pre-wrap;word-break:break-word;}
-.info-card .card-view:empty::before{content:attr(data-placeholder);color:#ccc;}
-body.view-mode .timeline-input{pointer-events:none;}
-body.view-mode .tl-add-btn{display:none;}
-body.view-mode .tl-del-btn{display:none;}
-body.view-mode .edit-only{display:none!important;}
-
-/* TIMELINE */
-.timeline-section{background:#fff;border-radius:12px;border:1px solid var(--border);padding:0.95rem 1.1rem 1.1rem;margin-bottom:1.1rem;box-shadow:0 2px 8px var(--shadow);}
-.timeline-section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;}
-/* left panel tl header */
-.tl-vertical-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.6rem;}
-.tl-title{font-family:'Noto Serif TC',serif;font-size:0.86rem;font-weight:600;color:var(--ink);}
-.tl-add-btn{padding:0.28rem 0.85rem;border-radius:20px;border:1px solid var(--jade);background:transparent;color:var(--jade);font-size:0.72rem;font-family:'Noto Sans TC',sans-serif;cursor:pointer;transition:all 0.2s;}
-.tl-add-btn:hover{background:var(--jade);color:#fff;}
-
-.tl-axis{display:flex;justify-content:space-between;font-family:'Noto Sans TC',sans-serif;font-size:0.58rem;color:var(--text-muted);margin-bottom:3px;user-select:none;}
-.tl-bar{display:none;} /* horizontal bar hidden — using vertical layout */
-.tl-bar-v{position:relative;width:32px;flex-shrink:0;background:linear-gradient(180deg,#eaf6ff,#d4ecf8);border-radius:8px;border:1px solid #a8d4f0;min-height:320px;}
-.tl-bar-v .tl-grid-line-h{position:absolute;left:0;right:0;height:1px;background:rgba(0,100,180,0.08);}
-.tl-segment-v{position:absolute;left:3px;right:3px;border-radius:4px;cursor:default;overflow:hidden;min-height:4px;}
-.tl-segment-v:hover{opacity:0.82;}
-.tl-time-label{position:absolute;right:calc(100% + 4px);font-family:'Noto Sans TC',sans-serif;font-size:0.55rem;color:#7a9ab8;white-space:nowrap;line-height:1;transform:translateY(-50%);}
-.tl-seg-label{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:0.58rem;font-weight:600;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.4);writing-mode:vertical-rl;white-space:nowrap;overflow:hidden;max-height:90%;}
-.tl-axis{display:none;} /* hide horizontal axis */
-.tl-v-wrap{display:flex;gap:0.6rem;padding:0.5rem 0.3rem 0.5rem 2.2rem;min-height:320px;}
-.tl-v-entries{flex:1;display:flex;flex-direction:column;gap:0.4rem;justify-content:flex-start;padding-top:0.2rem;}
-.tl-grid-line{position:absolute;top:0;bottom:0;width:1px;background:rgba(0,0,0,0.06);}
-.tl-segment{position:absolute;top:5px;bottom:5px;border-radius:4px;cursor:default;display:flex;align-items:center;justify-content:center;overflow:hidden;white-space:nowrap;font-family:'Noto Sans TC',sans-serif;font-size:0.65rem;font-weight:500;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.35);transition:opacity 0.15s;min-width:4px;}
-.tl-segment:hover{opacity:0.82;}
-.tl-c0{background:linear-gradient(90deg,#ff6b6b,#ee5a24);}
-.tl-c1{background:linear-gradient(90deg,#48dbfb,#0abde3);}
-.tl-c2{background:linear-gradient(90deg,#1dd1a1,#10ac84);}
-.tl-c3{background:linear-gradient(90deg,#f368e0,#e056bf);}
-.tl-c4{background:linear-gradient(90deg,#feca57,#ff9f43);}
-.tl-c5{background:linear-gradient(90deg,#54a0ff,#2e86de);}
-.tl-c6{background:linear-gradient(90deg,#5f27cd,#341f97);}
-.tl-c7{background:linear-gradient(90deg,#ff9ff3,#f368e0);}
-.tl-c8{background:linear-gradient(90deg,#00d2d3,#01abc3);}
-.tl-c9{background:linear-gradient(90deg,#ff6348,#ff4757);}
-
-.tl-entries{display:flex;flex-direction:column;gap:0.45rem;margin-top:0.65rem;}
-.tl-entry-header{display:grid;grid-template-columns:72px 72px 1fr 26px;gap:0.4rem;}
-.tl-entry-header span{font-family:'Noto Sans TC',sans-serif;font-size:0.66rem;color:var(--text-muted);padding:0 0.15rem;}
-.tl-entry{display:grid;grid-template-columns:72px 72px 1fr 26px;gap:0.4rem;align-items:center;}
-.timeline-input{padding:0.28rem 0.45rem;border:1px solid var(--border);border-radius:5px;font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;color:var(--ink);background:var(--parchment);width:100%;}
-.timeline-input:focus{outline:none;border-color:var(--jade);background:#fff;}
-.tl-del-btn{width:22px;height:22px;border-radius:50%;border:1px solid #ddd;background:transparent;color:#bbb;cursor:pointer;font-size:0.7rem;display:flex;align-items:center;justify-content:center;padding:0;transition:all 0.2s;flex-shrink:0;}
-.tl-del-btn:hover{border-color:var(--crimson);color:var(--crimson);}
-.tl-empty-msg{font-family:'Noto Sans TC',sans-serif;font-size:0.76rem;color:var(--border);padding:0.2rem 0;}
-/* Departure block */
-.departure-block{background:#fff;border-radius:12px;border:1px solid var(--border);padding:0.9rem 1.1rem;margin-bottom:1.1rem;box-shadow:0 2px 8px var(--shadow);display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;}
-.departure-block .dep-label{font-family:'Noto Serif TC',serif;font-size:0.88rem;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:0.5rem;white-space:nowrap;}
-.departure-block .dep-icon{width:32px;height:32px;border-radius:7px;background:#e8f5e9;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
-.dep-time-wrap{display:flex;align-items:center;gap:0.6rem;flex:1;min-width:160px;}
-.dep-time-input{padding:0.4rem 0.7rem;border:1.5px solid var(--border);border-radius:8px;font-family:'Ma Shan Zheng',cursive;font-size:1.5rem;color:var(--terracotta);width:100px;text-align:center;background:var(--parchment);transition:border-color 0.2s;}
-.dep-time-input:focus{outline:none;border-color:var(--terracotta);background:#fff;}
-.dep-time-input::placeholder{color:var(--border);font-size:1rem;}
-body.view-mode .dep-time-input{pointer-events:none;border-color:transparent;background:transparent;}
-.dep-note{font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;color:var(--text-muted);}
-/* Departure marker on timeline bar */
-.tl-dep-marker{position:absolute;top:0;bottom:0;width:3px;background:#e74c3c;z-index:5;cursor:default;}
-.tl-dep-marker::before{content:'出門';position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-family:'Noto Sans TC',sans-serif;font-size:0.6rem;color:#e74c3c;white-space:nowrap;font-weight:600;}
-.tl-dep-marker::after{content:'▼';position:absolute;top:0;left:50%;transform:translateX(-50%);font-size:0.55rem;color:#e74c3c;}
-
-/* WISH POOL */
-.global-wish-wrap{max-width:1100px;margin:0.8rem auto 0;padding:0 1.4rem;}
-@media(max-width:480px){.global-wish-wrap{padding:0 0.75rem;margin-top:0.6rem;}}
-.wish-pool{background:linear-gradient(135deg,#fff8e1,#fff3cd);border-radius:14px;border:2px solid #ffd54f;padding:1rem 1.2rem;margin-bottom:0;box-shadow:0 4px 16px rgba(255,180,0,0.2);}
-.wish-pool-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem;gap:0.5rem;}
-.wish-pool-title{font-family:'Noto Serif TC',serif;font-size:0.95rem;font-weight:700;color:#b7860a;display:flex;align-items:center;gap:0.5rem;}
-.wish-list{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:0.7rem;max-height:220px;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#ffd54f #fff8e1;padding-right:2px;}
-.wish-group{background:#fff;border-radius:10px;padding:0.55rem 0.8rem;border:1px solid #ffe082;margin-bottom:0;}
-.wish-group-name{font-size:0.75rem;color:#c8940a;font-weight:700;margin-bottom:0.3rem;display:flex;align-items:center;gap:0.4rem;}
-.wish-group-name::before{content:'✦';font-size:0.6rem;}
-.wish-entries{display:flex;flex-direction:column;gap:0.2rem;}
-.wish-entry{display:flex;align-items:center;gap:0.4rem;padding:0.15rem 0;}
-.wish-entry-text{flex:1;font-family:'Noto Sans TC',sans-serif;font-size:0.83rem;color:#5a4000;line-height:1.5;}
-.wish-entry-dot{width:5px;height:5px;border-radius:50%;background:#ffd54f;flex-shrink:0;}
-.wish-del{background:transparent;border:none;color:#ddc;cursor:pointer;font-size:0.75rem;padding:0 0.15rem;flex-shrink:0;transition:color 0.2s;line-height:1;}
-.wish-del:hover{color:#e53935;}
-.wish-empty{font-family:'Noto Sans TC',sans-serif;font-size:0.8rem;color:#c8a83a;padding:0.3rem 0;text-align:center;}
-.wish-input-row{display:flex;gap:0.5rem;}
-.wish-input-row input{flex:1;padding:0.45rem 0.75rem;border:1.5px solid #ffd54f;border-radius:8px;font-family:'Noto Sans TC',sans-serif;font-size:0.83rem;color:#5a4000;background:#fffbf0;}
-.wish-input-row input:focus{outline:none;border-color:#ffb300;background:#fff;}
-.wish-submit{padding:0.45rem 1rem;border-radius:8px;border:none;background:#ffb300;color:#fff;font-family:'Noto Serif TC',serif;font-size:0.83rem;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-weight:600;}
-.wish-submit:hover{background:#e6a200;transform:translateY(-1px);}
-.wish-name-badge{font-size:0.72rem;background:#ffb300;color:#fff;border-radius:20px;padding:0.15rem 0.6rem;font-family:'Noto Sans TC',sans-serif;}
-
-/* NEW TWO-COLUMN LAYOUT */
-.day-layout{display:grid;grid-template-columns:300px 1fr;gap:1.2rem;align-items:start;}
-@media(max-width:900px){
-  .day-layout{grid-template-columns:1fr;}
-  .day-left{min-height:unset;}
-  .tl-v-wrap{min-height:220px;}
-  .tl-bar-v{min-height:220px;}
+/* SYNC BAR */
+.sync-bar {
+  background:var(--surface); border:1px solid var(--border); border-radius:10px;
+  padding:8px 14px; margin-bottom:12px; display:flex; align-items:center; gap:8px;
 }
-.day-left{background:linear-gradient(180deg,#f0f8ff,#e8f4fc);border-radius:14px;border:1px solid #b8d8f0;padding:1rem;box-shadow:0 3px 16px rgba(0,100,180,0.1);}
-.tl-vertical-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.7rem;}
-.day-right{display:flex;flex-direction:column;gap:0.8rem;}
-.info-row-3{display:grid;grid-template-columns:repeat(3,1fr);gap:0.8rem;}
-.info-row-2{display:grid;grid-template-columns:repeat(2,1fr);gap:0.8rem;}
-@media(max-width:600px){.info-row-3{grid-template-columns:1fr;}.info-row-2{grid-template-columns:1fr;}}
-.info-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 10px var(--shadow);border:1px solid var(--border);}
-.info-card-head{padding:0.45rem 0.8rem;font-family:'Noto Serif TC',serif;font-size:0.8rem;font-weight:700;color:#fff;letter-spacing:0.03em;}
-.info-card textarea{width:100%;border:none;background:#fafafa;padding:0.6rem 0.8rem;font-family:'Noto Sans TC',sans-serif;font-size:0.82rem;color:var(--text);resize:vertical;min-height:80px;line-height:1.7;box-sizing:border-box;}
-.info-card textarea:focus{outline:none;background:#fff;}
-.info-card textarea::placeholder{color:#ccc;}
-.meal-card textarea{min-height:70px;}
-.sights-card textarea{min-height:90px;}
-
-/* ACTIONS BAR */
-.actions-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(255,248,240,0.97);backdrop-filter:blur(10px);border-top:2px solid var(--border);padding:0.65rem 2rem;display:flex;align-items:center;justify-content:center;gap:0.7rem;z-index:100;flex-wrap:wrap;}
-.btn{padding:0.55rem 1.3rem;border-radius:8px;font-family:'Noto Serif TC',serif;font-size:0.86rem;cursor:pointer;transition:all 0.2s;border:2px solid transparent;display:flex;align-items:center;gap:0.4rem;}
-.btn-jade{background:#00b87a;color:#fff;border-color:#00b87a;box-shadow:0 3px 12px rgba(0,184,122,0.35);}
-.btn-jade:hover{background:#009960;transform:translateY(-1px);}
-.btn-gold{background:#ffb300;color:#fff;border-color:#ffb300;box-shadow:0 3px 12px rgba(255,179,0,0.35);}
-.btn-gold:hover{background:#a97d20;transform:translateY(-1px);}
-.btn-primary{background:#f05a28;color:#fff;border-color:#f05a28;box-shadow:0 3px 12px rgba(240,90,40,0.35);}
-.btn-primary:hover{background:#a84f22;transform:translateY(-1px);}
-.btn-sky{background:#2471a3;color:#fff;border-color:#2471a3;box-shadow:0 3px 10px rgba(36,113,163,0.3);}
-.btn-sky:hover{background:#1a5276;transform:translateY(-1px);}
-/* FLIGHT MODAL */
-.flight-modal{max-width:600px!important;}
-.flight-tabs{display:flex;gap:0;margin-bottom:1rem;border-bottom:2px solid var(--border);}
-.flight-tab{padding:0.5rem 1.2rem;border:none;background:transparent;font-family:'Noto Sans TC',sans-serif;font-size:0.85rem;color:var(--text-muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all 0.2s;}
-.flight-tab.active{color:var(--sky,#2471a3);border-bottom-color:var(--sky,#2471a3);font-weight:600;}
-.flight-drop-zone{border:2px dashed var(--border);border-radius:10px;padding:2rem 1rem;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--parchment);margin-bottom:0.8rem;}
-.flight-drop-zone:hover,.flight-drop-zone.drag-over{border-color:var(--jade);background:#f0f9f5;}
-.flight-drop-zone .dz-icon{font-size:2rem;display:block;margin-bottom:0.5rem;}
-.flight-drop-zone p{font-family:'Noto Sans TC',sans-serif;font-size:0.83rem;color:var(--text-muted);}
-.flight-textarea{width:100%;height:140px;padding:0.7rem;border:1.5px solid var(--border);border-radius:8px;font-family:'Noto Sans TC',sans-serif;font-size:0.82rem;color:var(--text);background:var(--parchment);resize:vertical;line-height:1.6;margin-bottom:0.8rem;}
-.flight-textarea:focus{outline:none;border-color:var(--jade);background:#fff;}
-.flight-result{background:#f0f9f5;border:1px solid #b2dfcc;border-radius:8px;padding:0.9rem;margin-bottom:0.8rem;display:none;}
-.flight-result h4{font-family:'Noto Serif TC',serif;font-size:0.9rem;font-weight:700;color:var(--jade);margin-bottom:0.6rem;}
-.flight-item{display:flex;align-items:flex-start;gap:0.6rem;padding:0.5rem 0;border-bottom:1px solid #d4eedf;font-family:'Noto Sans TC',sans-serif;font-size:0.82rem;}
-.flight-item:last-child{border-bottom:none;}
-.flight-item-dot{width:10px;height:10px;border-radius:50%;background:var(--jade);flex-shrink:0;margin-top:3px;}
-.flight-item-body{flex:1;}
-.flight-item-body strong{display:block;color:var(--ink);margin-bottom:2px;}
-.flight-item-body span{color:var(--text-muted);}
-.flight-item-warn{color:var(--crimson)!important;}
-.flight-loading{text-align:center;padding:1.5rem;font-family:'Noto Sans TC',sans-serif;font-size:0.85rem;color:var(--text-muted);display:none;}
-.flight-loading .spin{display:inline-block;animation:spin 1s linear infinite;margin-right:0.5rem;}
-@keyframes spin{to{transform:rotate(360deg);}}
-
-
-/* TOAST */
-.toast{position:fixed;top:1.1rem;right:1.4rem;background:var(--jade);color:#fff;padding:0.55rem 1rem;border-radius:8px;font-family:'Noto Sans TC',sans-serif;font-size:0.81rem;opacity:0;transform:translateY(-10px);transition:all 0.3s;z-index:9999;pointer-events:none;}
-.toast.show{opacity:1;transform:translateY(0);}
-.toast.err{background:var(--crimson);}
-
-/* MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9990;display:flex;align-items:center;justify-content:center;padding:1rem;}
-.modal-box{background:#fff;border-radius:14px;padding:1.8rem;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.3);font-family:'Noto Serif TC',serif;}
-.modal-box h3{font-size:1.15rem;font-weight:700;margin-bottom:1.1rem;color:var(--ink);}
-.modal-field-label{font-family:'Noto Sans TC',sans-serif;font-size:0.8rem;color:var(--text-muted);display:block;margin-bottom:0.28rem;}
-.modal-input{width:100%;padding:0.55rem 0.85rem;border:1.5px solid var(--border);border-radius:7px;font-family:'Noto Sans TC',sans-serif;font-size:0.88rem;color:var(--ink);background:var(--parchment);margin-bottom:0.75rem;}
-.modal-input:focus{outline:none;border-color:var(--terracotta);background:#fff;}
-.modal-err{color:var(--crimson);font-family:'Noto Sans TC',sans-serif;font-size:0.79rem;margin-top:-0.4rem;margin-bottom:0.5rem;min-height:1.1em;}
-.modal-btns{display:flex;gap:0.6rem;margin-top:0.9rem;justify-content:flex-end;}
-.modal-btns button{padding:0.5rem 1.3rem;border-radius:7px;font-family:'Noto Serif TC',serif;font-size:0.88rem;cursor:pointer;border:2px solid transparent;transition:all 0.18s;}
-.modal-confirm{background:var(--terracotta);color:#fff;border-color:var(--terracotta);}
-.modal-confirm:hover{background:#a84f22;}
-.modal-cancel{background:transparent;color:var(--text-muted);border-color:var(--border);}
-.modal-cancel:hover{border-color:var(--text-muted);}
-.trip-preview{font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;color:var(--jade);margin-bottom:0.4rem;margin-top:-0.3rem;min-height:1.2em;}
-.trip-warn{font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;color:var(--crimson);background:#fff5f5;border-radius:6px;padding:0.5rem 0.7rem;margin-bottom:0.5rem;}
-
-/* WEBSITES PANEL */
-.websites-panel{display:none;}
-.websites-panel.active{display:block;animation:fadeIn 0.3s ease;}
-.websites-section{background:#fff;border-radius:12px;border:1px solid var(--border);padding:1.2rem;box-shadow:0 2px 8px var(--shadow);margin-bottom:1rem;}
-.websites-section h3{font-family:'Noto Serif TC',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;}
-.website-list{display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1rem;}
-.website-item{display:flex;align-items:center;gap:0.6rem;}
-.website-link{flex:1;display:flex;align-items:center;gap:0.6rem;padding:0.6rem 0.9rem;background:var(--parchment);border-radius:8px;border:1px solid var(--border);text-decoration:none;color:var(--ink);font-family:'Noto Sans TC',sans-serif;font-size:0.85rem;transition:all 0.2s;overflow:hidden;}
-.website-link:hover{background:var(--jade);color:#fff;border-color:var(--jade);transform:translateX(3px);}
-.website-link .ws-icon{font-size:1.1rem;flex-shrink:0;}
-.website-link .ws-info{flex:1;overflow:hidden;}
-.website-link .ws-name{font-weight:600;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.website-link .ws-url{font-size:0.72rem;opacity:0.6;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.ws-del-btn{width:26px;height:26px;border-radius:50%;border:1px solid #ddd;background:transparent;color:#bbb;cursor:pointer;font-size:0.75rem;flex-shrink:0;transition:all 0.2s;display:flex;align-items:center;justify-content:center;padding:0;}
-.ws-del-btn:hover{border-color:var(--crimson);color:var(--crimson);}
-.ws-add-form{display:none;background:var(--parchment);border-radius:10px;padding:1rem;border:1px dashed var(--border);margin-top:0.5rem;}
-.ws-add-form.open{display:block;}
-.ws-add-form input{width:100%;padding:0.5rem 0.75rem;border:1.5px solid var(--border);border-radius:7px;font-family:'Noto Sans TC',sans-serif;font-size:0.85rem;color:var(--ink);background:#fff;margin-bottom:0.5rem;}
-.ws-add-form input:focus{outline:none;border-color:var(--jade);}
-.ws-form-btns{display:flex;gap:0.5rem;justify-content:flex-end;}
-.ws-form-btns button{padding:0.45rem 1.1rem;border-radius:7px;font-family:'Noto Serif TC',serif;font-size:0.85rem;cursor:pointer;border:2px solid transparent;transition:all 0.18s;}
-.ws-btn-add-open{padding:0.35rem 1rem;border-radius:20px;border:1px solid var(--jade);background:transparent;color:var(--jade);font-size:0.75rem;font-family:'Noto Sans TC',sans-serif;cursor:pointer;transition:all 0.2s;}
-.ws-btn-add-open:hover{background:var(--jade);color:#fff;}
-body.view-mode .ws-del-btn{display:none;}
-body.view-mode .ws-btn-add-open{display:none;}
-body.view-mode .ws-add-form{display:none!important;}
-.ws-empty{font-family:'Noto Sans TC',sans-serif;font-size:0.8rem;color:var(--border);padding:0.5rem 0;}
-
-/* PWA / MOBILE */
-@media(max-width:480px){
-  .main{padding:0.8rem 0.75rem 6rem;}
-  /* Header */
-  .site-header{padding:calc(1rem + env(safe-area-inset-top)) 1rem 0;}
-  .header-title{font-size:2.4rem!important;}
-  .header-dates{font-size:0.72rem;}
-  .header-erhai{width:220px;opacity:0.4;}
-  .header-admin-btns{gap:0.35rem;}
-  .btn-header{padding:0.3rem 0.7rem;font-size:0.7rem;}
-  /* Day header */
-  .day-header{flex-wrap:wrap;gap:0.6rem;margin-bottom:0.8rem;}
-  .day-num-big{font-size:2.8rem;}
-  .day-title-input{font-size:0.88rem;}
-  /* Timeline on mobile: shorter */
-  .tl-v-wrap{min-height:180px;padding-left:1.8rem;}
-  .tl-bar-v{min-height:180px;width:26px;}
-  .day-left{padding:0.8rem;}
-  /* Info cards */
-  .info-row-3{grid-template-columns:1fr;}
-  .info-row-2{grid-template-columns:1fr;}
-  /* Actions */
-  .actions-bar{padding:0.55rem 0.7rem;gap:0.4rem;}
-  .btn{padding:0.5rem 0.8rem;font-size:0.78rem;}
-  /* Tabs */
-  .tab-btn{padding:0.4rem 0.65rem;}
-  .tab-btn .day-num{font-size:1.5rem;}
-  .tab-btn .day-date{font-size:0.58rem;}
-  .tab-btn .day-week{font-size:0.55rem;}
+.sync-dot { width:7px; height:7px; border-radius:50%; background:var(--green); flex-shrink:0; }
+.sync-dot.syncing { background:var(--yellow); animation:pulse 1s infinite; }
+.sync-dot.error   { background:var(--red); }
+@keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
+.sync-lbl { font-size:0.7rem; color:var(--ink2); }
+.sync-ts  { font-family:'DM Mono',monospace; font-size:0.6rem; color:var(--muted); margin-left:auto; }
+.btn-sync {
+  background:var(--primary-l); color:var(--primary); border:none;
+  padding:3px 9px; border-radius:10px; font-size:0.65rem; cursor:pointer;
+  font-weight:500; font-family:'Noto Sans TC',sans-serif; transition:all 0.18s;
 }
-@media(max-width:380px){
-  .btn span,.btn-text{display:none;}
-}
-/* Safe area for notch phones */
-.tab-nav-wrap{top:0;}
+.btn-sync:hover { background:var(--primary); color:#fff; }
 
-/* PRINT */
-.print-cover{display:none;}
-@media print{
-  body{background:#fff;}
-  .site-header,.tab-nav-wrap,.actions-bar,.day-panel:not(.print-include){display:none!important;}
-  .day-panel.print-include{display:block!important;page-break-after:always;}
-  .main{max-width:100%;padding:0;}
-  .print-cover{display:flex!important;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;text-align:center;page-break-after:always;}
-  .print-cover h1{font-family:'Ma Shan Zheng',cursive;font-size:4rem;color:var(--terracotta);margin-bottom:1rem;}
-  .card{break-inside:avoid;box-shadow:none;border:1px solid #ddd;}
-  .card textarea,.notes-row textarea{background:transparent;min-height:unset;resize:none;}
-  .tl-entries{display:none;}
-  *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+/* DAY CARD */
+.day-card {
+  background:var(--surface); border-radius:14px; margin-bottom:14px;
+  box-shadow:0 2px 10px var(--shadow2); overflow:hidden; border:1px solid var(--border);
+}
+.day-header {
+  background:linear-gradient(120deg,var(--primary) 0%,#5bb4ff 100%);
+  color:#fff; padding:14px 16px; display:flex; align-items:center; justify-content:space-between;
+}
+.day-d-num {
+  font-family:'Nunito',sans-serif; font-size:0.72rem; font-weight:800;
+  background:rgba(255,255,255,0.22); padding:2px 8px; border-radius:8px;
+  margin-bottom:4px; display:inline-block; letter-spacing:0.06em;
+}
+.day-date { font-family:'Nunito',sans-serif; font-size:1.18rem; font-weight:800; }
+.day-wd   { font-size:0.68rem; opacity:0.85; margin-top:1px; font-family:'DM Mono',monospace; }
+.day-total-badge {
+  background:rgba(255,255,255,0.22); border-radius:10px;
+  padding:4px 10px; font-family:'DM Mono',monospace; font-size:0.7rem;
+}
+
+/* SECTION LABEL */
+.sec-label {
+  font-family:'DM Mono',monospace; font-size:0.6rem; color:var(--muted);
+  letter-spacing:0.1em; margin-bottom:8px; display:flex; align-items:center; gap:6px;
+}
+.sec-label::after { content:''; flex:1; height:1px; background:var(--border); }
+
+/* TRANSPORT */
+.transport-area { padding:12px 14px 8px; border-bottom:1px solid var(--border); }
+.segment-list { display:flex; flex-direction:column; gap:7px; }
+.segment-row {
+  display:grid; grid-template-columns:auto 1fr 1fr auto;
+  gap:8px; align-items:center;
+  background:var(--surface2); border-radius:10px; padding:9px 10px; border:1px solid var(--border);
+}
+.seg-icon { width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.9rem; flex-shrink:0; }
+.si-fly{background:#e8f3ff;} .si-train{background:#fef2f2;} .si-car{background:#fffbeb;}
+.si-drive{background:#fffbeb;} .si-metro{background:#f5f3ff;} .si-bus{background:#ecfdf5;} .si-walk{background:#f8fafc;}
+.seg-times { display:flex; flex-direction:column; gap:2px; }
+.seg-tr { display:flex; align-items:center; gap:4px; font-family:'DM Mono',monospace; font-size:0.7rem; }
+.seg-lbl { color:var(--muted); font-size:0.58rem; width:14px; }
+.seg-val { color:var(--ink); font-weight:500; }
+.seg-places { display:flex; flex-direction:column; gap:2px; }
+.seg-place { font-size:0.71rem; color:var(--ink2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.seg-note  { font-size:0.62rem; color:var(--muted); font-style:italic; margin-top:1px; }
+.btn-x {
+  background:transparent; border:none; color:var(--muted); font-size:0.9rem;
+  cursor:pointer; padding:3px 5px; border-radius:6px; line-height:1; transition:all 0.15s;
+}
+.btn-x:hover { color:var(--red); background:#fef2f2; }
+
+/* ADD SEG FORM */
+.add-seg-form {
+  background:var(--primary-l); border:1.5px dashed #aad4ff;
+  border-radius:10px; padding:11px; margin-top:8px;
+}
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:7px; margin-bottom:7px; }
+.form-row.full { grid-template-columns:1fr; }
+.form-field { display:flex; flex-direction:column; gap:3px; }
+.form-lbl { font-family:'DM Mono',monospace; font-size:0.58rem; color:var(--primary-d); letter-spacing:0.05em; }
+.form-inp,.form-sel {
+  background:#fff; border:1px solid #c8dfff; border-radius:7px;
+  padding:6px 9px; font-family:'Noto Sans TC',sans-serif;
+  font-size:0.76rem; color:var(--ink); width:100%; transition:border-color 0.18s;
+}
+.form-inp:focus,.form-sel:focus { outline:none; border-color:var(--primary); }
+.type-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:4px; margin-bottom:7px; }
+.type-chip {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:2px; padding:6px 3px; border:1.5px solid #c8dfff; border-radius:8px;
+  cursor:pointer; font-size:0.62rem; background:#fff; transition:all 0.15s; line-height:1.2;
+}
+.type-chip span { font-size:1rem; }
+.type-chip.sel { border-color:var(--primary); background:var(--primary); color:#fff; }
+.btn-confirm {
+  width:100%; background:var(--primary); color:#fff; border:none; border-radius:8px;
+  padding:8px; font-family:'Noto Sans TC',sans-serif; font-size:0.8rem;
+  font-weight:500; cursor:pointer; margin-top:2px; transition:background 0.18s;
+}
+.btn-confirm:hover { background:var(--primary-d); }
+.btn-add-row {
+  display:flex; align-items:center; justify-content:center; gap:5px; width:100%;
+  background:transparent; border:1px dashed var(--border); color:var(--muted);
+  padding:7px; border-radius:8px; font-size:0.7rem;
+  font-family:'Noto Sans TC',sans-serif; cursor:pointer; margin-top:7px; transition:all 0.18s;
+}
+.btn-add-row:hover { border-color:var(--primary); color:var(--primary); background:var(--primary-l); }
+
+/* ACTIVITIES */
+.activities-area { padding:10px 14px; border-bottom:1px solid var(--border); }
+.act-item { display:flex; align-items:center; gap:8px; padding:4px 0; }
+.act-dot { width:7px; height:7px; border-radius:50%; background:var(--primary); flex-shrink:0; }
+.act-text { font-size:0.76rem; color:var(--ink2); flex:1; }
+.act-inp {
+  background:transparent; border:none; border-bottom:1.5px dashed var(--border);
+  font-family:'Noto Sans TC',sans-serif; font-size:0.76rem; color:var(--ink); flex:1; padding:2px 1px;
+}
+.act-inp:focus { outline:none; border-bottom-color:var(--primary); }
+.btn-add-act {
+  display:flex; align-items:center; gap:4px; background:transparent; border:none;
+  color:var(--muted); font-size:0.7rem; font-family:'Noto Sans TC',sans-serif;
+  cursor:pointer; padding:5px 0; transition:color 0.18s;
+}
+.btn-add-act:hover { color:var(--green); }
+
+/* HOTEL */
+.hotel-area {
+  padding:10px 14px; border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:10px; background:var(--green-l);
+}
+.hotel-ico { font-size:1.2rem; flex-shrink:0; }
+.hotel-info { flex:1; }
+.hotel-name { font-size:0.8rem; font-weight:600; color:var(--ink); }
+.hotel-det  { font-size:0.66rem; color:var(--green); font-family:'DM Mono',monospace; margin-top:1px; }
+.hotel-empty { font-size:0.74rem; color:#6cc9a0; }
+.btn-edit-hotel {
+  background:var(--green); color:#fff; border:none; padding:4px 10px;
+  border-radius:20px; font-size:0.65rem; cursor:pointer; font-weight:500;
+  font-family:'Noto Sans TC',sans-serif; transition:all 0.18s; white-space:nowrap;
+}
+.btn-edit-hotel:hover { background:#18a06a; }
+
+/* EXPENSE ROW */
+.day-exp-row {
+  background:var(--orange-l); padding:7px 14px;
+  display:flex; gap:7px; flex-wrap:wrap; align-items:center; border-top:1px solid #fce4cc;
+}
+.exp-chip {
+  font-family:'DM Mono',monospace; font-size:0.62rem;
+  padding:3px 8px; border-radius:12px; background:#fff; border:1px solid #fce4cc;
+}
+.exp-chip b { color:var(--orange); }
+.btn-exp {
+  margin-left:auto; background:var(--orange); color:#fff; border:none;
+  padding:4px 11px; border-radius:20px; font-size:0.65rem; font-weight:500;
+  font-family:'Noto Sans TC',sans-serif; cursor:pointer; transition:all 0.18s;
+}
+.btn-exp:hover { background:#e06520; }
+
+/* OVERVIEW */
+.ov-hero {
+  background:linear-gradient(135deg,var(--primary) 0%,#38b8f5 100%);
+  border-radius:16px; padding:22px 20px; color:#fff; margin-bottom:14px;
+  position:relative; overflow:hidden;
+}
+.ov-hero::after {
+  content:'☁️'; position:absolute; right:14px; top:10px;
+  font-size:4rem; opacity:0.18; pointer-events:none;
+}
+.ov-title { font-family:'Nunito',sans-serif; font-size:1.7rem; font-weight:800; margin-bottom:4px; }
+.ov-dates { font-family:'DM Mono',monospace; font-size:0.68rem; opacity:0.85; }
+.ov-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:16px; }
+.ov-stat { background:rgba(255,255,255,0.18); border-radius:10px; padding:9px 6px; text-align:center; }
+.ov-stat-n { font-family:'Nunito',sans-serif; font-size:1.4rem; font-weight:800; }
+.ov-stat-l { font-size:0.6rem; opacity:0.8; margin-top:1px; }
+.ov-list {
+  background:var(--surface); border-radius:14px;
+  box-shadow:0 2px 10px var(--shadow2); border:1px solid var(--border); overflow:hidden;
+}
+.ov-list-hd {
+  padding:11px 14px; background:var(--surface2); border-bottom:1px solid var(--border);
+  font-family:'DM Mono',monospace; font-size:0.62rem; color:var(--muted); letter-spacing:0.08em;
+}
+.ov-row {
+  display:flex; align-items:center; gap:10px; padding:10px 14px;
+  border-bottom:1px solid var(--border); cursor:pointer; transition:background 0.15s;
+}
+.ov-row:last-child { border-bottom:none; }
+.ov-row:hover { background:var(--primary-l); }
+.ov-dn {
+  font-family:'Nunito',sans-serif; font-weight:800; font-size:0.72rem; color:var(--primary);
+  background:var(--primary-l); width:30px; height:30px; border-radius:8px;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.ov-dd { font-size:0.73rem; color:var(--ink); width:68px; flex-shrink:0; }
+.ov-bar { flex:1; height:8px; background:var(--border); border-radius:4px; overflow:hidden; display:flex; gap:2px; }
+.ov-bar-seg { height:100%; flex:1; border-radius:3px; }
+.ov-info { font-size:0.63rem; color:var(--muted); text-align:right; width:72px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.ov-hotel { color:var(--green); }
+
+/* EXPENSES TAB */
+.exp-sum-card {
+  background:var(--surface); border-radius:14px; padding:18px 16px; margin-bottom:12px;
+  box-shadow:0 2px 10px var(--shadow2); border:1px solid var(--border);
+}
+.exp-sum-lbl { font-family:'DM Mono',monospace; font-size:0.6rem; color:var(--muted); letter-spacing:0.1em; margin-bottom:4px; }
+.exp-sum-total { font-family:'Nunito',sans-serif; font-size:2rem; font-weight:800; color:var(--ink); }
+.exp-sum-total span { font-size:0.9rem; color:var(--muted); font-weight:400; }
+.exp-cat-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin-top:14px; }
+.exp-cat-box {
+  background:var(--surface2); border-radius:10px; padding:8px 4px;
+  text-align:center; border:1px solid var(--border);
+}
+.exp-cat-ico { font-size:1.1rem; }
+.exp-cat-lbl { font-size:0.58rem; color:var(--muted); font-family:'DM Mono',monospace; margin-top:2px; }
+.exp-cat-amt { font-family:'DM Mono',monospace; font-size:0.75rem; color:var(--ink); font-weight:500; margin-top:2px; }
+.exp-day-list { display:flex; flex-direction:column; gap:8px; }
+.exp-day-card {
+  background:var(--surface); border-radius:12px;
+  box-shadow:0 1px 6px var(--shadow2); border:1px solid var(--border); overflow:hidden;
+}
+.exp-day-hd {
+  background:var(--surface2); padding:9px 14px;
+  display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border);
+}
+.exp-day-ttl { font-size:0.8rem; font-weight:600; color:var(--ink); }
+.exp-day-tot { font-family:'DM Mono',monospace; font-size:0.78rem; color:var(--orange); font-weight:500; }
+.exp-entries { padding:4px 14px 8px; }
+.exp-ent-row {
+  display:grid; grid-template-columns:auto 1fr auto auto;
+  gap:8px; align-items:center; padding:6px 0; border-bottom:1px dotted var(--border);
+}
+.exp-ent-row:last-child { border-bottom:none; }
+.exp-cdot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.cd-transport{background:var(--t-fly);} .cd-hotel{background:var(--green);}
+.cd-food{background:var(--yellow);} .cd-ticket{background:var(--purple);} .cd-other{background:var(--muted);}
+.exp-ent-desc { font-size:0.73rem; color:var(--ink2); }
+.exp-ent-cat  { font-size:0.6rem; color:var(--muted); font-family:'DM Mono',monospace; }
+.exp-ent-amt  { font-family:'DM Mono',monospace; font-size:0.76rem; color:var(--ink); text-align:right; }
+.add-exp-form {
+  background:var(--orange-l); border:1.5px dashed #fcd9b0; border-radius:10px;
+  padding:12px; margin-top:10px;
+}
+.add-exp-form h4 { font-size:0.78rem; margin-bottom:9px; color:var(--ink2); }
+.btn-confirm-exp {
+  width:100%; background:var(--orange); color:#fff; border:none; border-radius:8px;
+  padding:8px; font-family:'Noto Sans TC',sans-serif; font-size:0.8rem;
+  font-weight:500; cursor:pointer; margin-top:4px; transition:background 0.18s;
+}
+.btn-confirm-exp:hover { background:#e06520; }
+
+/* MODALS */
+.modal-overlay {
+  position:fixed; inset:0; background:rgba(30,41,59,0.45); z-index:200;
+  display:flex; align-items:center; justify-content:center; padding:20px;
+}
+.modal-box {
+  background:var(--surface); border-radius:18px; padding:28px 24px;
+  width:100%; max-width:340px; box-shadow:0 12px 40px rgba(30,41,59,0.2);
+}
+.modal-title { font-family:'Nunito',sans-serif; font-size:1.25rem; font-weight:800; margin-bottom:4px; }
+.modal-sub   { font-size:0.72rem; color:var(--muted); margin-bottom:18px; }
+.modal-inp {
+  width:100%; border:1.5px solid var(--border); border-radius:10px;
+  padding:10px 12px; font-family:'Noto Sans TC',sans-serif; font-size:0.9rem;
+  color:var(--ink); background:var(--surface2); margin-bottom:11px;
+}
+.modal-inp:focus { outline:none; border-color:var(--primary); }
+.modal-btn {
+  width:100%; background:var(--primary); color:#fff; border:none; border-radius:10px;
+  padding:11px; font-family:'Noto Sans TC',sans-serif; font-size:0.9rem;
+  font-weight:600; cursor:pointer; transition:background 0.18s;
+}
+.modal-btn:hover { background:var(--primary-d); }
+.modal-err { color:var(--red); font-size:0.7rem; margin-top:-6px; margin-bottom:8px; }
+.modal-close {
+  background:transparent; border:none; color:var(--muted); font-size:0.75rem;
+  cursor:pointer; display:block; margin-top:10px; text-align:center; width:100%;
+}
+.bs-overlay {
+  position:fixed; inset:0; background:rgba(30,41,59,0.4); z-index:200;
+  display:flex; align-items:flex-end; justify-content:center;
+}
+.bs {
+  background:var(--surface); border-radius:18px 18px 0 0; padding:20px 18px 36px;
+  width:100%; max-width:640px; max-height:86vh; overflow-y:auto;
+  box-shadow:0 -4px 30px rgba(30,41,59,0.15);
+}
+.bs h3 {
+  font-family:'Nunito',sans-serif; font-size:1.1rem; font-weight:800;
+  margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--border);
+}
+.toast {
+  position:fixed; bottom:22px; left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--ink); color:#fff; padding:9px 18px; border-radius:20px;
+  font-size:0.76rem; font-family:'Noto Sans TC',sans-serif;
+  box-shadow:0 4px 20px rgba(30,41,59,0.25);
+  transition:transform 0.28s cubic-bezier(0.34,1.56,0.64,1);
+  z-index:999; pointer-events:none; white-space:nowrap;
+}
+.toast.show { transform:translateX(-50%) translateY(0); }
+.hidden { display:none !important; }
+@media(max-width:400px){
+  .exp-cat-grid{grid-template-columns:repeat(3,1fr);}
+  .type-grid{grid-template-columns:repeat(4,1fr);}
+  .form-row{grid-template-columns:1fr;}
 }
 </style>
 </head>
-<body class="view-mode">
+<body>
 
-<div class="print-cover" id="printCover">
-  <h1>雲南旅遊計劃</h1>
-  <p id="printRange"></p>
-  <p style="margin-top:3rem;color:#aaa;font-size:0.85rem;">製作日期：<span id="printDate"></span></p>
-</div>
-
-<header class="site-header">
-  <div class="header-inner">
-    <div class="header-top">
-      <div class="header-title-area">
-        <div class="header-badge">✦ 旅遊行程規劃 ✦</div>
-        <h1 class="header-title">雲南<span>之旅</span></h1>
-        <p class="header-dates" id="headerDates">載入中...</p>
-      </div>
-      <div class="header-erhai">
-        <svg viewBox="0 0 420 180" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#87ceeb" stop-opacity="0.6"/>
-              <stop offset="60%" stop-color="#b8e4f7" stop-opacity="0.4"/>
-              <stop offset="100%" stop-color="#e0f4ff" stop-opacity="0.2"/>
-            </linearGradient>
-            <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#1a8fc1" stop-opacity="0.85"/>
-              <stop offset="50%" stop-color="#0d6fa0" stop-opacity="0.9"/>
-              <stop offset="100%" stop-color="#0a4f78" stop-opacity="0.95"/>
-            </linearGradient>
-            <linearGradient id="mountainGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#4a7fa8" stop-opacity="0.7"/>
-              <stop offset="100%" stop-color="#2a5a7a" stop-opacity="0.9"/>
-            </linearGradient>
-            <filter id="blur2">
-              <feGaussianBlur stdDeviation="2"/>
-            </filter>
-          </defs>
-
-          <!-- Sky -->
-          <rect width="420" height="180" fill="url(#skyGrad)"/>
-
-          <!-- Distant clouds -->
-          <ellipse cx="80" cy="30" rx="40" ry="14" fill="white" opacity="0.25"/>
-          <ellipse cx="110" cy="24" rx="28" ry="10" fill="white" opacity="0.2"/>
-          <ellipse cx="280" cy="20" rx="50" ry="15" fill="white" opacity="0.2"/>
-          <ellipse cx="320" cy="14" rx="35" ry="11" fill="white" opacity="0.18"/>
-          <ellipse cx="380" cy="35" rx="30" ry="10" fill="white" opacity="0.15"/>
-
-          <!-- Cangshan Mountains (蒼山) — layered ranges -->
-          <path d="M0,110 Q40,40 90,70 Q130,30 170,65 Q210,20 250,60 Q290,15 330,55 Q360,25 420,50 L420,130 L0,130 Z"
-                fill="url(#mountainGrad)" opacity="0.55"/>
-          <path d="M0,120 Q50,70 100,90 Q150,55 200,85 Q250,50 300,80 Q350,60 420,75 L420,135 L0,135 Z"
-                fill="#3a6a8a" opacity="0.5"/>
-          <!-- Snow caps -->
-          <path d="M88,42 Q90,35 92,42 Z" fill="white" opacity="0.7"/>
-          <path d="M168,38 Q170,30 172,38 Z" fill="white" opacity="0.6"/>
-          <path d="M248,33 Q250,24 252,33 Z" fill="white" opacity="0.7"/>
-          <path d="M328,28 Q330,20 332,28 Z" fill="white" opacity="0.6"/>
-
-          <!-- Erhai Lake horizon line -->
-          <path d="M0,132 Q105,128 210,130 Q315,132 420,129 L420,180 L0,180 Z"
-                fill="url(#waterGrad)"/>
-
-          <!-- Water reflections - shimmering lines -->
-          <line x1="10" y1="145" x2="80" y2="143" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" stroke-linecap="round"/>
-          <line x1="100" y1="150" x2="190" y2="148" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-linecap="round"/>
-          <line x1="210" y1="142" x2="290" y2="144" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" stroke-linecap="round"/>
-          <line x1="310" y1="155" x2="410" y2="153" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-linecap="round"/>
-          <line x1="50" y1="160" x2="140" y2="158" stroke="rgba(255,255,255,0.08)" stroke-width="2" stroke-linecap="round"/>
-          <line x1="240" y1="165" x2="360" y2="163" stroke="rgba(255,255,255,0.1)" stroke-width="1.5" stroke-linecap="round"/>
-
-          <!-- Mountain reflections in water -->
-          <path d="M0,135 Q50,155 100,140 Q150,160 200,142 Q250,158 300,143 Q350,155 420,138 L420,165 L0,165 Z"
-                fill="#0a4060" opacity="0.25"/>
-
-          <!-- Small sailboat -->
-          <polygon points="200,133 206,133 203,118" fill="white" opacity="0.5"/>
-          <rect x="202" y="133" width="4" height="2" rx="1" fill="#8ab4c8" opacity="0.6"/>
-
-          <!-- Another boat -->
-          <polygon points="310,136 315,136 312,124" fill="white" opacity="0.4"/>
-          <rect x="309" y="136" width="5" height="1.5" rx="1" fill="#7aa8c0" opacity="0.5"/>
-
-          <!-- Distant islet / 南詔風情島 hint -->
-          <ellipse cx="355" cy="131" rx="18" ry="4" fill="#2a6040" opacity="0.4"/>
-
-          <!-- Sun glow on water -->
-          <ellipse cx="380" cy="135" rx="35" ry="8" fill="#ffd060" opacity="0.12"/>
-          <ellipse cx="380" cy="150" rx="25" ry="5" fill="#ffd060" opacity="0.08"/>
-
-          <!-- Foreground gentle wave ripples -->
-          <path d="M0,170 Q30,167 60,170 Q90,173 120,170 Q150,167 180,170 Q210,173 240,170 Q270,167 300,170 Q330,173 360,170 Q390,167 420,170" 
-                stroke="rgba(255,255,255,0.12)" stroke-width="1.5" fill="none"/>
-          <path d="M0,176 Q40,173 80,176 Q120,179 160,176 Q200,173 240,176 Q280,179 320,176 Q360,173 420,176"
-                stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"/>
-        </svg>
-      </div>
-      <div class="header-right">
-        <div class="header-admin-btns">
-          <button class="btn-header btn-member" id="memberBtn" onclick="showMemberLogin()">👥 團員登入</button>
-          <button class="btn-header btn-lock" id="editBtn" onclick="showLoginModal()">🔒 編輯模式</button>
-          <button class="btn-header btn-unlock" id="logoutBtn" onclick="exitEdit()" style="display:none">🔓 結束編輯</button>
-          <button class="btn-header btn-trip-settings" id="tripSettingsBtn" onclick="showTripSettings()" style="display:none">⚙️ 行程設定</button>
-        </div>
-      </div>
+<header class="app-header">
+  <div class="hdr-left">
+    <div class="hdr-logo">🏔️</div>
+    <div>
+      <div class="hdr-title">雲南行旅 2026</div>
+      <div class="hdr-sub">7/27 — 8/9 · 14天13夜</div>
     </div>
-    <div class="settings-bar" id="settingsBar" style="display:none">
-      <label>🔗 Apps Script URL</label>
-      <input type="text" id="scriptUrl" placeholder="貼上 Google Apps Script 網址...">
-      <button class="btn-connect" onclick="connectSheets()">連接試算表</button>
-      <button class="btn-connect" style="border-color:#adf;color:#adf" onclick="showSetupGuide()">📋 設定教學</button>
-      <button class="btn-connect" style="border-color:#f96;color:#f96" onclick="runDiagnostic()">🔬 診斷連線</button>
-      <span class="sync-status" id="syncStatus">尚未連接</span>
-    </div>
+  </div>
+  <div class="hdr-right">
+    <div class="badge badge-view" id="modeBadge">瀏覽</div>
+    <button class="btn-hdr" id="loginBtn" onclick="openLogin()">管理員</button>
   </div>
 </header>
 
-<div class="tab-nav-wrap">
-  <nav class="tab-nav" id="tabNav"></nav>
-</div>
-
-<div class="global-wish-wrap" id="globalWishWrap">
-  <div class="wish-pool global-wish-pool">
-    <div class="wish-pool-header">
-      <span class="wish-pool-title">🌟 團員許願池
-        <span class="wish-name-badge" id="globalWishBadge" style="display:none"></span>
-      </span>
-      <div style="display:flex;align-items:center;gap:0.6rem;">
-        <span style="font-family:'Noto Sans TC',sans-serif;font-size:0.72rem;color:#c8a83a;">全團共用</span>
-        <button id="memberLogoutBtn" onclick="memberLogout()" style="display:none;background:transparent;border:none;font-family:'Noto Sans TC',sans-serif;font-size:0.68rem;color:#bbb;cursor:pointer;padding:0;text-decoration:underline;">登出</button>
-      </div>
-    </div>
-    <div class="wish-list" id="globalWishList">
-      <div class="wish-empty">尚無許願，登入後可新增想去的景點 ✨</div>
-    </div>
-    <div class="wish-input-row" id="globalWishInputRow" style="display:none">
-      <input type="text" id="globalWishInput" placeholder="輸入想去的景點..." maxlength="50" onkeydown="if(event.key==='Enter')submitWish()">
-      <button class="wish-submit" onclick="submitWish()">許願 🌠</button>
-    </div>
-  </div>
-</div>
+<nav class="tab-bar" id="tabBar"></nav>
 <main class="main" id="mainContent"></main>
-
-<div class="actions-bar">
-  <div class="edit-only" style="display:flex;gap:0.7rem;flex-wrap:wrap;align-items:center;">
-    <button class="btn btn-jade" onclick="saveToLocal()">💾 儲存本地</button>
-    <button class="btn btn-jade" onclick="syncToSheets()">☁️ 同步試算表</button>
-    <button class="btn btn-sky" onclick="showFlightImport()">✈️ 匯入航班</button>
-  </div>
-  <button class="btn btn-gold" onclick="loadFromSheets()">🔄 載入最新行程</button>
-  <button class="btn btn-primary" onclick="printPDF()">🖨️ 列印 / 轉存 PDF</button>
-</div>
-
 <div class="toast" id="toast"></div>
 
+<!-- LOGIN -->
+<div class="modal-overlay hidden" id="loginModal">
+  <div class="modal-box">
+    <div class="modal-title">管理員登入</div>
+    <div class="modal-sub">輸入管理密碼以編輯行程與花費</div>
+    <input type="password" class="modal-inp" id="pwInput" placeholder="管理密碼"
+      onkeydown="if(event.key==='Enter')doLogin()">
+    <div class="modal-err hidden" id="loginErr">密碼錯誤，請重試</div>
+    <button class="modal-btn" onclick="doLogin()">登入</button>
+    <button class="modal-close" onclick="closeLogin()">取消</button>
+  </div>
+</div>
+
+<!-- HOTEL MODAL -->
+<div class="modal-overlay hidden" id="hotelModal">
+  <div class="modal-box">
+    <div class="modal-title">🏨 住宿資訊</div>
+    <div class="modal-sub" id="hotelSub"></div>
+    <input class="modal-inp" id="hotelName" placeholder="酒店名稱">
+    <input class="modal-inp" id="hotelDetail" placeholder="備註（如：含早、標準雙床間）">
+    <button class="modal-btn" onclick="saveHotel()">儲存</button>
+    <button class="modal-close" onclick="document.getElementById('hotelModal').classList.add('hidden')">取消</button>
+  </div>
+</div>
+
+<!-- EXPENSE SHEET -->
+<div class="bs-overlay hidden" id="expModal">
+  <div class="bs" id="expSheet"></div>
+</div>
+
 <script>
-// ─── CONFIG ───
-const DEFAULT_CONFIG = {startYear:2026,startMonth:7,startDay:29,totalDays:12};
-let tripConfig = {...DEFAULT_CONFIG};
-const PASS        = 'CCcc7379403!'; // 管理員（完整編輯）
-const MEMBER_PASS = 'Wondali78';     // 團員（連接試算表，唯讀）
-const SCRIPT_URL  = 'https://script.google.com/macros/s/AKfycbxk0lXUJyiXp4Lvp1LzqkKs7FLWGTDOyh9wEolFgRVyH_CUpt2lNQ-yf56189jXgIc/exec'; // Apps Script URL（固定）
-const WEEKDAYS = ['日','一','二','三','四','五','六'];
-let DAYS = [];
-let currentTab = 0;
-let isEditMode = false;
-let memberUnlocked = false; // 團員已通過驗證
-let dirty = false;
-let scriptUrl = '';
+// ═══ CONFIG ═══════════════════════════════════════
+const ADMIN_PASSWORD = 'CCcc7379403!';
 
-function loadTripConfig(){
-  const r=localStorage.getItem('yunnan_config');
-  if(r) try{ tripConfig={...DEFAULT_CONFIG,...JSON.parse(r)}; }catch(e){}
-}
-function saveTripConfig(){ localStorage.setItem('yunnan_config',JSON.stringify(tripConfig)); }
-function buildDays(){
-  const s=new Date(tripConfig.startYear,tripConfig.startMonth-1,tripConfig.startDay);
-  return Array.from({length:tripConfig.totalDays},(_,i)=>{ const d=new Date(s); d.setDate(s.getDate()+i); return d; });
-}
-function fmtDate(d){ return `${d.getMonth()+1}月${d.getDate()}日（週${WEEKDAYS[d.getDay()]}）`; }
-function fmtShort(d){ return `${d.getMonth()+1}/${d.getDate()}`; }
-function nowTime(){ return new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}); }
+// 將 Google Apps Script 部署後的網址貼在這裡
+// 格式：'https://script.google.com/macros/s/AKfycb.../exec'
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyPmGcQImOty_b79zolQ8RjmmFC1eHKXH5R1HMtsaU0QI3zGVeITgyP9yL3qYVZIbCR/exec';
 
-// ─── AUTH ───
-function showMemberLogin(){
-  // Always require password - never skip
-  const ov=mkModal(`
-    <h3>👥 團員登入</h3>
-    <p style="font-family:'Noto Sans TC',sans-serif;font-size:0.82rem;color:var(--text-muted);margin-bottom:0.9rem;">輸入團員密碼以載入最新行程</p>
-    <label class="modal-field-label">團員密碼</label>
-    <input class="modal-input" type="password" id="memberPwInput" placeholder="請輸入密碼" onkeydown="if(event.key==='Enter')doMemberLogin()">
-    <div class="modal-err" id="memberPwErr"></div>
-    <div class="modal-btns">
-      <button class="modal-cancel" onclick="closeMod()">取消</button>
-      <button class="modal-confirm" onclick="doMemberLogin()" style="background:var(--jade);border-color:var(--jade);">登入</button>
-    </div>`);
-  setTimeout(()=>ov.querySelector('#memberPwInput').focus(),50);
+const USE_CLOUD = GAS_URL !== 'https://script.google.com/macros/s/AKfycbyPmGcQImOty_b79zolQ8RjmmFC1eHKXH5R1HMtsaU0QI3zGVeITgyP9yL3qYVZIbCR/exec';
+
+// ═══ CONSTANTS ═══════════════════════════════════
+const START_DATE = new Date(2026, 6, 27);
+const TOTAL_DAYS = 14;
+const WEEKDAYS   = ['日','一','二','三','四','五','六'];
+const TRANSPORT_TYPES = [
+  {id:'fly',   icon:'✈️', label:'飛機'},
+  {id:'train', icon:'🚄', label:'高鐵'},
+  {id:'car',   icon:'🚕', label:'打車'},
+  {id:'drive', icon:'🚗', label:'自駕'},
+  {id:'metro', icon:'🚇', label:'地鐵'},
+  {id:'bus',   icon:'🚌', label:'公車'},
+  {id:'walk',  icon:'🚶', label:'步行'},
+];
+const EXPENSE_CATS = [
+  {id:'transport', icon:'✈️', label:'交通', cls:'cd-transport'},
+  {id:'hotel',     icon:'🏨', label:'住房', cls:'cd-hotel'},
+  {id:'food',      icon:'🍜', label:'飲食', cls:'cd-food'},
+  {id:'ticket',    icon:'🎟️', label:'門票', cls:'cd-ticket'},
+  {id:'other',     icon:'💰', label:'其他', cls:'cd-other'},
+];
+
+// ═══ STATE ════════════════════════════════════════
+let isAdmin=false, currentTab='overview', syncStatus='idle', lastSyncTime=null;
+let currentHotelKey=null, addSegState={};
+let data=initData();
+
+function initData(){
+  const d={days:{},expenses:{}};
+  for(let i=0;i<TOTAL_DAYS;i++){
+    const k='d'+(i+1);
+    d.days[k]={segments:[],hotel:'',hotelDetail:'',activities:[]};
+    d.expenses[k]=[];
+  }
+  return d;
 }
-function doMemberLogin(){
-  const pw=(document.getElementById('memberPwInput')?.value)||'';
-  if(pw===MEMBER_PASS){ closeMod(); enterMemberMode(); }
-  else if(pw===PASS){ closeMod(); enterEdit(); } // admin can also use this dialog
-  else{
-    const e=document.getElementById('memberPwErr');
-    if(e) e.textContent='密碼錯誤，請再試一次';
-    const i=document.getElementById('memberPwInput');
-    if(i){ i.value=''; i.focus(); i.style.borderColor='var(--crimson)'; }
+
+// ═══ DATE ═════════════════════════════════════════
+function getDate(i){const d=new Date(START_DATE);d.setDate(d.getDate()+i);return d;}
+function fmt(d){return`${d.getMonth()+1}/${d.getDate()}`;}
+function fmtL(d){return`${d.getMonth()+1}月${d.getDate()}日`;}
+function fmtNow(){return new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});}
+
+// ═══ CLOUD SYNC ═══════════════════════════════════
+async function cloudSave(){
+  if(!USE_CLOUD){localSave();return;}
+  setSyncUI('syncing');
+  try{
+    const r=await fetch(GAS_URL,{
+      method:'POST',
+      body:JSON.stringify({action:'save',data}),
+      headers:{'Content-Type':'text/plain'}
+    });
+    const j=await r.json();
+    if(j.ok){setSyncUI('ok');localSave();showToast('已同步到雲端 ☁️');}
+    else throw new Error(j.error);
+  }catch(e){
+    setSyncUI('error');localSave();showToast('雲端同步失敗，已存本機');
   }
 }
-function enterMemberMode(){
-  memberUnlocked=true;
-  localStorage.setItem('yunnan_member_logged','1'); // 記住登入狀態
-  document.getElementById('memberBtn').style.display='none';
-  scriptUrl = SCRIPT_URL;
-  localStorage.setItem('yunnan_scripturl', SCRIPT_URL);
-  document.getElementById('scriptUrl').value = SCRIPT_URL;
-  setSyncStatus('已連接，載入中...','ok');
-  // Ask for member name (first time only)
-  const savedName = localStorage.getItem('yunnan_member_name');
-  if(!savedName){
-    const name = prompt('請輸入你的名字（顯示在許願池，只需輸入一次）：','') || '團員';
-    localStorage.setItem('yunnan_member_name', name.trim()||'團員');
+
+async function cloudLoad(){
+  if(!USE_CLOUD){localLoad();renderCurrent();return;}
+  setSyncUI('syncing');
+  try{
+    const r=await fetch(GAS_URL+'?action=load&t='+Date.now());
+    const j=await r.json();
+    if(j.ok&&j.data){
+      data=mergeData(j.data);localSave();setSyncUI('ok');
+      renderCurrent();showToast('已載入最新資料 ✅');
+    }else throw new Error('load failed');
+  }catch(e){
+    setSyncUI('error');localLoad();renderCurrent();showToast('無法連線，使用本機暫存');
   }
-  showWishInputs();
-  closeMod();
-  loadFromSheets();
-  toast('✅ 登入成功，載入行程中...');
-  setTimeout(()=>{
-    const wp = document.getElementById('globalWishWrap');
-    if(wp){ wp.scrollIntoView({behavior:'smooth',block:'start'}); }
-  }, 400);
 }
 
-function showLoginModal(){
-  const ov=mkModal(`
-    <h3>🔐 進入編輯模式</h3>
-    <label class="modal-field-label">管理員密碼</label>
-    <input class="modal-input" type="password" id="pwInput" placeholder="密碼" onkeydown="if(event.key==='Enter')doLogin()">
-    <div class="modal-err" id="pwErr"></div>
-    <div class="modal-btns">
-      <button class="modal-cancel" onclick="closeMod()">取消</button>
-      <button class="modal-confirm" onclick="doLogin()">確認登入</button>
-    </div>`);
-  setTimeout(()=>ov.querySelector('#pwInput').focus(),50);
+function mergeData(remote){
+  const base=initData();
+  for(const k of Object.keys(base.days)){
+    base.days[k]=remote.days?.[k]||base.days[k];
+    base.expenses[k]=remote.expenses?.[k]||base.expenses[k];
+  }
+  return base;
+}
+
+function localSave(){localStorage.setItem('yunnan2026_v3',JSON.stringify(data));}
+function localLoad(){
+  try{const r=localStorage.getItem('yunnan2026_v3');if(r)data=mergeData(JSON.parse(r));}catch(e){}
+}
+function saveData(){cloudSave();}
+
+function setSyncUI(s){
+  syncStatus=s;
+  if(s==='ok')lastSyncTime=fmtNow();
+  const dot=document.getElementById('syncDot');
+  const lbl=document.getElementById('syncLbl');
+  const ts =document.getElementById('syncTs');
+  if(!dot)return;
+  dot.className='sync-dot'+(s==='syncing'?' syncing':s==='error'?' error':'');
+  lbl.textContent=s==='syncing'?'同步中…':s==='error'?'同步失敗':'已同步';
+  if(ts&&lastSyncTime)ts.textContent=lastSyncTime;
+}
+
+// ═══ AUTH ═════════════════════════════════════════
+function openLogin(){
+  if(isAdmin){doLogout();return;}
+  document.getElementById('loginModal').classList.remove('hidden');
+  setTimeout(()=>document.getElementById('pwInput').focus(),100);
+}
+function closeLogin(){
+  document.getElementById('loginModal').classList.add('hidden');
+  document.getElementById('loginErr').classList.add('hidden');
+  document.getElementById('pwInput').value='';
 }
 function doLogin(){
-  const pw=(document.getElementById('pwInput')?.value)||'';
-  if(pw===PASS){ closeMod(); enterEdit(); }
-  else{
-    const e=document.getElementById('pwErr');
-    if(e) e.textContent='密碼錯誤，請再試一次';
-    const i=document.getElementById('pwInput');
-    if(i){ i.value=''; i.focus(); i.style.borderColor='var(--crimson)'; }
+  if(document.getElementById('pwInput').value===ADMIN_PASSWORD){
+    isAdmin=true;closeLogin();
+    document.getElementById('modeBadge').textContent='管理員';
+    document.getElementById('modeBadge').className='badge badge-admin';
+    document.getElementById('loginBtn').textContent='登出';
+    renderCurrent();showToast('歡迎，管理員 ✅');
+  }else{
+    document.getElementById('loginErr').classList.remove('hidden');
   }
 }
-function enterEdit(){
-  isEditMode=true;
-  memberUnlocked=true;
-  // Auto-connect hardcoded URL
-  scriptUrl = SCRIPT_URL;
-  localStorage.setItem('yunnan_scripturl', SCRIPT_URL);
-  document.getElementById('scriptUrl').value = SCRIPT_URL;
-  document.body.classList.remove('view-mode');
-  document.getElementById('memberBtn').style.display='none';
-  document.getElementById('editBtn').style.display='none';
-  document.getElementById('logoutBtn').style.display='';
-  document.getElementById('tripSettingsBtn').style.display='';
-  document.getElementById('settingsBar').style.display='';
-  document.querySelectorAll('.edit-only').forEach(el=>el.style.display='flex');
-  if(!localStorage.getItem('yunnan_member_name')) localStorage.setItem('yunnan_member_name','管理員');
-  showWishInputs();
-  setSyncStatus('已連接','ok');
-  toast('✅ 已進入編輯模式');
-}
-function exitEdit(){
-  isEditMode=false;
-  document.body.classList.add('view-mode');
-  document.getElementById('editBtn').style.display='';
-  document.getElementById('logoutBtn').style.display='none';
-  document.getElementById('tripSettingsBtn').style.display='none';
-  document.getElementById('settingsBar').style.display='none';
-  document.querySelectorAll('.edit-only').forEach(el=>el.style.display='none');
-  // Keep memberBtn hidden if already member-unlocked
-  if(!memberUnlocked) document.getElementById('memberBtn').style.display='';
-  toast('已切換為瀏覽模式');
+function doLogout(){
+  isAdmin=false;
+  document.getElementById('modeBadge').textContent='瀏覽';
+  document.getElementById('modeBadge').className='badge badge-view';
+  document.getElementById('loginBtn').textContent='管理員';
+  renderCurrent();showToast('已登出');
 }
 
-// ─── TRIP SETTINGS ───
-function showTripSettings(){
-  const s=new Date(tripConfig.startYear,tripConfig.startMonth-1,tripConfig.startDay);
-  const sv=s.toISOString().split('T')[0];
-  const ov=mkModal(`
-    <h3>⚙️ 行程設定</h3>
-    <label class="modal-field-label">出發日期</label>
-    <input class="modal-input" type="date" id="tsStart" value="${sv}" oninput="updateTripPreview()">
-    <label class="modal-field-label">總天數</label>
-    <input class="modal-input" type="number" id="tsDays" value="${tripConfig.totalDays}" min="1" max="60" oninput="updateTripPreview()">
-    <div class="trip-preview" id="tripPreview"></div>
-    <div class="trip-warn">⚠️ 變更天數後，超出範圍的資料將遺失，請確認後再套用。</div>
-    <hr style="border:none;border-top:1px solid var(--border);margin:0.8rem 0;">
-    <label class="modal-field-label">🤖 Claude API Key（用於航班 AI 解析）</label>
-    <input class="modal-input" type="password" id="claudeKeyInput" placeholder="貼上 sk-ant-... 開頭的 API Key" value="${localStorage.getItem('yunnan_claude_key')||''}">
-    <div style="font-family:'Noto Sans TC',sans-serif;font-size:0.74rem;color:var(--text-muted);margin-top:-0.5rem;margin-bottom:0.6rem;">
-      至 <a href="https://console.anthropic.com/settings/keys" target="_blank" style="color:var(--jade);">console.anthropic.com</a> 取得 → 複製貼上即可（需先加值）
-    </div>
-    <div class="modal-btns">
-      <button class="modal-cancel" onclick="closeMod()">取消</button>
-      <button class="modal-confirm" onclick="applyTripSettings()">套用設定</button>
-    </div>`);
-  updateTripPreview();
-}
-function updateTripPreview(){
-  const sv=(document.getElementById('tsStart')||{}).value;
-  const dv=parseInt((document.getElementById('tsDays')||{}).value)||0;
-  const el=document.getElementById('tripPreview');
-  if(!el||!sv||dv<1) return;
-  const s=new Date(sv+'T00:00:00');
-  const e=new Date(s); e.setDate(s.getDate()+dv-1);
-  el.textContent=`${s.getMonth()+1}月${s.getDate()}日 ─ ${e.getMonth()+1}月${e.getDate()}日，共 ${dv} 天`;
-}
-function applyTripSettings(){
-  const sv=(document.getElementById('tsStart')||{}).value;
-  const dv=parseInt((document.getElementById('tsDays')||{}).value);
-  if(!sv||isNaN(dv)||dv<1){ toast('請填入正確的日期和天數',true); return; }
-  const oldData=getData();
-  const s=new Date(sv+'T00:00:00');
-  tripConfig={startYear:s.getFullYear(),startMonth:s.getMonth()+1,startDay:s.getDate(),totalDays:dv};
-  saveTripConfig();
-  // Save Gemini key if provided
-  const gk=(document.getElementById('claudeKeyInput')||{}).value?.trim();
-  if(gk) localStorage.setItem('yunnan_claude_key', gk);
-  closeMod();
-  rebuildUI(oldData);
-  const keyMsg = gk ? '，Claude API Key 已儲存' : '';
-  toast(`✅ 行程已更新為 ${dv} 天${keyMsg}`);
-}
-
-// ─── MODAL HELPERS ───
-function mkModal(inner){
-  closeMod();
-  const ov=document.createElement('div');
-  ov.className='modal-overlay'; ov.id='activeModal';
-  ov.innerHTML=`<div class="modal-box">${inner}</div>`;
-  document.body.appendChild(ov);
-  ov.addEventListener('click',e=>{ if(e.target===ov) closeMod(); });
-  return ov;
-}
-function closeMod(){ document.getElementById('activeModal')?.remove(); }
-
-// ─── TIMELINE ───
-const TL_COLORS=['tl-c0','tl-c1','tl-c2','tl-c3','tl-c4','tl-c5','tl-c6','tl-c7','tl-c8','tl-c9'];
-function pct(h,m=0){ return ((h*60+m)/(24*60))*100; }
-function parseTime(str){
-  const s=(str||'').trim().replace('：',':');
-  let m=s.match(/^(\d{1,2}):(\d{2})$/);
-  if(m) return {h:+m[1],m:+m[2]};
-  m=s.match(/^(\d{1,2})$/);
-  if(m) return {h:+m[1],m:0};
-  return null;
-}
-function renderTimeline(i){
-  const vbar=document.getElementById(`tl-vbar-${i}`);
-  if(!vbar) return;
-  vbar.querySelectorAll('.tl-segment-v,.tl-time-label').forEach(e=>e.remove());
-
-  const entries=getTimelineEntries(i);
-  const HOUR_START=6, HOUR_END=24; // show 06:00–24:00
-  const totalMins=(HOUR_END-HOUR_START)*60;
-
-  // Draw hour grid — only label 8, 12, 16, 20
-  const MARK_HOURS=[8,12,16,20];
-  for(let h=HOUR_START;h<=HOUR_END;h+=1){
-    const pctV=((h-HOUR_START)/(HOUR_END-HOUR_START))*100;
-    const isMark=MARK_HOURS.includes(h);
-    // Grid line
-    const gl=document.createElement('div');
-    gl.style.cssText=`position:absolute;left:0;right:0;top:${pctV}%;height:${isMark?'1.5':'0.5'}px;background:${isMark?'rgba(0,120,200,0.25)':'rgba(0,100,180,0.06)'};`;
-    vbar.appendChild(gl);
-    if(isMark){
-      // Tick mark on left edge
-      const tick=document.createElement('div');
-      tick.style.cssText=`position:absolute;left:-5px;top:${pctV}%;width:5px;height:2px;background:#5aaad0;transform:translateY(-50%);`;
-      vbar.appendChild(tick);
-      // Time label
-      const lbl=document.createElement('div');
-      lbl.className='tl-time-label';
-      lbl.style.top=pctV+'%';
-      lbl.style.fontWeight='600';
-      lbl.style.color='#2a7ab8';
-      lbl.style.fontSize='0.6rem';
-      lbl.textContent=String(h).padStart(2,'0');
-      vbar.appendChild(lbl);
-    }
-  }
-
-  entries.forEach((ent,ci)=>{
-    const t1=parseTime(ent.from),t2=parseTime(ent.to);
-    if(!t1||!t2) return;
-    const m1=Math.max(0,(t1.h-HOUR_START)*60+t1.m);
-    let m2=Math.max(0,(t2.h-HOUR_START)*60+t2.m);
-    if(m2<=m1) m2=Math.min(totalMins,m1+30);
-    const top=(m1/totalMins)*100;
-    const height=Math.max(3,((m2-m1)/totalMins)*100);
-    const seg=document.createElement('div');
-    seg.className='tl-segment-v '+TL_COLORS[ci%TL_COLORS.length];
-    seg.style.top=top+'%';
-    seg.style.height=height+'%';
-    seg.title=`${ent.from}─${ent.to} ${ent.label}`;
-    if(height>5){
-      const lbl=document.createElement('div');
-      lbl.className='tl-seg-label';
-      lbl.textContent=ent.label.length>10?ent.label.slice(0,9)+'…':ent.label;
-      seg.appendChild(lbl);
-    }
-    vbar.appendChild(seg);
-  });
-}
-function getTimelineEntries(i){
-  const n=+(document.getElementById(`tl-count-${i}`)?.value||0);
-  return Array.from({length:n},(_,k)=>({
-    from: document.getElementById(`tl-from-${i}-${k}`)?.value||'',
-    to:   document.getElementById(`tl-to-${i}-${k}`)?.value||'',
-    label:document.getElementById(`tl-label-${i}-${k}`)?.value||'',
-  }));
-}
-function sortEntries(entries){
-  // Sort by departure time; entries with no time go to end
-  return [...entries].sort((a,b)=>{
-    const ta=parseTime(a.from), tb=parseTime(b.from);
-    if(!ta && !tb) return 0;
-    if(!ta) return 1;
-    if(!tb) return -1;
-    return (ta.h*60+ta.m) - (tb.h*60+tb.m);
-  });
-}
-function setTimelineEntries(i,entries){
-  const el=document.getElementById(`tl-entries-${i}`);
-  const cnt=document.getElementById(`tl-count-${i}`);
-  if(!el||!cnt) return;
-  cnt.value=entries.length;
-  el.innerHTML=buildTLRows(i,entries);
-  renderTimeline(i);
-}
-function sortAndRefresh(i){
-  // Called on blur of time inputs — re-sort and rebuild
-  const entries=getTimelineEntries(i);
-  const sorted=sortEntries(entries);
-  // Only rebuild if order changed
-  const changed=entries.some((e,k)=>e.from!==sorted[k].from||e.label!==sorted[k].label);
-  if(changed){
-    setTimelineEntries(i,sorted);
-    markDirty();
-  }
-}
-function buildTLRows(i,entries){
-  if(!entries.length) return '<div class="tl-empty-msg" style="font-size:0.72rem;color:#aac;padding:0.3rem 0;">點「＋ 新增」加入交通段</div>';
-  let h='';
-  entries.forEach((ent,k)=>{
-    h+=`<div class="tl-entry" style="display:grid;grid-template-columns:1fr 26px;gap:0.3rem;align-items:start;background:#f0f8ff;border-radius:7px;padding:0.4rem 0.5rem;border:1px solid #cce4f8;">
-      <div>
-        <div style="display:flex;gap:0.3rem;margin-bottom:0.3rem;">
-          <input class="timeline-input" type="text" id="tl-from-${i}-${k}" value="${ent.from||''}" placeholder="出發 08:00" maxlength="5" style="flex:1;font-size:0.75rem;" oninput="renderTimeline(${i});markDirty()" onblur="sortAndRefresh(${i})">
-          <span style="font-size:0.7rem;color:#7aa;align-self:center;">→</span>
-          <input class="timeline-input" type="text" id="tl-to-${i}-${k}" value="${ent.to||''}" placeholder="抵達 12:30" maxlength="5" style="flex:1;font-size:0.75rem;" oninput="renderTimeline(${i});markDirty()" onblur="sortAndRefresh(${i})">
-        </div>
-        <input class="timeline-input" type="text" id="tl-label-${i}-${k}" value="${ent.label||''}" placeholder="交通說明（如：高鐵G6004 昆明→大理）" style="width:100%;font-size:0.75rem;" oninput="renderTimeline(${i});markDirty()">
-      </div>
-      <button class="tl-del-btn" onclick="delTLEntry(${i},${k})" style="margin-top:0.3rem;">✕</button>
-    </div>`;
-  });
-  return h;
-}
-function addTLEntry(i){
-  const entries=getTimelineEntries(i);
-  entries.push({from:'',to:'',label:''});
-  setTimelineEntries(i,entries);
-  markDirty();
-}
-function delTLEntry(i,k){
-  const entries=getTimelineEntries(i);
-  entries.splice(k,1);
-  setTimelineEntries(i,entries);
-  markDirty();
-}
-
-// ─── BUILD UI ───
-function buildUI(oldData){
-  try{ DAYS=buildDays(); }catch(e){ DAYS=[]; console.error('buildDays error:',e); }
-  if(!DAYS.length){ console.error('No days generated'); return; }
-  updateHeaderDates();
-  const tabNav=document.getElementById('tabNav');
-  const mc=document.getElementById('mainContent');
-  tabNav.innerHTML=''; mc.innerHTML='';
-  DAYS.forEach((d,i)=>{
-    const dn=i+1;
-    const btn=document.createElement('button');
-    btn.className='tab-btn'+(i===0?' active':'');
-    btn.id=`tab-btn-${i}`; btn.onclick=()=>switchTab(i);
-    btn.innerHTML=`<span class="day-num">${dn}</span><span class="day-date">${fmtShort(d)}</span><span class="day-week">（${WEEKDAYS[d.getDay()]}）</span>`;
-    tabNav.appendChild(btn);
-
-    let gridHtml='';
-    for(let h=0;h<=24;h+=3) gridHtml+=`<div class="tl-grid-line" style="left:${pct(h)}%"></div>`;
-    const axisHtml=[0,3,6,9,12,15,18,21,24].map(h=>`<span>${String(h).padStart(2,'0')}:00</span>`).join('');
-
-    const panel=document.createElement('div');
-    panel.className='day-panel'+(i===0?' active':'');
-    panel.id=`panel-${i}`;
-    panel.innerHTML=`
-      <div class="day-header">
-        <div class="day-num-big">${dn}</div>
-        <div class="day-info">
-          <h2>第 ${dn} 天</h2>
-          <div class="day-date-full">${fmtDate(d)}</div>
-        </div>
-        <input class="day-title-input" type="text" id="title-${i}" placeholder="今天的主題（例：大理古城漫遊）" oninput="markDirty()">
-      </div>
-      <div class="day-layout">
-        <!-- LEFT: vertical timeline -->
-        <div class="day-left">
-          <div class="tl-vertical-header">
-            <span class="tl-title">🚌 交通時間軸</span>
-            <button class="tl-add-btn" onclick="addTLEntry(${i})">＋ 新增</button>
-          </div>
-          <div class="tl-v-wrap">
-            <!-- Vertical bar -->
-            <div class="tl-bar-v" id="tl-vbar-${i}"></div>
-            <!-- Entry inputs -->
-            <div class="tl-v-entries">
-              <input type="hidden" id="tl-count-${i}" value="0">
-              <div id="tl-entries-${i}">
-                <div class="tl-empty-msg">點「＋ 新增」加入交通</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- RIGHT: stacked info cards -->
-        <div class="day-right">
-          <div class="info-card sights-card">
-            <div class="info-card-head" style="background:linear-gradient(135deg,#0288d1,#01579b);">🏛️ 主要景點</div>
-            <textarea id="sights-${i}" placeholder="今日景點...&#10;例：洱海、崇聖寺三塔" oninput="markDirty();syncViewDiv(this)"></textarea><div class="card-view" id="sights-view-${i}" data-placeholder="今日景點..."></div>
-          </div>
-          <div class="info-row-3">
-            <div class="info-card meal-card">
-              <div class="info-card-head" style="background:linear-gradient(135deg,#ff9800,#f57c00);">🌅 早餐</div>
-              <textarea id="breakfast-${i}" placeholder="早餐..." oninput="markDirty();syncViewDiv(this)"></textarea><div class="card-view" id="breakfast-view-${i}" data-placeholder="早餐..."></div>
-            </div>
-            <div class="info-card meal-card">
-              <div class="info-card-head" style="background:linear-gradient(135deg,#43a047,#2e7d32);">☀️ 午餐</div>
-              <textarea id="lunch-${i}" placeholder="午餐..." oninput="markDirty();syncViewDiv(this)"></textarea><div class="card-view" id="lunch-view-${i}" data-placeholder="午餐..."></div>
-            </div>
-            <div class="info-card meal-card">
-              <div class="info-card-head" style="background:linear-gradient(135deg,#7c3aed,#5b21b6);">🌙 晚餐</div>
-              <textarea id="dinner-${i}" placeholder="晚餐..." oninput="markDirty();syncViewDiv(this)"></textarea><div class="card-view" id="dinner-view-${i}" data-placeholder="晚餐..."></div>
-            </div>
-          </div>
-          <div class="info-row-2">
-            <div class="info-card">
-              <div class="info-card-head" style="background:linear-gradient(135deg,#e53935,#b71c1c);">🏨 住宿</div>
-              <textarea id="hotel-${i}" placeholder="住宿名稱、地址..." oninput="markDirty();syncViewDiv(this)"></textarea><div class="card-view" id="hotel-view-${i}" data-placeholder="住宿名稱、地址..."></div>
-            </div>
-            <div class="info-card">
-              <div class="info-card-head" style="background:linear-gradient(135deg,#00897b,#00695c);">🚗 交通說明</div>
-              <textarea id="transport-${i}" placeholder="交通方式、車次..." oninput="markDirty();syncViewDiv(this)"></textarea><div class="card-view" id="transport-view-${i}" data-placeholder="交通方式、車次..."></div>
-            </div>
-          </div>
-          <div class="info-card">
-            <div class="info-card-head" style="background:linear-gradient(135deg,#f57f17,#e65100);">📝 備注 / 小叮嚀</div>
-            <textarea id="notes-${i}" placeholder="備注、注意事項、貼心提醒..." oninput="markDirty();syncViewDiv(this)"></textarea><div class="card-view" id="notes-view-${i}" data-placeholder="備注、注意事項、貼心提醒..."></div>
-          </div>
-        </div>
-      </div>`;
-    mc.appendChild(panel);
-  });
-  // ── WEBSITES TAB ──
-  const wsBtn = document.createElement('button');
-  wsBtn.className = 'tab-btn';
-  wsBtn.id = 'tab-btn-ws';
-  wsBtn.onclick = () => switchTab('ws');
-  wsBtn.innerHTML = '<span class="day-num">🔗</span><span class="day-date">網站</span>';
-  tabNav.appendChild(wsBtn);
-
-  const wsPanel = document.createElement('div');
-  wsPanel.className = 'websites-panel';
-  wsPanel.id = 'panel-ws';
-  wsPanel.innerHTML = `
-    <div class="websites-section">
-      <h3>🔗 常用網站</h3>
-      <div class="website-list" id="websiteList"></div>
-      <div class="ws-empty" id="wsEmpty" style="display:none">尚無網站，點「新增網站」加入</div>
-      <button class="ws-btn-add-open" onclick="toggleWsForm()">＋ 新增網站</button>
-      <div class="ws-add-form" id="wsAddForm">
-        <input type="text" id="wsName" placeholder="網站名稱（例：住宿訂單）">
-        <input type="url"  id="wsUrl"  placeholder="網址（例：https://booking.com/...）">
-        <input type="text" id="wsIcon" placeholder="圖示 Emoji（選填，例：🏨）">
-        <div class="ws-form-btns">
-          <button style="background:transparent;color:var(--text-muted);border-color:var(--border);" onclick="toggleWsForm()">取消</button>
-          <button style="background:var(--jade);color:#fff;border-color:var(--jade);" onclick="addWebsite()">新增</button>
-        </div>
-      </div>
-    </div>`;
-  mc.appendChild(wsPanel);
-
-  if(oldData) setData(oldData);
-  if(currentTab!=='ws' && (currentTab>=DAYS.length || currentTab<0)) currentTab=0;
-  switchTab(currentTab);
-  renderWebsites();
-  renderAllWishes();
-  if(memberUnlocked) showWishInputs();
-}
-function updateHeaderDates(){
-  const d=buildDays();
-  if(!d.length) return;
-  const s=d[0],e=d[d.length-1];
-  document.getElementById('headerDates').textContent=
-    `${s.getFullYear()}年${s.getMonth()+1}月${s.getDate()}日 — ${e.getMonth()+1}月${e.getDate()}日（${d.length}天）`;
-}
-function rebuildUI(old){ currentTab = (currentTab==='ws'||currentTab<DAYS.length) ? currentTab : 0; buildUI(old); }
-
-// ─── TAB SWITCH ───
-function switchTab(i){
-  currentTab=i;
-  // Tab buttons
-  document.querySelectorAll('.tab-btn').forEach((b,j)=>{
-    const isWs = i==='ws' && b.id==='tab-btn-ws';
-    const isDay = i!=='ws' && j===i;
-    b.classList.toggle('active', isWs||isDay);
-  });
-  // Day panels
-  document.querySelectorAll('.day-panel').forEach((p,j)=>p.classList.toggle('active',i!=='ws'&&j===i));
-  // Websites panel
-  const wp=document.getElementById('panel-ws');
-  if(wp) wp.classList.toggle('active',i==='ws');
-}
-
-// ─── DIRTY ───
-function markDirty(){ dirty=true; }
-
-// ─── WISH POOL ───
-function getWishes(){
-  try{ return JSON.parse(localStorage.getItem('yunnan_wishes_global')||'[]'); }catch{ return []; }
-}
-function saveWishes(list){
-  localStorage.setItem('yunnan_wishes_global', JSON.stringify(list));
-  markDirty();
-}
-function renderAllWishes(){
-  const el = document.getElementById('globalWishList');
-  if(!el) return;
-  const wishes = getWishes();
-  if(!wishes.length){
-    el.innerHTML = '<div class="wish-empty">尚無許願，登入後可新增想去的景點 ✨</div>';
-    return;
-  }
-  // Group by person name, preserving order of first appearance
-  const groups = [];
-  const groupMap = {};
-  wishes.forEach((w,k)=>{
-    const name = w.name||'團員';
-    if(!groupMap[name]){
-      groupMap[name] = {name, items:[]};
-      groups.push(groupMap[name]);
-    }
-    groupMap[name].items.push({text:w.text, idx:k});
-  });
-  el.innerHTML = groups.map(g=>`
-    <div class="wish-group">
-      <div class="wish-group-name">${g.name}</div>
-      <div class="wish-entries">
-        ${g.items.map(item=>`
-          <div class="wish-entry">
-            <div class="wish-entry-dot"></div>
-            <span class="wish-entry-text">${item.text}</span>
-            ${memberUnlocked?`<button class="wish-del" onclick="delWish(${item.idx})" title="刪除">✕</button>`:''}
-          </div>`).join('')}
-      </div>
-    </div>`).join('');
-}
-function submitWish(){
-  const input = document.getElementById('globalWishInput');
-  if(!input) return;
-  const text = input.value.trim();
-  if(!text){ input.focus(); return; }
-  const wishes = getWishes();
-  const name = localStorage.getItem('yunnan_member_name') || '團員';
-  wishes.push({ text, name, time: Date.now() });
-  saveWishes(wishes);
-  renderAllWishes();
-  input.value = '';
-  input.focus();
-  toast('🌟 許願成功！');
-  if(scriptUrl) syncWishesToSheets();
-}
-function delWish(k){
-  const wishes = getWishes();
-  wishes.splice(k,1);
-  saveWishes(wishes);
-  renderAllWishes();
-  if(scriptUrl) syncWishesToSheets();
-}
-function showWishInputs(){
-  const row = document.getElementById('globalWishInputRow');
-  const badge = document.getElementById('globalWishBadge');
-  const logoutBtn = document.getElementById('memberLogoutBtn');
-  if(row) row.style.display='flex';
-  if(badge){
-    badge.textContent = localStorage.getItem('yunnan_member_name')||'團員';
-    badge.style.display='';
-  }
-  if(logoutBtn) logoutBtn.style.display='';
-}
-function hideWishInputs(){
-  const row = document.getElementById('globalWishInputRow');
-  const badge = document.getElementById('globalWishBadge');
-  const logoutBtn = document.getElementById('memberLogoutBtn');
-  if(row) row.style.display='none';
-  if(badge) badge.style.display='none';
-  if(logoutBtn) logoutBtn.style.display='none';
-}
-function memberLogout(){
-  if(!confirm('確定要登出團員模式嗎？')) return;
-  localStorage.removeItem('yunnan_member_logged');
-  memberUnlocked = false;
-  hideWishInputs();
-  document.getElementById('memberBtn').style.display='';
-  toast('已登出團員模式');
-}
-async function syncWishesToSheets(){
-  if(!scriptUrl) return;
-  const wishes = getWishes();
-  try{
-    await fetch(scriptUrl,{method:'POST',headers:{'Content-Type':'text/plain'},
-      body:JSON.stringify({action:'writeWishes',wishes})});
-  }catch(e){}
-}
-async function loadWishesFromSheets(result){
-  if(!result.wishes) return;
-  // Support both old per-day format and new global format
-  const data = Array.isArray(result.wishes) ? result.wishes : [];
-  if(data.length) localStorage.setItem('yunnan_wishes_global', JSON.stringify(data));
-  renderAllWishes();
-}
-
-// ─── WEBSITES ───
-function getWebsites(){
-  try{ return JSON.parse(localStorage.getItem('yunnan_websites')||'[]'); }catch{ return []; }
-}
-function saveWebsites(list){
-  localStorage.setItem('yunnan_websites', JSON.stringify(list));
-  markDirty();
-}
-function renderWebsites(){
-  const list = getWebsites();
-  const el = document.getElementById('websiteList');
-  const empty = document.getElementById('wsEmpty');
-  if(!el) return;
-  if(!list.length){
-    el.innerHTML='';
-    if(empty) empty.style.display='';
-    return;
-  }
-  if(empty) empty.style.display='none';
-  el.innerHTML = list.map((w,k)=>`
-    <div class="website-item">
-      <a class="website-link" href="${w.url}" target="_blank" rel="noopener">
-        <span class="ws-icon">${w.icon||'🌐'}</span>
-        <span class="ws-info">
-          <span class="ws-name">${w.name}</span>
-          <span class="ws-url">${w.url}</span>
-        </span>
-      </a>
-      <button class="ws-del-btn" onclick="delWebsite(${k})">✕</button>
-    </div>`).join('');
-}
-function toggleWsForm(){
-  const f=document.getElementById('wsAddForm');
-  if(!f) return;
-  f.classList.toggle('open');
-  if(f.classList.contains('open')) document.getElementById('wsName').focus();
-}
-function addWebsite(){
-  const name=(document.getElementById('wsName')?.value||'').trim();
-  const url =(document.getElementById('wsUrl')?.value||'').trim();
-  const icon=(document.getElementById('wsIcon')?.value||'').trim();
-  if(!name){ document.getElementById('wsName').focus(); return; }
-  if(!url || !url.startsWith('http')){ document.getElementById('wsUrl').focus(); return; }
-  const list=getWebsites();
-  list.push({name,url,icon:icon||'🌐'});
-  saveWebsites(list);
-  renderWebsites();
-  // Clear form
-  document.getElementById('wsName').value='';
-  document.getElementById('wsUrl').value='';
-  document.getElementById('wsIcon').value='';
-  toggleWsForm();
-  toast('✅ 網站已新增');
-}
-function delWebsite(k){
-  const list=getWebsites();
-  list.splice(k,1);
-  saveWebsites(list);
-  renderWebsites();
-}
-
-// ─── DATA ───
-function getData(){
-  return DAYS.map((_,i)=>({
-    title:     document.getElementById(`title-${i}`)?.value||'',
-    breakfast: document.getElementById(`breakfast-${i}`)?.value||'',
-    lunch:     document.getElementById(`lunch-${i}`)?.value||'',
-    dinner:    document.getElementById(`dinner-${i}`)?.value||'',
-    sights:    document.getElementById(`sights-${i}`)?.value||'',
-    transport: document.getElementById(`transport-${i}`)?.value||'',
-    hotel:     document.getElementById(`hotel-${i}`)?.value||'',
-    notes:     document.getElementById(`notes-${i}`)?.value||'',
-    departure: document.getElementById(`dep-${i}`)?.value||'',
-    timeline:  getTimelineEntries(i),
-  }));
-}
-function setData(arr){
-  if(!arr) return;
-  arr.forEach((row,i)=>{
-    if(i>=DAYS.length) return;
-    const set=(id,v)=>{ const el=document.getElementById(id); if(el) el.value=v||''; };
-    set(`title-${i}`,row.title);
-    set(`breakfast-${i}`,row.breakfast);
-    set(`lunch-${i}`,row.lunch);
-    set(`dinner-${i}`,row.dinner);
-    set(`sights-${i}`,row.sights);
-    set(`transport-${i}`,row.transport);
-    set(`hotel-${i}`,row.hotel);
-    set(`notes-${i}`,row.notes);
-    set(`dep-${i}`,row.departure||'');
-    if(row.timeline?.length) setTimelineEntries(i,sortEntries(row.timeline));
-    renderTimeline(i);
-  });
-  setTimeout(()=>{ expandAllTextareas(); syncAllViewDivs(); }, 50);
-}
-
-// ─── LOCAL SAVE ───
-function saveToLocal(){
-  localStorage.setItem('yunnan_2026',JSON.stringify(getData()));
-  dirty=false; toast('✅ 已儲存至本地');
-}
-function loadFromLocal(){
-  const r=localStorage.getItem('yunnan_2026');
-  if(r) try{ setData(JSON.parse(r)); }catch(e){}
-}
-
-// ─── SHEETS SYNC ───
-function connectSheets(){
-  scriptUrl=document.getElementById('scriptUrl').value.trim();
-  if(!scriptUrl||!scriptUrl.startsWith('https://script.google.com')){ toast('❌ Apps Script URL 格式不正確',true); return; }
-  localStorage.setItem('yunnan_scripturl',scriptUrl);
-  document.getElementById('syncErrorBox')?.remove();
-  loadFromSheets();
-}
-async function syncToSheets(){
-  if(!scriptUrl){ toast('請先連接試算表',true); return; }
-  setSyncStatus('同步中...','');
-  try{
-    const rows=getData().map((row,i)=>({
-      day:`第${i+1}天`,date:fmtDate(DAYS[i]),
-      title:row.title,breakfast:row.breakfast,lunch:row.lunch,
-      dinner:row.dinner,sights:row.sights,transport:row.transport,
-      hotel:row.hotel,notes:row.notes,
-      departure:row.departure||'',
-      timeline:JSON.stringify(row.timeline||[]),
-    }));
-    const websites = getWebsites();
-    const payload = {action:'write',rows,config:tripConfig,websites};
-    console.log('同步資料：', JSON.stringify(payload).slice(0,200));
-    const res=await fetch(scriptUrl,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(payload)});
-    let result; try{ result=await res.json(); }catch{ result={ok:res.ok}; }
-    console.log('同步回應：', JSON.stringify(result));
-    if(!res.ok||result.error) throw new Error(result.error||`HTTP ${res.status}`);
-    dirty=false;
-    const wsCount = websites.length;
-    setSyncStatus('✓ 已同步 '+nowTime(),'ok');
-    toast(`✅ 已同步（行程 ${rows.length} 天，網站 ${wsCount} 筆）`);
-    document.getElementById('syncErrorBox')?.remove();
-  }catch(e){ setSyncStatus('✗ 同步失敗','err'); toast('❌ 同步失敗：'+e.message,true); showSyncError('sync',e,''); }
-}
-async function loadFromSheets(){
-  if(!scriptUrl){ toast('請先填入 Apps Script 網址',true); return; }
-  setSyncStatus('載入中...','');
-  let rawText='';
-  try{
-    let res;
-    try{ res=await fetch(scriptUrl+'?action=read&t='+Date.now()); }
-    catch(netErr){ throw new Error('網路連線失敗（可能是 CORS 問題）：'+netErr.message); }
-    rawText=await res.text();
-    if(!res.ok){
-      const hint = res.status===403?' — 存取被拒，請確認部署時「存取權限」設為「任何人」'
-                 : res.status===404?' — 找不到，請確認 URL 是否正確'
-                 : '';
-      throw new Error(`伺服器回傳 HTTP ${res.status}${hint}`);
-    }
-    let result;
-    try{ result=JSON.parse(rawText); }
-    catch{ throw new Error('回應不是合法 JSON，Script 可能有語法錯誤或尚未部署。\n收到：'+rawText.slice(0,300)); }
-    if(result.error) throw new Error('Script 回傳錯誤：'+result.error);
-    document.getElementById('syncErrorBox')?.remove();
-    // Parse all data first
-    const incomingWebsites = (result.websites && Array.isArray(result.websites)) ? result.websites : null;
-    if(incomingWebsites) localStorage.setItem('yunnan_websites', JSON.stringify(incomingWebsites));
-
-    if(!result.rows?.length){
-      // No row data - just update config and websites
-      if(result.config){ tripConfig={...DEFAULT_CONFIG,...result.config}; saveTripConfig(); rebuildUI(null); }
-      renderWebsites();
-      setSyncStatus('✓ 已連接（試算表為空）','ok');
-      toast('✅ 連線成功！試算表目前無資料，填寫後按「☁️ 同步試算表」即可存入。');
-      return;
-    }
-
-    // Parse row data
-    const parsed=result.rows.slice(0,DAYS.length).map(r=>({
-      title:r.title||'',breakfast:r.breakfast||'',lunch:r.lunch||'',
-      dinner:r.dinner||'',sights:r.sights||'',transport:r.transport||'',
-      hotel:r.hotel||'',notes:r.notes||'',
-      departure:r.departure||'',
-      timeline:(()=>{ try{ return JSON.parse(r.timeline||'[]'); }catch{ return []; } })(),
-    }));
-
-    // If config changed, rebuild UI with data; otherwise just setData
-    if(result.config){
-      tripConfig={...DEFAULT_CONFIG,...result.config};
-      saveTripConfig();
-      rebuildUI(parsed); // pass data directly so rebuildUI fills it in
-    } else {
-      setData(parsed);
-    }
-
-    // Always render websites last, after UI is fully built
-    renderWebsites();
-    loadWishesFromSheets(result);
-    setSyncStatus('✓ 已載入 '+nowTime(),'ok');
-    toast('✅ 已載入 '+parsed.length+' 天資料');
-  }catch(e){
-    setSyncStatus('✗ 載入失敗','err');
-    toast('❌ '+e.message.split('\n')[0],true);
-    showSyncError('load',e,rawText);
-    console.error('loadFromSheets:',e,'raw:',rawText);
-  }
-}
-function setSyncStatus(msg,cls){ const el=document.getElementById('syncStatus'); el.textContent=msg; el.className='sync-status '+(cls||''); }
-
-
-// ─── DIAGNOSTIC TOOL ───
-async function runDiagnostic(){
-  const url = document.getElementById('scriptUrl').value.trim();
-  const ov = document.createElement('div');
-  ov.id = 'diagModal';
-  ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:99999;display:flex;align-items:center;justify-content:center;padding:1rem;';
-  ov.innerHTML = `<div style="background:#0d1f0d;color:#c8f0c8;border-radius:12px;max-width:620px;width:100%;max-height:88vh;overflow-y:auto;padding:1.8rem;font-family:'Noto Sans TC',sans-serif;font-size:0.83rem;">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem;">
-      <strong style="font-size:1rem;color:#6effa0;">🔬 Apps Script 連線診斷</strong>
-      <button onclick="document.getElementById('diagModal').remove()" style="background:transparent;border:none;color:#6effa0;cursor:pointer;font-size:1.2rem;">✕</button>
-    </div>
-    <div id="diagLog" style="line-height:2.2;"></div>
-  </div>`;
-  document.body.appendChild(ov);
-  ov.addEventListener('click', e=>{ if(e.target===ov) ov.remove(); });
-
-  const log = document.getElementById('diagLog');
-  const write = (msg, color='#c8f0c8') => {
-    log.innerHTML += `<div style="color:${color};">${msg}</div>`;
-    log.scrollTop = log.scrollHeight;
-  };
-  const ok  = msg => write('✅ ' + msg, '#6effa0');
-  const err = msg => write('❌ ' + msg, '#ff8080');
-  const info= msg => write('ℹ️ ' + msg, '#aaddff');
-  const warn= msg => write('⚠️ ' + msg, '#ffd080');
-
-  write('開始診斷...', '#888');
-
-  // Step 1: URL format
-  if(!url){ err('未填入 Apps Script URL，請先貼上網址'); return; }
-  if(!url.startsWith('https://script.google.com/macros/s/')){
-    err('URL 格式錯誤 — 正確格式應為：<code style="color:#adf">https://script.google.com/macros/s/AKfy.../exec</code>');
-    warn('你填入的是：' + url.slice(0,80));
-    return;
-  }
-  ok('URL 格式正確');
-
-  // Step 2: fetch test
-  info('嘗試連線中...');
-  let res, rawText;
-  try{
-    res = await fetch(url + '?action=read&t=' + Date.now());
-    rawText = await res.text();
-  } catch(netErr) {
-    err('網路請求失敗：' + netErr.message);
-    warn('可能原因：① 網路問題 ② Apps Script 尚未部署 ③ CORS 被拒');
-    return;
-  }
-
-  info(`伺服器回應狀態：HTTP ${res.status}`);
-
-  // Step 3: HTTP status
-  if(res.status === 403){
-    err('HTTP 403 — 存取被拒');
-    warn('請回到 Apps Script → 部署 → 管理部署作業 → 編輯（鉛筆圖示）→ 「存取誰可以使用此應用程式」改為<strong style="color:#ffd">「任何人」</strong> → 部署');
-    write('<div style="background:#1a1a0a;padding:0.6rem 0.8rem;border-radius:6px;margin-top:0.3rem;color:#ffd;font-size:0.77rem;">注意：改完設定後需要重新部署，並複製<strong>新的 URL</strong> 回來貼上</div>');
-    return;
-  }
-  if(res.status === 404){
-    err('HTTP 404 — 找不到此 URL');
-    warn('請確認 URL 末尾是 <code style="color:#adf">/exec</code> 而不是 <code style="color:#f96">/dev</code>');
-    return;
-  }
-  if(!res.ok){
-    err(`HTTP ${res.status} 錯誤`);
-    write('原始回應：<pre style="background:#111;padding:0.5rem;border-radius:4px;font-size:0.7rem;color:#aaa;white-space:pre-wrap;margin-top:0.3rem;">' + rawText.slice(0,400).replace(/</g,'&lt;') + '</pre>');
-    return;
-  }
-  ok('HTTP 200 — 伺服器有回應');
-
-  // Step 4: JSON parse
-  let parsed;
-  try{
-    parsed = JSON.parse(rawText);
-  } catch(je) {
-    err('回應不是合法 JSON — Apps Script 程式碼有誤或尚未正確部署');
-    write('收到的原始內容：<pre style="background:#111;padding:0.5rem;border-radius:4px;font-size:0.7rem;color:#f96;white-space:pre-wrap;margin-top:0.3rem;">' + rawText.slice(0,600).replace(/</g,'&lt;') + '</pre>');
-    warn('請回 Apps Script 確認：① 程式碼完整貼上 ② 儲存後重新部署 ③ 沒有語法錯誤');
-    return;
-  }
-  ok('回應為合法 JSON');
-
-  // Step 5: content check
-  if(parsed.error){
-    err('Script 回傳錯誤：' + parsed.error);
-    warn('請確認 SHEET_ID 是否正確，以及試算表是否可被存取');
-    return;
-  }
-  if(Array.isArray(parsed.rows) && parsed.rows.length === 0){
-    ok('連線完全成功！試算表目前無資料（rows 為空陣列）');
-    info('這是正常狀態 — 請在網頁填寫資料後，按「☁️ 同步試算表」把資料寫入，之後再載入即可看到資料');
-  } else if(Array.isArray(parsed.rows)){
-    ok(`連線成功！試算表有 ${parsed.rows.length} 筆資料，可以正常載入`);
-  } else {
-    warn('回應格式異常，缺少 rows 欄位');
-    write('收到：<pre style="background:#111;padding:0.5rem;border-radius:4px;font-size:0.7rem;color:#aaa;white-space:pre-wrap;margin-top:0.3rem;">' + JSON.stringify(parsed).slice(0,300).replace(/</g,'&lt;') + '</pre>');
-  }
-
-  write('──────────────────', '#444');
-  write('──────────────────', '#444');
-  if(location.protocol === 'file:'){
-    write('', '#444');
-    write('⚠️ 目前以本地檔案（file://）開啟，所有跨來源請求都會被瀏覽器封鎖', '#ffd080');
-    write('✅ 請將此檔案上傳至 <strong>GitHub Pages</strong> 後再使用同步功能', '#6effa0');
-    write('→ 上傳後以 <code>https://你的帳號.github.io/倉庫名/</code> 開啟', '#aaddff');
-  }
-  write('診斷完成', '#888');
-}
-
-function showSyncError(type,err,raw){
-  document.getElementById('syncErrorBox')?.remove();
-  const bar=document.getElementById('settingsBar');
-  if(!bar) return;
-  const tips=[
-    '① 部署時「存取誰可以使用此應用程式」必須選 <strong style="color:#ffd">任何人</strong>（不是「僅限自己」）',
-    '② 每次<strong style="color:#ffd">修改 Script 後需重新部署</strong>，並複製新 URL（舊 URL 指向舊版本）',
-    '③ SHEET_ID 是試算表網址中 <code style="color:#adf">/d/</code> 和 <code style="color:#adf">/edit</code> 之間那一段長字串',
-    '④ 試算表需有名為「<strong style="color:#ffd">雲南行程</strong>」的工作表（第一次同步後自動建立）',
-    '⑤ 第一次使用：先填寫資料 → 按「☁️ 同步試算表」→ 再按「🔄 從試算表載入」',
+// ═══ TABS ═════════════════════════════════════════
+function buildTabs(){
+  const tabs=[
+    {id:'overview',label:'總覽'},
+    {id:'expenses',label:'💰 花費'},
+    ...Array.from({length:TOTAL_DAYS},(_,i)=>({id:'d'+(i+1),label:`D${i+1} ${fmt(getDate(i))}`}))
   ];
-  const box=document.createElement('div');
-  box.id='syncErrorBox';
-  box.style.cssText="background:#1e0a0a;color:#ffb8b8;border-radius:0 0 8px 8px;padding:1rem 1.2rem;font-family:'Noto Sans TC',sans-serif;font-size:0.79rem;line-height:2;border-top:1px solid #5a1a1a;max-width:1100px;margin:0 auto;";
-  const rawHtml = raw ? `<details style="margin-top:0.6rem;"><summary style="cursor:pointer;color:#888;font-size:0.74rem;">▶ 伺服器原始回應（偵錯用，可截圖給開發者）</summary><pre style="background:#111;padding:0.6rem;border-radius:4px;font-size:0.68rem;color:#aaa;white-space:pre-wrap;margin-top:0.4rem;max-height:130px;overflow-y:auto;">${raw.slice(0,600).replace(/</g,'&lt;')}</pre></details>` : '';
-  box.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;">
-    <div style="flex:1;">
-      <strong style="color:#ff8080;font-size:0.88rem;">❌ 連線失敗 — 請依序確認以下事項：</strong>
-      <div style="color:#ffcca0;margin-top:0.3rem;font-size:0.8rem;">錯誤訊息：${err.message.replace(/\n/g,'<br>').replace(/</g,'&lt;')}</div>
-      <ol style="padding-left:1.3rem;margin-top:0.5rem;color:#ffcca0;">${tips.map(t=>`<li>${t}</li>`).join('')}</ol>
-      ${rawHtml}
-    </div>
-    <button onclick="document.getElementById('syncErrorBox').remove()" style="background:transparent;border:none;color:#ff8080;cursor:pointer;font-size:1.1rem;flex-shrink:0;padding:0;">✕</button>
+  document.getElementById('tabBar').innerHTML=tabs.map(t=>
+    `<button class="tab-btn${t.id===currentTab?' active':''}" onclick="switchTab('${t.id}')">${t.label}</button>`
+  ).join('');
+}
+function switchTab(id){currentTab=id;buildTabs();renderCurrent();window.scrollTo(0,0);}
+function renderCurrent(){
+  if(currentTab==='overview')renderOverview();
+  else if(currentTab==='expenses')renderExpenses();
+  else renderDay(currentTab);
+}
+
+// ═══ SYNC BAR ═════════════════════════════════════
+function syncBar(){
+  if(!USE_CLOUD)return'';
+  const st=syncStatus==='syncing'?'同步中…':syncStatus==='error'?'同步失敗':'已同步';
+  const dc=syncStatus==='syncing'?' syncing':syncStatus==='error'?' error':'';
+  return`<div class="sync-bar">
+    <div class="sync-dot${dc}" id="syncDot"></div>
+    <div class="sync-lbl" id="syncLbl">${st}</div>
+    <div class="sync-ts" id="syncTs">${lastSyncTime||''}</div>
+    <button class="btn-sync" onclick="cloudLoad()">重新整理</button>
   </div>`;
-  // Insert after settings bar's parent
-  bar.closest('.header-inner').insertAdjacentElement('afterend', box);
 }
 
-// ─── SETUP GUIDE ───
-function copyGuideCode(btn){
-  const code = window._guideCode || '';
-  if(navigator.clipboard && navigator.clipboard.writeText){
-    navigator.clipboard.writeText(code).then(()=>{
-      btn.textContent='✅ 已複製！';
-      setTimeout(()=>btn.textContent='📋 複製程式碼',2500);
-    }).catch(()=> fallbackCopy(code, btn));
-  } else {
-    fallbackCopy(code, btn);
+// ═══ OVERVIEW ═════════════════════════════════════
+function renderOverview(){
+  const main=document.getElementById('mainContent');
+  const totalExp=Object.values(data.expenses).flat().reduce((s,e)=>s+(e.amount||0),0);
+  const segCount=Object.values(data.days).reduce((s,d)=>s+d.segments.length,0);
+  const hotelCount=Object.values(data.days).filter(d=>d.hotel).length;
+  let rows='';
+  for(let i=0;i<TOTAL_DAYS;i++){
+    const k='d'+(i+1);const day=data.days[k];const d=getDate(i);
+    const bars=day.segments.map(s=>`<div class="ov-bar-seg" style="background:var(--t-${s.type})"></div>`).join('');
+    const info=day.hotel?`<span class="ov-hotel">🏨 ${day.hotel}</span>`:
+               day.activities.filter(Boolean).length?`${day.activities.filter(Boolean).length}項活動`:'';
+    rows+=`<div class="ov-row" onclick="switchTab('${k}')">
+      <div class="ov-dn">D${i+1}</div>
+      <div class="ov-dd">${fmt(d)} 周${WEEKDAYS[d.getDay()]}</div>
+      <div class="ov-bar">${bars||'<div class="ov-bar-seg" style="background:var(--border);flex:1"></div>'}</div>
+      <div class="ov-info">${info}</div>
+    </div>`;
   }
-}
-function fallbackCopy(text, btn){
-  const ta = document.createElement('textarea');
-  ta.value = text;
-  ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;';
-  document.body.appendChild(ta);
-  ta.focus(); ta.select();
-  try{
-    document.execCommand('copy');
-    if(btn){ btn.textContent='✅ 已複製！'; setTimeout(()=>btn.textContent='📋 複製程式碼',2500); }
-  }catch(e){
-    alert('請手動選取程式碼框內文字後複製（Ctrl+A, Ctrl+C）');
-  }
-  document.body.removeChild(ta);
-}
-function showSetupGuide(){
-  const code=`// ============================================================
-// 雲南旅遊計劃 - Google Apps Script 後端
-// 使用說明：把 SHEET_ID 換成你的試算表 ID 後貼入 Apps Script
-// ============================================================
-const SHEET_ID   = '貼上你的試算表ID';
-const SHEET_NAME = '雲南行程';
-const COLS = ['天數','日期','今日主題','早餐','午餐','晚餐','主要景點','交通','住宿','備注','出門時間','時間軸'];
-const KEYS = ['day','date','title','breakfast','lunch','dinner','sights','transport','hotel','notes','departure','timeline'];
-
-function doGet(e) {
-  const action = (e && e.parameter && e.parameter.action) ? e.parameter.action : 'read';
-  if (action === 'read') return readData();
-  return ok({ rows: [] });
-}
-
-function doPost(e) {
-  try {
-    const b = JSON.parse(e.postData.contents);
-    if (b.action === 'write')    return writeData(b.rows, b.config, b.websites);
-    if (b.action === 'writeWishes') return writeWishes(b.wishes);
-    if (b.action === 'parseAI') return proxyClaudeAI(b.apiKey, b.system, b.content);
-    return ok({ error: '未知操作：' + b.action });
-  } catch(err) {
-    return ok({ error: 'doPost 錯誤：' + err.message });
-  }
-}
-
-function readData() {
-  try {
-    const ss = SpreadsheetApp.openById(SHEET_ID);
-    const sh = ss.getSheetByName(SHEET_NAME);
-    if (!sh || sh.getLastRow() < 2) return ok({ rows: [] });
-    const vals = sh.getRange(2, 1, sh.getLastRow() - 1, COLS.length).getValues();
-    const rows = vals.map(function(r) {
-      var o = {};
-      KEYS.forEach(function(k, i) { o[k] = r[i] ? String(r[i]) : ''; });
-      return o;
-    });
-    var config = null, websites = null;
-    try {
-      var cs = ss.getSheetByName('_config');
-      if (cs) config = JSON.parse(cs.getRange(1,1).getValue() || 'null');
-    } catch(e) {}
-    try {
-      var wss = ss.getSheetByName('_websites');
-      if (wss) websites = JSON.parse(wss.getRange(1,1).getValue() || 'null');
-    } catch(e) {}
-    var wishes = null;
-    try { var wsh=ss.getSheetByName('_wishes'); if(wsh){ var wv=wsh.getRange(1,1).getValue(); wishes=wv?JSON.parse(wv):null; } } catch(e) {}
-    return ok({ rows: rows, config: config, websites: websites, wishes: wishes });
-  } catch(err) {
-    return ok({ error: 'readData 錯誤：' + err.message });
-  }
-}
-
-function writeData(rows, config, websites) {
-  try {
-    if (!rows || !Array.isArray(rows)) {
-      return ok({ error: 'rows 格式錯誤，收到：' + typeof rows });
-    }
-    const ss = SpreadsheetApp.openById(SHEET_ID);
-    var sh = ss.getSheetByName(SHEET_NAME);
-    if (!sh) sh = ss.insertSheet(SHEET_NAME);
-    sh.clearContents();
-    sh.appendRow(COLS);
-    rows.forEach(function(r) {
-      if (!r) return;
-      sh.appendRow(KEYS.map(function(k) { return r[k] ? String(r[k]) : ''; }));
-    });
-    if (config) {
-      var cs = ss.getSheetByName('_config');
-      if (!cs) cs = ss.insertSheet('_config');
-      cs.getRange(1, 1).setValue(JSON.stringify(config));
-    }
-    if (websites) {
-      var ws = ss.getSheetByName('_websites');
-      if (!ws) ws = ss.insertSheet('_websites');
-      ws.getRange(1, 1).setValue(JSON.stringify(websites));
-    }
-    return ok({ ok: true, count: rows.length });
-  } catch(err) {
-    return ok({ error: 'writeData 錯誤：' + err.message });
-  }
-}
-
-function proxyClaudeAI(apiKey, system, content) {
-  try {
-    if (!apiKey) return ok({ error: 'API Key 未提供' });
-    var body = {
-      model: 'claude-sonnet-4-6',
-      max_tokens: 1024,
-      system: system,
-      messages: [{ role: 'user', content: content }]
-    };
-    var resp = UrlFetchApp.fetch('https://api.anthropic.com/v1/messages', {
-      method: 'post',
-      contentType: 'application/json',
-      headers: {
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01'
-      },
-      payload: JSON.stringify(body),
-      muteHttpExceptions: true
-    });
-    var json = JSON.parse(resp.getContentText());
-    if (json.error) return ok({ error: 'Claude API 錯誤：' + json.error.message });
-    var text = (json.content || []).map(function(b) { return b.text || ''; }).join('');
-    return ok({ result: text });
-  } catch(err) {
-    return ok({ error: 'proxyClaudeAI 錯誤：' + err.message });
-  }
-}
-
-function writeWishes(wishes) {
-  try {
-    var ss = SpreadsheetApp.openById(SHEET_ID);
-    var wsh = ss.getSheetByName('_wishes');
-    if (!wsh) wsh = ss.insertSheet('_wishes');
-    // Store as array (global pool)
-    var data = Array.isArray(wishes) ? wishes : [];
-    wsh.getRange(1, 1).setValue(JSON.stringify(data));
-    return ok({ ok: true });
-  } catch(err) {
-    return ok({ error: 'writeWishes 錯誤：' + err.message });
-  }
-}
-function ok(obj) {
-  return ContentService
-    .createTextOutput(JSON.stringify(obj))
-    .setMimeType(ContentService.MimeType.JSON);
-}`;
-
-  window._guideCode = code;
-  const ov=document.createElement('div');
-  ov.className='modal-overlay'; ov.id='guideModal'; ov.style.zIndex='99999';
-  ov.innerHTML=`<div style="background:#1e2d1e;color:#d4e8d4;border-radius:12px;max-width:700px;width:100%;max-height:90vh;overflow-y:auto;padding:1.8rem;font-family:'Noto Sans TC',sans-serif;">
-    <h2 style="color:#6effa0;margin-bottom:0.9rem;font-size:1.05rem;">📋 Google Apps Script 設定教學</h2>
-    <ol style="line-height:2.3;font-size:0.83rem;margin-bottom:0.9rem;padding-left:1.4rem;">
-      <li>開啟 Google 試算表 → 「擴充功能 → Apps Script」</li>
-      <li>清空編輯器，貼入程式碼，<strong style="color:#ffd;">把 SHEET_ID 換成你的試算表 ID</strong></li>
-      <li>儲存 → 「部署 → 新增部署作業」→ 類型：<strong style="color:#ffd;">網頁應用程式</strong></li>
-      <li>執行身分：<strong style="color:#ffd;">我</strong>；存取權限：<strong style="color:#ffd;">任何人</strong> → 部署</li>
-      <li>複製「網頁應用程式 URL」貼到本頁的欄位，按「連接試算表」</li>
-    </ol>
-    <pre id="guideCode" style="background:#111;padding:0.9rem;border-radius:8px;font-size:0.68rem;overflow-x:auto;white-space:pre-wrap;color:#b8ffb8;line-height:1.55;">${code.replace(/</g,'&lt;')}</pre>
-    <div style="margin-top:0.9rem;display:flex;gap:0.7rem;">
-      <button onclick="copyGuideCode(this)" style="padding:0.45rem 0.9rem;border-radius:6px;border:1px solid #6effa0;background:transparent;color:#6effa0;cursor:pointer;font-size:0.8rem;">📋 複製程式碼</button>
-      <button onclick="document.getElementById('guideModal').remove()" style="padding:0.45rem 0.9rem;border-radius:6px;border:1px solid #888;background:transparent;color:#aaa;cursor:pointer;font-size:0.8rem;">關閉</button>
-    </div>
-  </div>`;
-  document.body.appendChild(ov);
-  ov.addEventListener('click',e=>{ if(e.target===ov) ov.remove(); });
-}
-
-
-// ─── FLIGHT IMPORT ───
-let flightTab = 'text'; // 'text' | 'file'
-let parsedFlights = [];
-
-function showFlightImport(){
-  const tripStart = DAYS[0];
-  const tripEnd   = DAYS[DAYS.length-1];
-  const ov = mkModal(`
-    <h3>✈️ 匯入航班資訊</h3>
-    <div class="flight-tabs">
-      <button class="flight-tab active" id="ftab-text" onclick="switchFlightTab('text')">📋 貼上文字</button>
-      <button class="flight-tab" id="ftab-file" onclick="switchFlightTab('file')">📎 上傳檔案 / 截圖</button>
-    </div>
-
-    <!-- TEXT TAB -->
-    <div id="ftab-text-panel">
-      <p style="font-family:'Noto Sans TC',sans-serif;font-size:0.79rem;color:var(--text-muted);margin-bottom:0.6rem;">
-        將航班確認信、行程表或訂位記錄貼入下方，AI 自動解析起降時間：
-      </p>
-      <textarea class="flight-textarea" id="flightText" placeholder="例：
-BR195 台北桃園(TPE) → 昆明長水(KMG)
-出發：2026-07-28 09:35
-抵達：2026-07-28 12:50
----
-或 Booking confirmation / 行程確認信 任意格式均可"></textarea>
-    </div>
-
-    <!-- FILE TAB -->
-    <div id="ftab-file-panel" style="display:none">
-      <div class="flight-drop-zone" id="dropZone" onclick="document.getElementById('flightFileInput').click()"
-           ondragover="event.preventDefault();this.classList.add('drag-over')"
-           ondragleave="this.classList.remove('drag-over')"
-           ondrop="handleFileDrop(event)">
-        <span class="dz-icon">📄</span>
-        <p>點擊或拖曳上傳<br><strong>圖片（截圖）、PDF、文字檔</strong></p>
-        <p style="margin-top:0.4rem;font-size:0.74rem;opacity:0.7;">支援 JPG / PNG / PDF / TXT</p>
+  main.innerHTML=`${syncBar()}
+    <div class="ov-hero">
+      <div class="ov-title">☀️ 雲南行旅</div>
+      <div class="ov-dates">2026年 7月27日 — 8月9日 · 14天13夜</div>
+      <div class="ov-stats">
+        <div class="ov-stat"><div class="ov-stat-n">${segCount}</div><div class="ov-stat-l">交通段次</div></div>
+        <div class="ov-stat"><div class="ov-stat-n">${hotelCount}</div><div class="ov-stat-l">酒店登記</div></div>
+        <div class="ov-stat"><div class="ov-stat-n">¥${totalExp>0?totalExp.toLocaleString():'—'}</div><div class="ov-stat-l">總花費</div></div>
       </div>
-      <input type="file" id="flightFileInput" accept="image/*,.pdf,.txt" style="display:none" onchange="handleFileSelect(this)">
-      <div id="filePreview" style="font-family:'Noto Sans TC',sans-serif;font-size:0.8rem;color:var(--jade);margin-bottom:0.5rem;"></div>
     </div>
-
-    <!-- LOADING -->
-    <div class="flight-loading" id="flightLoading">
-      <span class="spin">✈️</span> AI 解析中，請稍候...
-    </div>
-
-    <!-- RESULT -->
-    <div class="flight-result" id="flightResult">
-      <h4>✅ 解析結果（確認後按「加入行程」）</h4>
-      <div id="flightResultList"></div>
-    </div>
-
-    <div style="font-family:'Noto Sans TC',sans-serif;font-size:0.74rem;color:var(--text-muted);margin-bottom:0.3rem;">
-      行程範圍：${fmtDate(tripStart)} ─ ${fmtDate(tripEnd)}
-    </div>
-
-    <div class="modal-btns">
-      <button class="modal-cancel" onclick="closeMod()">取消</button>
-      <button class="modal-confirm" id="flightParseBtn" onclick="parseFlights()">🔍 解析航班</button>
-      <button class="modal-confirm" id="flightAddBtn" onclick="addFlightsToSchedule()" style="display:none;background:var(--jade);border-color:var(--jade);">✅ 加入行程</button>
-    </div>
-  `);
-  // widen modal
-  ov.querySelector('.modal-box').style.maxWidth = '600px';
+    <div class="ov-list">
+      <div class="ov-list-hd">行程一覽 — 點選查看詳情</div>
+      ${rows}
+    </div>`;
 }
 
-function switchFlightTab(tab){
-  flightTab = tab;
-  document.getElementById('ftab-text-panel').style.display = tab==='text' ? '' : 'none';
-  document.getElementById('ftab-file-panel').style.display = tab==='file' ? '' : 'none';
-  document.querySelectorAll('.flight-tab').forEach(b=>b.classList.remove('active'));
-  document.getElementById('ftab-'+tab).classList.add('active');
-}
-
-let flightFileData = null; // {type, base64, mimeType}
-
-function handleFileDrop(e){
-  e.preventDefault();
-  document.getElementById('dropZone').classList.remove('drag-over');
-  const file = e.dataTransfer.files[0];
-  if(file) processFlightFile(file);
-}
-function handleFileSelect(input){
-  const file = input.files[0];
-  if(file) processFlightFile(file);
-}
-function processFlightFile(file){
-  const allowed = ['image/jpeg','image/png','image/gif','image/webp','application/pdf','text/plain'];
-  if(!allowed.includes(file.type)){
-    toast('不支援此格式，請上傳圖片、PDF 或 TXT',true); return;
-  }
-  const reader = new FileReader();
-  reader.onload = e => {
-    const base64 = e.target.result.split(',')[1];
-    flightFileData = { mimeType: file.type, base64, name: file.name };
-    const prev = document.getElementById('filePreview');
-    if(prev) prev.textContent = '✅ 已選擇：' + file.name + ' (' + (file.size/1024).toFixed(0) + ' KB)';
-  };
-  reader.readAsDataURL(file);
-}
-
-async function parseFlights(){
-  const loading  = document.getElementById('flightLoading');
-  const result   = document.getElementById('flightResult');
-  const parseBtn = document.getElementById('flightParseBtn');
-  const addBtn   = document.getElementById('flightAddBtn');
-
-  // Build prompt content
-  let userContent = [];
-  if(flightTab === 'file' && flightFileData){
-    if(flightFileData.mimeType === 'text/plain'){
-      // decode as text
-      const txt = atob(flightFileData.base64);
-      userContent = [{ type:'text', text: '以下是航班文件內容：\n' + txt }];
-    } else if(flightFileData.mimeType === 'application/pdf'){
-      userContent = [
-        { type:'document', source:{ type:'base64', media_type:'application/pdf', data: flightFileData.base64 } },
-        { type:'text', text:'請從此 PDF 中找出所有航班資訊。' }
-      ];
-    } else {
-      // image
-      userContent = [
-        { type:'image', source:{ type:'base64', media_type: flightFileData.mimeType, data: flightFileData.base64 } },
-        { type:'text', text:'請從此圖片中找出所有航班資訊。' }
-      ];
-    }
-  } else {
-    const txt = document.getElementById('flightText')?.value?.trim();
-    if(!txt){ toast('請先貼上航班資訊或上傳檔案',true); return; }
-    userContent = [{ type:'text', text: txt }];
-  }
-
-  const tripStart = DAYS[0];
-  const tripEnd   = DAYS[DAYS.length-1];
-  const systemPrompt = `你是一個航班資訊解析助手。
-用戶會提供航班確認信、截圖或行程文字，你需要：
-1. 找出所有航班（包含搭乘日期、航班號、出發地、目的地、出發時間、抵達時間）
-2. 日期格式統一輸出為 YYYY-MM-DD，時間為 HH:MM（24小時制）
-3. 若年份不明，推斷在行程範圍 ${tripStart.toISOString().split('T')[0]} 至 ${tripEnd.toISOString().split('T')[0]} 內
-4. 只回傳 JSON，不要任何說明文字或 Markdown 符號
-
-回傳格式（陣列）：
-[
-  {
-    "date": "2026-07-28",
-    "flightNo": "BR195",
-    "from": "台北桃園(TPE)",
-    "to": "昆明長水(KMG)",
-    "depTime": "09:35",
-    "arrTime": "12:50",
-    "label": "BR195 台北→昆明",
-    "inRange": true
-  }
-]
-inRange 為 true 表示此日期在行程範圍內。若日期不在行程內，仍輸出但 inRange 設 false。`;
-
-  loading.style.display = 'block';
-  result.style.display = 'none';
-  parseBtn.style.display = 'none';
-
-  try{
-    const claudeKey = localStorage.getItem('yunnan_claude_key');
-    if(!claudeKey) throw new Error('請先設定 Claude API Key（進入編輯模式 → ⚙️ 行程設定 → Claude API Key）');
-    if(!scriptUrl)  throw new Error('請先連接 Apps Script 試算表（航班解析需透過 Apps Script 中繼）');
-
-    // Build Claude messages content
-    const claudeContent = Array.isArray(userContent) ? userContent : [{type:'text',text:userContent}];
-
-    // Call Claude via Apps Script proxy (avoids CORS from GitHub Pages)
-    const resp = await fetch(scriptUrl, {
-      method: 'POST',
-      headers: {'Content-Type': 'text/plain'},
-      body: JSON.stringify({
-        action:  'parseAI',
-        apiKey:  claudeKey,
-        system:  systemPrompt,
-        content: claudeContent
-      })
-    });
-    const data = await resp.json();
-    if(data.error) throw new Error(data.error);
-
-    const raw = (data.result||'').trim();
-    const clean = raw.replace(/^```[a-z]*\n?/,'').replace(/```$/,'').trim();
-    parsedFlights = JSON.parse(clean);
-
-    // Render result
-    const list = document.getElementById('flightResultList');
-    list.innerHTML = parsedFlights.map(f=>{
-      const warn = !f.inRange ? ' flight-item-warn' : '';
-      const tag  = !f.inRange ? ' ⚠️ 日期不在行程範圍內' : '';
-      return `<div class="flight-item">
-        <div class="flight-item-dot" style="${!f.inRange?'background:var(--crimson)':''}"></div>
-        <div class="flight-item-body">
-          <strong>${f.date} &nbsp;${f.flightNo||''}</strong>
-          <span class="${warn}">${f.from} → ${f.to}　${f.depTime}─${f.arrTime}${tag}</span>
+// ═══ DAY VIEW ═════════════════════════════════════
+function renderDay(key){
+  const idx=parseInt(key.slice(1))-1;
+  const day=data.days[key];const d=getDate(idx);
+  const exps=data.expenses[key]||[];
+  const dayTotal=exps.reduce((s,e)=>s+(e.amount||0),0);
+  const segsHtml=day.segments.map((s,si)=>renderSeg(s,si,key)).join('');
+  const actsHtml=day.activities.map((a,ai)=>renderAct(a,ai,key)).join('');
+  const chips=EXPENSE_CATS.map(c=>{
+    const s=exps.filter(e=>e.cat===c.id).reduce((x,e)=>x+(e.amount||0),0);
+    return s>0?`<div class="exp-chip">${c.icon} <b>¥${s.toLocaleString()}</b></div>`:'';
+  }).join('');
+  document.getElementById('mainContent').innerHTML=`${syncBar()}
+    <div class="day-card">
+      <div class="day-header">
+        <div>
+          <div class="day-d-num">DAY ${idx+1}</div>
+          <div class="day-date">${fmtL(d)}</div>
+          <div class="day-wd">周${WEEKDAYS[d.getDay()]}</div>
         </div>
+        ${dayTotal>0?`<div class="day-total-badge">¥${dayTotal.toLocaleString()}</div>`:''}
+      </div>
+      <div class="transport-area">
+        <div class="sec-label">交通安排</div>
+        <div class="segment-list" id="segList_${key}">${segsHtml}</div>
+        ${isAdmin?`<div id="addSegForm_${key}" class="hidden">${buildSegForm(key)}</div>
+          <button class="btn-add-row" onclick="toggleAddSeg('${key}')">＋ 新增交通段次</button>`:''}
+      </div>
+      <div class="activities-area">
+        <div class="sec-label">活動安排</div>
+        <div id="actList_${key}">${actsHtml||(!isAdmin?'<div style="font-size:0.73rem;color:var(--muted);padding:4px 0">尚未安排活動</div>':'')}</div>
+        ${isAdmin?`<button class="btn-add-act" onclick="addAct('${key}')">＋ 新增活動</button>`:''}
+      </div>
+      <div class="hotel-area">
+        <div class="hotel-ico">🏨</div>
+        <div class="hotel-info">
+          ${day.hotel
+            ?`<div class="hotel-name">${day.hotel}</div><div class="hotel-det">${day.hotelDetail||'住宿'}</div>`
+            :`<div class="hotel-empty">${isAdmin?'尚未填寫酒店':'尚未登記住宿'}</div>`}
+        </div>
+        ${isAdmin?`<button class="btn-edit-hotel" onclick="openHotelModal('${key}')">✏️ 填寫</button>`:''}
+      </div>
+      <div class="day-exp-row">
+        ${chips||'<span style="font-size:0.66rem;color:#d8a87a">尚無花費記錄</span>'}
+        <button class="btn-exp" onclick="openExpModal('${key}')">${isAdmin?'＋ 記帳':'📊 查看'}</button>
+      </div>
+    </div>`;
+}
+
+function renderSeg(seg,si,key){
+  const t=TRANSPORT_TYPES.find(x=>x.id===seg.type)||TRANSPORT_TYPES[2];
+  return`<div class="segment-row">
+    <div class="seg-icon si-${seg.type}">${t.icon}</div>
+    <div class="seg-times">
+      <div class="seg-tr"><span class="seg-lbl">出</span><span class="seg-val">${seg.departTime||'--:--'}</span></div>
+      <div class="seg-tr"><span class="seg-lbl">抵</span><span class="seg-val">${seg.arriveTime||'--:--'}</span></div>
+    </div>
+    <div class="seg-places">
+      <div class="seg-place">📍 ${seg.from||'出發地'}</div>
+      <div class="seg-place">📍 ${seg.to||'目的地'}</div>
+      ${seg.note?`<div class="seg-note">${seg.note}</div>`:''}
+    </div>
+    ${isAdmin?`<button class="btn-x" onclick="removeSeg('${key}',${si})">✕</button>`:''}
+  </div>`;
+}
+
+function renderAct(act,ai,key){
+  if(isAdmin)return`<div class="act-item"><div class="act-dot"></div>
+    <input class="act-inp" value="${escHtml(act)}" placeholder="輸入活動名稱…"
+      onchange="updateAct('${key}',${ai},this.value)"
+      onblur="updateAct('${key}',${ai},this.value)">
+    <button class="btn-x" onclick="removeAct('${key}',${ai})">✕</button>
+  </div>`;
+  return act?`<div class="act-item"><div class="act-dot"></div><div class="act-text">${escHtml(act)}</div></div>`:'';
+}
+
+// ── ADD SEG ──
+function buildSegForm(key){
+  const id='asf_'+key;
+  const chips=TRANSPORT_TYPES.map(t=>
+    `<div class="type-chip" data-t="${t.id}" onclick="selSegType('${key}','${t.id}')"><span>${t.icon}</span>${t.label}</div>`
+  ).join('');
+  return`<div class="add-seg-form" id="${id}">
+    <div class="form-lbl" style="margin-bottom:5px">交通方式</div>
+    <div class="type-grid">${chips}</div>
+    <div class="form-row">
+      <div class="form-field"><div class="form-lbl">出發地</div><input class="form-inp" id="${id}_from" placeholder="例：昆明長水機場"></div>
+      <div class="form-field"><div class="form-lbl">目的地</div><input class="form-inp" id="${id}_to" placeholder="例：大理機場"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-field"><div class="form-lbl">出發時間</div><input type="time" class="form-inp" id="${id}_dep"></div>
+      <div class="form-field"><div class="form-lbl">抵達時間</div><input type="time" class="form-inp" id="${id}_arr"></div>
+    </div>
+    <div class="form-row full">
+      <div class="form-field"><div class="form-lbl">備註（選填）</div><input class="form-inp" id="${id}_note" placeholder="例：CA4103 / 高鐵G309"></div>
+    </div>
+    <button class="btn-confirm" onclick="confirmAddSeg('${key}')">✓ 確認新增</button>
+  </div>`;
+}
+function toggleAddSeg(key){document.getElementById('addSegForm_'+key)?.classList.toggle('hidden');}
+function selSegType(key,type){
+  addSegState[key]=type;
+  document.getElementById('asf_'+key)?.querySelectorAll('.type-chip').forEach(el=>{
+    el.classList.toggle('sel',el.dataset.t===type);
+  });
+}
+function confirmAddSeg(key){
+  const id='asf_'+key;
+  const type=addSegState[key]||'car';
+  const from=document.getElementById(id+'_from').value.trim();
+  const to=document.getElementById(id+'_to').value.trim();
+  const dep=document.getElementById(id+'_dep').value;
+  const arr=document.getElementById(id+'_arr').value;
+  const note=document.getElementById(id+'_note').value.trim();
+  if(!from&&!to){showToast('請至少填寫出發地或目的地');return;}
+  data.days[key].segments.push({type,from,to,departTime:dep,arriveTime:arr,note});
+  saveData();renderDay(key);
+}
+function removeSeg(key,idx){data.days[key].segments.splice(idx,1);saveData();renderDay(key);}
+
+// ── ACTIVITIES ──
+function addAct(key){
+  data.days[key].activities.push('');renderDay(key);
+  setTimeout(()=>{
+    const inputs=document.getElementById('actList_'+key)?.querySelectorAll('.act-inp');
+    if(inputs?.length)inputs[inputs.length-1].focus();
+  },50);
+}
+function updateAct(key,idx,val){data.days[key].activities[idx]=val;saveData();}
+function removeAct(key,idx){data.days[key].activities.splice(idx,1);saveData();renderDay(key);}
+
+// ── HOTEL ──
+function openHotelModal(key){
+  currentHotelKey=key;
+  const idx=parseInt(key.slice(1))-1;
+  document.getElementById('hotelSub').textContent=`D${idx+1} · ${fmtL(getDate(idx))}`;
+  document.getElementById('hotelName').value=data.days[key].hotel||'';
+  document.getElementById('hotelDetail').value=data.days[key].hotelDetail||'';
+  document.getElementById('hotelModal').classList.remove('hidden');
+  setTimeout(()=>document.getElementById('hotelName').focus(),100);
+}
+function saveHotel(){
+  if(!currentHotelKey)return;
+  data.days[currentHotelKey].hotel=document.getElementById('hotelName').value.trim();
+  data.days[currentHotelKey].hotelDetail=document.getElementById('hotelDetail').value.trim();
+  saveData();
+  document.getElementById('hotelModal').classList.add('hidden');
+  renderDay(currentHotelKey);
+}
+
+// ═══ EXPENSE MODAL ════════════════════════════════
+function openExpModal(key){
+  const m=document.getElementById('expModal');
+  m.classList.remove('hidden');
+  m.onclick=e=>{if(e.target===m)closeExpModal();};
+  renderExpSheet(key);
+}
+function closeExpModal(){document.getElementById('expModal').classList.add('hidden');renderCurrent();}
+function renderExpSheet(key){
+  const idx=parseInt(key.slice(1))-1;
+  const exps=data.expenses[key]||[];
+  const total=exps.reduce((s,e)=>s+(e.amount||0),0);
+  const rows=exps.map((e,ei)=>{
+    const cat=EXPENSE_CATS.find(c=>c.id===e.cat)||EXPENSE_CATS[4];
+    return`<div class="exp-ent-row">
+      <div class="exp-cdot ${cat.cls}"></div>
+      <div><div class="exp-ent-desc">${escHtml(e.desc||'')}</div><div class="exp-ent-cat">${cat.label}</div></div>
+      <div class="exp-ent-amt">¥${(e.amount||0).toLocaleString()}</div>
+      ${isAdmin?`<button class="btn-x" onclick="delExp('${key}',${ei})">✕</button>`:''}
+    </div>`;
+  }).join('');
+  const addForm=isAdmin?`<div class="add-exp-form">
+    <h4>＋ 新增花費</h4>
+    <div class="form-row">
+      <div class="form-field"><div class="form-lbl" style="color:var(--orange)">類別</div>
+        <select class="form-sel" id="neCat">${EXPENSE_CATS.map(c=>`<option value="${c.id}">${c.icon} ${c.label}</option>`).join('')}</select>
+      </div>
+      <div class="form-field"><div class="form-lbl" style="color:var(--orange)">金額 (¥)</div>
+        <input type="number" class="form-inp" id="neAmt" placeholder="0">
+      </div>
+    </div>
+    <div class="form-row full">
+      <div class="form-field"><div class="form-lbl" style="color:var(--orange)">說明</div>
+        <input class="form-inp" id="neDesc" placeholder="例：午餐 · 過橋米線">
+      </div>
+    </div>
+    <button class="btn-confirm-exp" onclick="addExp('${key}')">新增花費</button>
+  </div>`:'';
+  document.getElementById('expSheet').innerHTML=`
+    <h3>💰 D${idx+1} · ${fmtL(getDate(idx))} 花費</h3>
+    ${total>0?`<div style="font-family:'DM Mono',monospace;font-size:1.3rem;color:var(--orange);font-weight:700;margin-bottom:12px">¥ ${total.toLocaleString()}</div>`:''}
+    ${rows||'<div style="font-size:0.75rem;color:var(--muted);padding:10px 0">尚無花費記錄</div>'}
+    ${addForm}
+    <button onclick="closeExpModal()" style="width:100%;margin-top:14px;padding:10px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;font-family:'Noto Sans TC',sans-serif;font-size:0.8rem;cursor:pointer;color:var(--ink2)">關閉</button>`;
+}
+function addExp(key){
+  const cat=document.getElementById('neCat').value;
+  const amt=parseFloat(document.getElementById('neAmt').value)||0;
+  const desc=document.getElementById('neDesc').value.trim();
+  if(!amt&&!desc){showToast('請填寫金額或說明');return;}
+  if(!data.expenses[key])data.expenses[key]=[];
+  data.expenses[key].push({cat,amount:amt,desc});
+  saveData();renderExpSheet(key);
+}
+function delExp(key,idx){data.expenses[key].splice(idx,1);saveData();renderExpSheet(key);}
+
+// ═══ EXPENSES TAB ═════════════════════════════════
+function renderExpenses(){
+  const main=document.getElementById('mainContent');
+  const allExps=Object.entries(data.expenses).flatMap(([k,a])=>a.map(e=>({...e,key:k})));
+  const total=allExps.reduce((s,e)=>s+(e.amount||0),0);
+  const catBoxes=EXPENSE_CATS.map(c=>{
+    const s=allExps.filter(e=>e.cat===c.id).reduce((x,e)=>x+(e.amount||0),0);
+    return`<div class="exp-cat-box"><div class="exp-cat-ico">${c.icon}</div>
+      <div class="exp-cat-lbl">${c.label}</div>
+      <div class="exp-cat-amt">${s>0?'¥'+s.toLocaleString():'—'}</div></div>`;
+  }).join('');
+  let cards='';
+  for(let i=0;i<TOTAL_DAYS;i++){
+    const k='d'+(i+1);const exps=data.expenses[k]||[];
+    if(!exps.length)continue;
+    const dt=exps.reduce((s,e)=>s+(e.amount||0),0);const d=getDate(i);
+    const rows=exps.map((e,ei)=>{
+      const cat=EXPENSE_CATS.find(c=>c.id===e.cat)||EXPENSE_CATS[4];
+      return`<div class="exp-ent-row">
+        <div class="exp-cdot ${cat.cls}"></div>
+        <div><div class="exp-ent-desc">${escHtml(e.desc||'')}</div><div class="exp-ent-cat">${cat.label}</div></div>
+        <div class="exp-ent-amt">¥${(e.amount||0).toLocaleString()}</div>
+        ${isAdmin?`<button class="btn-x" onclick="delExpR('${k}',${ei})">✕</button>`:''}
       </div>`;
     }).join('');
-
-    result.style.display = 'block';
-    addBtn.style.display = '';
-    toast('✅ 解析完成，共 '+parsedFlights.length+' 筆航班');
-  }catch(e){
-    toast('❌ 解析失敗：'+e.message,true);
-    parseBtn.style.display = '';
-    console.error(e);
-  } finally {
-    loading.style.display = 'none';
-  }
-}
-
-function addFlightsToSchedule(){
-  if(!parsedFlights.length){ toast('沒有可加入的航班',true); return; }
-  let addedCount = 0;
-  let skipCount  = 0;
-
-  parsedFlights.forEach(f => {
-    if(!f.inRange){ skipCount++; return; }
-    // Find which day index matches
-    const fDate = new Date(f.date + 'T00:00:00');
-    const dayIdx = DAYS.findIndex(d =>
-      d.getFullYear()===fDate.getFullYear() &&
-      d.getMonth()===fDate.getMonth() &&
-      d.getDate()===fDate.getDate()
-    );
-    if(dayIdx < 0){ skipCount++; return; }
-
-    // Add to that day's timeline
-    const entries = getTimelineEntries(dayIdx);
-    entries.push({ from: f.depTime, to: f.arrTime, label: f.label || (f.flightNo+' '+f.from+'→'+f.to) });
-    setTimelineEntries(dayIdx, entries);
-
-    // Also append to transport textarea
-    const ta = document.getElementById('transport-'+dayIdx);
-    if(ta){
-      const existing = ta.value.trim();
-      const newLine = `${f.flightNo} ${f.from}→${f.to} ${f.depTime}─${f.arrTime}`;
-      ta.value = existing ? existing + '\n' + newLine : newLine;
-    }
-    addedCount++;
-  });
-
-  markDirty();
-  closeMod();
-
-  if(addedCount){
-    // Switch to the first day that has a new flight
-    const firstFlight = parsedFlights.find(f=>f.inRange);
-    if(firstFlight){
-      const fDate = new Date(firstFlight.date+'T00:00:00');
-      const idx = DAYS.findIndex(d=>d.getFullYear()===fDate.getFullYear()&&d.getMonth()===fDate.getMonth()&&d.getDate()===fDate.getDate());
-      if(idx>=0) switchTab(idx);
-    }
-    toast('✅ 已加入 '+addedCount+' 筆航班到行程中'+(skipCount?' （'+skipCount+' 筆超出範圍略過）':''));
-  } else {
-    toast('⚠️ 所有航班日期均超出行程範圍，未加入',true);
-  }
-}
-
-// ─── PRINT ───
-function printPDF(){
-  const d=buildDays();
-  const s=d[0],e=d[d.length-1];
-  document.getElementById('printRange').textContent=`${s.getFullYear()}年${s.getMonth()+1}月${s.getDate()}日 ─ ${e.getMonth()+1}月${e.getDate()}日`;
-  document.getElementById('printDate').textContent=new Date().toLocaleDateString('zh-TW');
-  document.querySelectorAll('.day-panel').forEach(p=>p.classList.add('print-include'));
-  window.print();
-  setTimeout(()=>document.querySelectorAll('.day-panel').forEach(p=>p.classList.remove('print-include')),1500);
-}
-
-// ─── TOAST ───
-let toastTimer;
-function toast(msg,isErr=false){
-  const el=document.getElementById('toast');
-  el.textContent=msg; el.className='toast show'+(isErr?' err':'');
-  clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove('show'),3200);
-}
-
-
-// ─── LOCAL FILE DETECTION (removed) ───
-
-// ─── AUTO SAVE ───
-setInterval(()=>{ if(dirty) saveToLocal(); },30_000);
-setInterval(()=>{ if(dirty&&scriptUrl) syncToSheets(); },120_000);
-
-// ─── SYNC VIEW DIV (for read-only display) ───
-function syncViewDiv(ta){
-  const viewId = ta.id.replace(/^(\w+)-(\d+)$/, '$1-view-$2');
-  const div = document.getElementById(viewId);
-  if(div) div.textContent = ta.value;
-}
-function syncAllViewDivs(){
-  document.querySelectorAll('.info-card textarea').forEach(ta=>{
-    syncViewDiv(ta);
-  });
-}
-// ─── AUTO-EXPAND TEXTAREA ───
-function autoExpand(el){
-  el.style.height='auto';
-  el.style.height=Math.max(el.scrollHeight, 70)+'px';
-}
-document.addEventListener('input', e=>{
-  if(e.target.tagName==='TEXTAREA' && e.target.closest('.info-card')){
-    autoExpand(e.target);
-  }
-});
-function expandAllTextareas(){
-  document.querySelectorAll('.info-card textarea').forEach(ta=>{
-    autoExpand(ta);
-  });
-}
-
-// ─── INIT ───
-try {
-  loadTripConfig();
-  buildUI();
-  loadFromLocal();
-  scriptUrl = SCRIPT_URL;
-  document.getElementById('scriptUrl').value = SCRIPT_URL;
-
-  // Auto-restore member login
-  if(localStorage.getItem('yunnan_member_logged')==='1'){
-    memberUnlocked = true;
-    document.getElementById('memberBtn').style.display='none';
-    showWishInputs();
-    setSyncStatus('已連接，載入中...','ok');
-    setTimeout(loadFromSheets, 600);
-  }
-} catch(initErr) {
-  console.error('Init error:', initErr);
-  document.getElementById('headerDates').textContent = '載入錯誤，請重新整理';
-  document.getElementById('mainContent').innerHTML =
-    '<div style="padding:2rem;font-family:sans-serif;color:#e53935;text-align:center;">' +
-    '<h2>⚠️ 頁面載入失敗</h2>' +
-    '<p style="margin-top:1rem;font-size:0.9rem;color:#666;">' + initErr.message + '</p>' +
-    '<button onclick="location.reload()" style="margin-top:1.5rem;padding:0.6rem 1.5rem;background:#f05a28;color:#fff;border:none;border-radius:8px;font-size:1rem;cursor:pointer;">🔄 重新載入</button>' +
-    '</div>';
-}
-
-// ─── PWA: SERVICE WORKER ───
-if('serviceWorker' in navigator && location.protocol === 'https:' && !location.hostname.includes('claude')){
-  window.addEventListener('load', ()=>{
-    navigator.serviceWorker.register('./sw.js').catch(e=>console.log('SW reg failed:',e));
-  });
-}
-
-// ─── PWA: JUMP TO TODAY ───
-(function(){
-  const params = new URLSearchParams(location.search);
-  if(params.get('today')==='1'){
-    const today = new Date();
-    const idx = DAYS.findIndex(d =>
-      d.getFullYear()===today.getFullYear() &&
-      d.getMonth()===today.getMonth() &&
-      d.getDate()===today.getDate()
-    );
-    if(idx>=0) setTimeout(()=>switchTab(idx), 100);
-  }
-})();
-
-// ─── PWA: INSTALL PROMPT ───
-let deferredPrompt = null;
-window.addEventListener('beforeinstallprompt', e => {
-  e.preventDefault();
-  deferredPrompt = e;
-  // Show install banner after 3 seconds if not standalone
-  if(!window.matchMedia('(display-mode: standalone)').matches){
-    setTimeout(showInstallBanner, 3000);
-  }
-});
-
-function showInstallBanner(){
-  if(document.getElementById('installBanner')) return;
-  const banner = document.createElement('div');
-  banner.id = 'installBanner';
-  banner.style.cssText = [
-    'position:fixed','top:0','left:0','right:0',
-    'background:linear-gradient(90deg,#1a3a2a,#1e4060)',
-    'color:#fff','padding:0.7rem 1rem',
-    'display:flex','align-items:center','justify-content:space-between',
-    'font-family:\'Noto Sans TC\',sans-serif','font-size:0.82rem',
-    'z-index:99999','gap:0.8rem','flex-wrap:wrap',
-    'box-shadow:0 2px 12px rgba(0,0,0,0.3)'
-  ].join(';');
-  banner.innerHTML = `
-    <span>⛰️ <strong>加到主畫面</strong>，像 App 一樣使用！</span>
-    <div style="display:flex;gap:0.5rem;">
-      <button onclick="installApp()" style="padding:0.4rem 1rem;border-radius:20px;border:none;background:#e8b84b;color:#1a3a2a;font-weight:600;cursor:pointer;font-size:0.8rem;">安裝</button>
-      <button onclick="document.getElementById('installBanner').remove()" style="padding:0.4rem 0.8rem;border-radius:20px;border:1px solid rgba(255,255,255,0.4);background:transparent;color:#fff;cursor:pointer;font-size:0.8rem;">略過</button>
+    cards+=`<div class="exp-day-card">
+      <div class="exp-day-hd">
+        <div class="exp-day-ttl">D${i+1} · ${fmt(d)} 周${WEEKDAYS[d.getDay()]}</div>
+        <div class="exp-day-tot">¥${dt.toLocaleString()}</div>
+      </div>
+      <div class="exp-entries">${rows}</div>
     </div>`;
-  document.body.prepend(banner);
-}
-
-async function installApp(){
-  if(deferredPrompt){
-    deferredPrompt.prompt();
-    const {outcome} = await deferredPrompt.userChoice;
-    deferredPrompt = null;
-    document.getElementById('installBanner')?.remove();
-  } else {
-    // iOS fallback instructions
-    showIOSInstallGuide();
   }
+  main.innerHTML=`${syncBar()}
+    <div class="exp-sum-card">
+      <div class="exp-sum-lbl">TOTAL EXPENSES</div>
+      <div class="exp-sum-total">¥${total>0?total.toLocaleString():'0'} <span>人民幣</span></div>
+      <div class="exp-cat-grid">${catBoxes}</div>
+    </div>
+    <div class="exp-day-list">
+      ${cards||'<div style="font-size:0.8rem;color:var(--muted);text-align:center;padding:24px">尚無任何花費記錄</div>'}
+    </div>`;
+}
+function delExpR(key,idx){data.expenses[key].splice(idx,1);saveData();renderExpenses();}
+
+// ═══ TOAST ════════════════════════════════════════
+let toastT;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2300);
 }
 
-function showIOSInstallGuide(){
-  const ov = document.createElement('div');
-  ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:99999;display:flex;align-items:flex-end;justify-content:center;padding:1rem;';
-  ov.innerHTML = `<div style="background:#fff;border-radius:16px;padding:1.5rem;max-width:400px;width:100%;font-family:'Noto Sans TC',sans-serif;text-align:center;">
-    <div style="font-size:2rem;margin-bottom:0.5rem;">📱</div>
-    <h3 style="font-size:1rem;font-weight:700;margin-bottom:1rem;color:#1a3a2a;">加到 iPhone 主畫面</h3>
-    <ol style="text-align:left;line-height:2.2;font-size:0.85rem;color:#444;padding-left:1.2rem;margin-bottom:1rem;">
-      <li>點下方工具列的 <strong>「分享」</strong> 按鈕 <span style="font-size:1.1rem;">⬆️</span></li>
-      <li>向下滑找到 <strong>「加入主畫面」</strong></li>
-      <li>點右上角 <strong>「新增」</strong></li>
-    </ol>
-    <button onclick="this.closest('div[style*=fixed]').remove()" style="padding:0.6rem 2rem;border-radius:20px;border:none;background:#1a3a2a;color:#fff;font-size:0.9rem;cursor:pointer;">知道了</button>
-  </div>`;
-  document.body.appendChild(ov);
-  ov.addEventListener('click', e=>{ if(e.target===ov) ov.remove(); });
+// ═══ UTILS ════════════════════════════════════════
+function escHtml(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// ─── MOBILE: improve bottom bar padding for safe area ───
-document.querySelector('.actions-bar').style.paddingBottom = 'calc(0.65rem + env(safe-area-inset-bottom))';
+// ═══ INIT ═════════════════════════════════════════
+localLoad();
+buildTabs();
+if(USE_CLOUD)cloudLoad();
+else renderCurrent();
 </script>
 </body>
 </html>
