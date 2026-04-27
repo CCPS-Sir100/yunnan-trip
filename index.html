@@ -264,6 +264,14 @@ body {
   transition: all 0.15s; line-height: 1; flex-shrink: 0;
 }
 .btn-del:hover { color: var(--rose); background: var(--rose-l); }
+.btn-edit {
+  background: none; border: none; color: var(--muted); font-size: 0.9rem;
+  cursor: pointer; padding: 2px 4px; border-radius: 5px;
+  transition: all 0.15s; line-height: 1; flex-shrink: 0;
+}
+.btn-edit:hover { color: var(--blue); background: var(--blue-l); }
+.seg-editing { background: var(--sky); border-color: var(--blue); }
+.seg-edit-form { width: 100%; }
 
 /* ── ADD SEGMENT FORM ────────────────────── */
 .add-form {
@@ -922,8 +930,52 @@ function renderDay(k){
 }
 
 // ── SEGMENT ───────────────────────────────
+let editingSeg = null; // 'k_si' format
+
 function renderSeg(s,si,k){
   const t = TRANSPORTS.find(x=>x.id===s.type)||TRANSPORTS[2];
+  const eid = k+'_'+si;
+  const isEditing = editingSeg === eid;
+
+  if(admin && isEditing){
+    // EDIT MODE
+    const typeChips = TRANSPORTS.map(tt=>
+      `<div class="type-chip${s.type===tt.id?' on':''}" data-t="${tt.id}"
+        onclick="updSegType('${k}',${si},'${tt.id}',this)">${tt.icon} ${tt.label}</div>`
+    ).join('');
+    return `<div class="seg seg-editing">
+      <div class="seg-edit-form">
+        <div class="type-grid" style="margin-bottom:8px">${typeChips}</div>
+        <div class="f-row">
+          <div class="f-field"><div class="f-lbl">出發地</div>
+            <input class="f-inp" id="es_from_${eid}" value="${esc(s.from||'')}">
+          </div>
+          <div class="f-field"><div class="f-lbl">目的地</div>
+            <input class="f-inp" id="es_to_${eid}" value="${esc(s.to||'')}">
+          </div>
+        </div>
+        <div class="f-row">
+          <div class="f-field"><div class="f-lbl">出發時間</div>
+            <input type="time" class="f-inp" id="es_dep_${eid}" value="${s.dep||s.departTime||''}">
+          </div>
+          <div class="f-field"><div class="f-lbl">抵達時間</div>
+            <input type="time" class="f-inp" id="es_arr_${eid}" value="${s.arr||s.arriveTime||''}">
+          </div>
+        </div>
+        <div class="f-row full">
+          <div class="f-field"><div class="f-lbl">備註</div>
+            <input class="f-inp" id="es_note_${eid}" value="${esc(s.note||'')}">
+          </div>
+        </div>
+        <div style="display:flex;gap:7px;margin-top:4px">
+          <button class="btn-confirm" style="flex:1" onclick="saveSegEdit('${k}',${si})">✓ 儲存</button>
+          <button class="btn-confirm" style="flex:0 0 auto;background:var(--slate2)" onclick="cancelSegEdit('${k}')">取消</button>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // VIEW MODE
   return `<div class="seg">
     <div class="seg-ico si-${s.type}">${t.icon}</div>
     <div class="seg-body">
@@ -938,8 +990,42 @@ function renderSeg(s,si,k){
       </div>
       ${s.note?`<div class="seg-note">${esc(s.note)}</div>`:''}
     </div>
-    ${admin?`<button class="btn-del" onclick="delSeg('${k}',${si})">✕</button>`:''}
+    ${admin?`<div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0">
+      <button class="btn-edit" onclick="startSegEdit('${k}',${si})">✏️</button>
+      <button class="btn-del"  onclick="delSeg('${k}',${si})">✕</button>
+    </div>`:''}
   </div>`;
+}
+
+function startSegEdit(k,si){
+  editingSeg = k+'_'+si;
+  renderDay(k);
+  // scroll to edited seg
+  setTimeout(()=>{
+    const el = document.querySelector('.seg-editing');
+    if(el) el.scrollIntoView({block:'nearest',behavior:'smooth'});
+  },50);
+}
+function cancelSegEdit(k){ editingSeg=null; renderDay(k); }
+
+function updSegType(k,si,type,el){
+  data.days[k].segs[si].type=type;
+  el.closest('.type-grid').querySelectorAll('.type-chip').forEach(c=>c.classList.toggle('on',c.dataset.t===type));
+}
+
+function saveSegEdit(k,si){
+  const eid=k+'_'+si;
+  const s=data.days[k].segs[si];
+  s.from = document.getElementById('es_from_'+eid).value.trim();
+  s.to   = document.getElementById('es_to_'+eid).value.trim();
+  s.dep  = document.getElementById('es_dep_'+eid).value;
+  s.arr  = document.getElementById('es_arr_'+eid).value;
+  s.note = document.getElementById('es_note_'+eid).value.trim();
+  // clear legacy fields
+  delete s.departTime; delete s.arriveTime;
+  editingSeg=null;
+  sortSegs(k);
+  saveData(); renderDay(k);
 }
 
 // ── ADD SEGMENT FORM ───────────────────────
@@ -1043,7 +1129,10 @@ function renderExpSheet(k){
       <div class="exp-dot ${c.cls}"></div>
       <div><div class="exp-desc">${esc(e.desc||'')}</div><div class="exp-cat-tag">${c.label}</div></div>
       <div class="exp-amt">¥${(e.amt||0).toLocaleString()}</div>
-      ${admin?`<button class="btn-del" onclick="delExp('${k}',${ei})">✕</button>`:''}
+      ${admin?`<div style="display:flex;gap:3px">
+        <button class="btn-edit" onclick="editExpPrompt('${k}',${ei})">✏️</button>
+        <button class="btn-del"  onclick="delExp('${k}',${ei})">✕</button>
+      </div>`:''}
     </div>`;
   }).join('');
   const addForm=admin?`<div class="add-exp-form">
@@ -1080,6 +1169,22 @@ function addExp(k){
   saveData(); renderExpSheet(k);
 }
 function delExp(k,i){ data.exp[k].splice(i,1); saveData(); renderExpSheet(k); }
+
+function editExpPrompt(k,i){
+  const e = data.exp[k][i];
+  const cats = ['transport','hotel','food','ticket','other'];
+  const catLabels = {'transport':'✈️ 交通','hotel':'🏨 住房','food':'🍜 飲食','ticket':'🎟️ 門票','other':'💰 其他'};
+  const desc = prompt('說明：', e.desc||'');
+  if(desc===null) return;
+  const amtStr = prompt('金額（¥）：', e.amt||0);
+  if(amtStr===null) return;
+  const catStr = prompt('類別（transport/hotel/food/ticket/other）：', e.cat||'other');
+  if(catStr===null) return;
+  e.desc = desc;
+  e.amt  = parseFloat(amtStr)||0;
+  e.cat  = cats.includes(catStr) ? catStr : e.cat;
+  saveData(); renderExpSheet(k);
+}
 
 // ══════════════════════════════════════════
 // EXPENSES TAB
