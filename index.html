@@ -70,6 +70,12 @@ body {
   font-family:'Noto Sans TC',sans-serif; cursor:pointer; font-weight:500; transition:all 0.18s;
 }
 .btn-hdr:hover { background:var(--primary); color:#fff; }
+#uploadBtn {
+  background:var(--orange); color:#fff; border:none;
+  padding:5px 11px; border-radius:20px; font-size:0.68rem;
+  font-family:'Noto Sans TC',sans-serif; cursor:pointer; font-weight:500; transition:all 0.18s;
+}
+#uploadBtn:hover { background:#e06520; }
 
 /* TABS */
 .tab-bar {
@@ -418,6 +424,7 @@ body {
   </div>
   <div class="hdr-right">
     <div class="badge badge-view" id="modeBadge">瀏覽</div>
+    <button class="btn-upload hidden" id="uploadBtn" onclick="forceUpload()">⬆️ 上傳</button>
     <button class="btn-hdr" id="loginBtn" onclick="openLogin()">管理員</button>
   </div>
 </header>
@@ -615,6 +622,7 @@ function doLogin(){
     document.getElementById('modeBadge').textContent='管理員';
     document.getElementById('modeBadge').className='badge badge-admin';
     document.getElementById('loginBtn').textContent='登出';
+    document.getElementById('uploadBtn').classList.remove('hidden');
     renderCurrent();showToast('歡迎，管理員 ✅');
   }else{
     document.getElementById('loginErr').classList.remove('hidden');
@@ -625,6 +633,7 @@ function doLogout(){
   document.getElementById('modeBadge').textContent='瀏覽';
   document.getElementById('modeBadge').className='badge badge-view';
   document.getElementById('loginBtn').textContent='管理員';
+  document.getElementById('uploadBtn').classList.add('hidden');
   renderCurrent();showToast('已登出');
 }
 
