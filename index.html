@@ -521,33 +521,54 @@ function fmtNow(){return new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',m
 async function cloudSave(){
   if(!USE_CLOUD){localSave();return;}
   setSyncUI('syncing');
+  localSave();
   try{
-    // 用 GET 帶資料，分段避免 URL 過長
     const dataStr=JSON.stringify(data);
-    const encoded=encodeURIComponent(dataStr);
-    const url=GAS_URL+'?action=save&data='+encoded;
-    const r=await fetch(url,{method:'GET',redirect:'follow',cache:'no-cache'});
-    if(!r.ok) throw new Error('HTTP '+r.status);
-    const text=await r.text();
-    const j=JSON.parse(text);
-    if(j.ok){setSyncUI('ok');localSave();showToast('已同步到雲端 ☁️');}
-    else throw new Error(j.error||'save failed');
+    // 用 no-cors POST 送出（GAS 收得到，但瀏覽器看不到回應）
+    await fetch(GAS_URL,{
+      method:'POST',
+      mode:'no-cors',
+      body:dataStr,
+      headers:{'Content-Type':'text/plain'}
+    });
+    setSyncUI('ok');
   }catch(e){
-    setSyncUI('error');localSave();
-    showToast('同步失敗：'+e.message);
+    setSyncUI('error');
     console.error('cloudSave error:',e);
   }
 }
 
-// 強制把本機資料上傳雲端
+// 強制把本機資料上傳雲端，並驗證是否成功
 async function forceUpload(){
-  localLoad(); // 確保 data 是最新本機版本
+  localLoad();
   showToast('上傳中…');
-  await cloudSave();
-  if(syncStatus==='ok'){
-    showToast('✅ 本機資料已上傳到雲端！');
-    renderCurrent();
+  setSyncUI('syncing');
+  const dataStr=JSON.stringify(data);
+  try{
+    // POST 送出
+    await fetch(GAS_URL,{
+      method:'POST',
+      mode:'no-cors',
+      body:dataStr,
+      headers:{'Content-Type':'text/plain'}
+    });
+    // 等 1.5 秒後用 GET 讀回來驗證
+    await new Promise(r=>setTimeout(r,1500));
+    const r2=await fetch(GAS_URL+'?action=load&t='+Date.now(),{redirect:'follow',cache:'no-cache'});
+    const j2=await r2.json();
+    if(j2.ok && j2.data){
+      setSyncUI('ok');
+      showToast('✅ 上傳成功！其他人重新整理即可看到');
+    } else {
+      setSyncUI('error');
+      showToast('⚠️ 上傳可能失敗，請再試一次');
+    }
+  }catch(e){
+    setSyncUI('error');
+    showToast('上傳失敗：'+e.message);
+    console.error('forceUpload error:',e);
   }
+  renderCurrent();
 }
 
 async function cloudLoad(){
