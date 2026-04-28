@@ -481,6 +481,52 @@ body {
 }
 .toast.show { transform: translateX(-50%) translateY(0); }
 
+/* ── PHOTOS ──────────────────────────────── */
+.photo-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-top: 4px;
+}
+.photo-item {
+  position: relative; aspect-ratio: 1; border-radius: 10px;
+  overflow: hidden; background: var(--border); cursor: pointer;
+}
+.photo-item img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 0.2s;
+}
+.photo-item:hover img { transform: scale(1.05); }
+.photo-del {
+  position: absolute; top: 4px; right: 4px;
+  background: rgba(0,0,0,0.55); color: #fff;
+  border: none; border-radius: 50%; width: 22px; height: 22px;
+  font-size: 0.7rem; cursor: pointer; display: flex;
+  align-items: center; justify-content: center; line-height: 1;
+}
+.photo-del:hover { background: var(--rose); }
+.photo-upload-btn {
+  aspect-ratio: 1; border-radius: 10px;
+  border: 2px dashed var(--border); background: var(--bg);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px; cursor: pointer; transition: all 0.18s; color: var(--muted);
+  font-size: 0.68rem;
+}
+.photo-upload-btn:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-l); }
+.photo-upload-btn .pu-icon { font-size: 1.4rem; }
+.photo-input { display: none; }
+
+/* lightbox */
+.lightbox {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.92);
+  z-index: 900; display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.lightbox img { max-width: 100%; max-height: 90vh; border-radius: 8px; object-fit: contain; }
+.lightbox-close {
+  position: absolute; top: 16px; right: 16px;
+  background: rgba(255,255,255,0.15); border: none; color: #fff;
+  width: 36px; height: 36px; border-radius: 50%; font-size: 1.1rem;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+
 /* ── UTIL ────────────────────────────────── */
 .hidden { display: none !important; }
 .empty-msg { font-size: 0.76rem; color: var(--muted); padding: 4px 0; }
@@ -602,7 +648,7 @@ let data = mkData();
 function mkData(){
   const d={days:{},exp:{}};
   for(let i=1;i<=DAYS;i++){
-    d.days['d'+i]={segs:[],hotel:'',hotelDet:'',acts:[]};
+    d.days['d'+i]={segs:[],hotel:'',hotelDet:'',acts:[],photos:[]};
     d.exp['d'+i]=[];
   }
   return d;
@@ -627,6 +673,7 @@ function merge(remote){
         hotel:    rd.hotel||'',
         hotelDet: rd.hotelDet || rd.hotelDetail || '',
         acts:     rd.acts || rd.activities || [],
+        photos:   rd.photos || [],
       };
     }
     if(remote.exp?.[k])       base.exp[k]=remote.exp[k];
@@ -921,6 +968,20 @@ function renderDay(k){
         </div>
       </div>
 
+      <!-- 參考圖片 -->
+      <div class="sec">
+        <div class="sec-hd"><div class="sec-icon">🖼️</div><div class="sec-title">參考圖片・地圖截圖</div></div>
+        <div class="photo-grid" id="photoGrid_${k}">
+          ${renderPhotos(day.photos||[], k)}
+          ${admin?`<label class="photo-upload-btn" for="photoInput_${k}">
+            <span class="pu-icon">＋</span>
+            <span>上傳圖片</span>
+          </label>
+          <input type="file" class="photo-input" id="photoInput_${k}"
+            accept="image/*" multiple onchange="handlePhotos('${k}',this)">`:''}
+        </div>
+      </div>
+
       <!-- 花費 -->
       <div class="exp-strip">
         ${chips||`<span style="font-size:0.7rem;color:#c4923a">尚無花費記錄</span>`}
@@ -934,7 +995,7 @@ let editingSeg = null; // 'k_si' format
 
 function renderSeg(s,si,k){
   const t = TRANSPORTS.find(x=>x.id===s.type)||TRANSPORTS[2];
-  const eid = k+'_'+si;
+  const eid = k+'_'+String(si);
   const isEditing = editingSeg === eid;
 
   if(admin && isEditing){
@@ -998,9 +1059,8 @@ function renderSeg(s,si,k){
 }
 
 function startSegEdit(k,si){
-  editingSeg = k+'_'+si;
+  editingSeg = k+'_'+String(si);
   renderDay(k);
-  // scroll to edited seg
   setTimeout(()=>{
     const el = document.querySelector('.seg-editing');
     if(el) el.scrollIntoView({block:'nearest',behavior:'smooth'});
@@ -1106,6 +1166,70 @@ function saveHotel(){
   data.days[hotelKey].hotel=document.getElementById('hotelName').value.trim();
   data.days[hotelKey].hotelDet=document.getElementById('hotelDetail').value.trim();
   saveData(); closeHotelModal(); renderDay(hotelKey);
+}
+
+// ══════════════════════════════════════════
+// PHOTOS
+// ══════════════════════════════════════════
+function renderPhotos(photos, k){
+  return photos.map((p,pi)=>
+    `<div class="photo-item" onclick="openLightbox('${k}',${pi})">
+       <img src="${p}" loading="lazy">
+       ${admin?`<button class="photo-del" onclick="event.stopPropagation();delPhoto('${k}',${pi})">✕</button>`:''}
+     </div>`
+  ).join('');
+}
+
+function handlePhotos(k, input){
+  const files = Array.from(input.files);
+  if(!files.length) return;
+  showToast('上傳中…');
+  let done=0;
+  files.forEach(file=>{
+    // Resize before storing to keep Firebase size manageable
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        const MAX = 800;
+        let w=img.width, h=img.height;
+        if(w>MAX||h>MAX){
+          if(w>h){h=Math.round(h*MAX/w);w=MAX;}
+          else{w=Math.round(w*MAX/h);h=MAX;}
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width=w; canvas.height=h;
+        canvas.getContext('2d').drawImage(img,0,0,w,h);
+        const b64 = canvas.toDataURL('image/jpeg',0.75);
+        if(!data.days[k].photos) data.days[k].photos=[];
+        data.days[k].photos.push(b64);
+        done++;
+        if(done===files.length){
+          saveData();
+          renderDay(k);
+          showToast(`✅ 已上傳 ${files.length} 張圖片`);
+        }
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+  input.value=''; // reset
+}
+
+function delPhoto(k,pi){
+  data.days[k].photos.splice(pi,1);
+  saveData(); renderDay(k);
+}
+
+function openLightbox(k,pi){
+  const src = data.days[k].photos[pi];
+  const lb = document.createElement('div');
+  lb.className='lightbox';
+  lb.innerHTML=`<button class="lightbox-close" onclick="this.parentElement.remove()">✕</button>
+    <img src="${src}">`;
+  lb.onclick=e=>{ if(e.target===lb) lb.remove(); };
+  document.body.appendChild(lb);
 }
 
 // ══════════════════════════════════════════
