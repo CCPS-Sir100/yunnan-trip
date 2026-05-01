@@ -515,16 +515,35 @@ body {
 
 /* lightbox */
 .lightbox {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.92);
+  position: fixed; inset: 0; background: rgba(0,0,0,0.95);
   z-index: 900; display: flex; align-items: center; justify-content: center;
-  padding: 20px;
+  touch-action: none;
 }
-.lightbox img { max-width: 100%; max-height: 90vh; border-radius: 8px; object-fit: contain; }
+.lb-img-wrap {
+  width: 100vw; height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; touch-action: none; cursor: grab;
+}
+.lb-img-wrap:active { cursor: grabbing; }
+.lightbox img {
+  max-width: 100%; max-height: 100vh; object-fit: contain;
+  user-select: none; -webkit-user-select: none;
+  transform-origin: center center;
+  will-change: transform;
+  border-radius: 0;
+}
 .lightbox-close {
-  position: absolute; top: 16px; right: 16px;
-  background: rgba(255,255,255,0.15); border: none; color: #fff;
-  width: 36px; height: 36px; border-radius: 50%; font-size: 1.1rem;
+  position: fixed; top: 16px; right: 16px; z-index: 901;
+  background: rgba(255,255,255,0.18); border: none; color: #fff;
+  width: 42px; height: 42px; border-radius: 50%; font-size: 1.2rem;
   cursor: pointer; display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(6px);
+}
+.lb-hint {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  font-size: 0.75rem; color: rgba(255,255,255,0.4);
+  font-family: 'DM Mono', monospace; white-space: nowrap;
+  pointer-events: none; letter-spacing: 0.04em;
 }
 
 /* ── SHEETS LINK ─────────────────────────── */
@@ -1249,10 +1268,102 @@ function openLightbox(k,pi){
   const src = data.days[k].photos[pi];
   const lb = document.createElement('div');
   lb.className='lightbox';
-  lb.innerHTML=`<button class="lightbox-close" onclick="this.parentElement.remove()">✕</button>
-    <img src="${src}">`;
+  lb.innerHTML=`
+    <button class="lightbox-close" onclick="this.parentElement.remove()">✕</button>
+    <div class="lb-img-wrap" id="lbWrap">
+      <img src="${src}" id="lbImg" draggable="false">
+    </div>
+    <div class="lb-hint">雙擊放大 · 雙指縮放 · 點外側關閉</div>`;
   lb.onclick=e=>{ if(e.target===lb) lb.remove(); };
   document.body.appendChild(lb);
+
+  // ── Pinch & pan state ──
+  const wrap = document.getElementById('lbWrap');
+  const img  = document.getElementById('lbImg');
+  let scale=1, minScale=1, maxScale=5;
+  let tx=0, ty=0;
+  let lastDist=0, lastMidX=0, lastMidY=0;
+  let isDragging=false, dragStartX=0, dragStartY=0, dragTx=0, dragTy=0;
+
+  function applyTransform(animate=false){
+    img.style.transition = animate ? 'transform 0.25s ease' : 'none';
+    img.style.transform = `translate(${tx}px,${ty}px) scale(${scale})`;
+  }
+
+  function clampTranslate(){
+    // Allow panning only when zoomed in
+    if(scale <= 1){ tx=0; ty=0; return; }
+    const iw = img.naturalWidth  || img.offsetWidth;
+    const ih = img.naturalHeight || img.offsetHeight;
+    const dw = wrap.offsetWidth;
+    const dh = wrap.offsetHeight;
+    const maxTx = Math.max(0, (iw * scale - dw) / 2);
+    const maxTy = Math.max(0, (ih * scale - dh) / 2);
+    tx = Math.max(-maxTx, Math.min(maxTx, tx));
+    ty = Math.max(-maxTy, Math.min(maxTy, ty));
+  }
+
+  // ── Touch events ──
+  wrap.addEventListener('touchstart', e=>{
+    if(e.touches.length===2){
+      e.preventDefault();
+      const t0=e.touches[0], t1=e.touches[1];
+      lastDist = Math.hypot(t1.clientX-t0.clientX, t1.clientY-t0.clientY);
+      lastMidX = (t0.clientX+t1.clientX)/2;
+      lastMidY = (t0.clientY+t1.clientY)/2;
+    } else if(e.touches.length===1){
+      isDragging=true;
+      dragStartX=e.touches[0].clientX;
+      dragStartY=e.touches[0].clientY;
+      dragTx=tx; dragTy=ty;
+    }
+  },{passive:false});
+
+  wrap.addEventListener('touchmove', e=>{
+    e.preventDefault();
+    if(e.touches.length===2){
+      const t0=e.touches[0], t1=e.touches[1];
+      const dist = Math.hypot(t1.clientX-t0.clientX, t1.clientY-t0.clientY);
+      const ratio = dist / lastDist;
+      scale = Math.max(minScale, Math.min(maxScale, scale * ratio));
+      lastDist = dist;
+      clampTranslate();
+      applyTransform();
+    } else if(e.touches.length===1 && isDragging && scale>1){
+      tx = dragTx + (e.touches[0].clientX - dragStartX);
+      ty = dragTy + (e.touches[0].clientY - dragStartY);
+      clampTranslate();
+      applyTransform();
+    }
+  },{passive:false});
+
+  wrap.addEventListener('touchend', e=>{
+    isDragging=false;
+    if(scale < 1.05){ scale=1; tx=0; ty=0; applyTransform(true); }
+  });
+
+  // ── Double-tap to zoom ──
+  let lastTap=0;
+  wrap.addEventListener('touchend', e=>{
+    const now=Date.now();
+    if(now-lastTap < 300){
+      e.preventDefault();
+      if(scale > 1){ scale=1; tx=0; ty=0; }
+      else { scale=2.5; }
+      clampTranslate();
+      applyTransform(true);
+    }
+    lastTap=now;
+  });
+
+  // ── Mouse wheel zoom (desktop) ──
+  wrap.addEventListener('wheel', e=>{
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? 0.85 : 1.15;
+    scale = Math.max(minScale, Math.min(maxScale, scale * delta));
+    clampTranslate();
+    applyTransform();
+  },{passive:false});
 }
 
 // ══════════════════════════════════════════
