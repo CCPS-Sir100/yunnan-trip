@@ -595,6 +595,7 @@ body {
     </div>
     <div class="hdr-acts">
       <button class="chip chip-amber hidden" id="uploadBtn" onclick="forceUpload()">⬆ 上傳</button>
+      <button class="chip hidden" id="clearPhotosBtn" style="background:var(--rose);color:#fff" onclick="clearAllPhotos()" title="清除所有圖片">🗑 圖片</button>
       <button class="chip chip-ghost" id="loginBtn" onclick="openLogin()">管理員</button>
     </div>
   </div>
@@ -650,8 +651,10 @@ body {
 // ══════════════════════════════════════════
 // CONFIG
 // ══════════════════════════════════════════
-const ADMIN_PW     = 'CCcc7379403!';
-const FIREBASE_URL = 'https://yunnan2026-ce09b-default-rtdb.asia-southeast1.firebasedatabase.app';
+const ADMIN_PW      = 'CCcc7379403!';
+const FIREBASE_URL  = 'https://yunnan2026-ce09b-default-rtdb.asia-southeast1.firebasedatabase.app';
+// Firebase Storage — 存圖片用，格式：https://firebasestorage.googleapis.com/v0/b/[PROJECT_ID].appspot.com
+const STORAGE_URL   = 'https://firebasestorage.googleapis.com/v0/b/yunnan2026-ce09b.appspot.com';
 
 // ══════════════════════════════════════════
 // CONSTANTS
@@ -785,7 +788,10 @@ async function cloudLoad(){
   setSyncUI('loading');
   try{
     const url = FIREBASE_URL+'/tripData.json?t='+Date.now();
-    const r = await fetch(url);
+    const ctrl = new AbortController();
+    const timer = setTimeout(()=>ctrl.abort(), 15000);
+    const r = await fetch(url, {signal: ctrl.signal});
+    clearTimeout(timer);
     if(!r.ok) throw new Error('HTTP '+r.status);
     const j = await r.json();
     if(j && j.days){
@@ -850,6 +856,7 @@ function doLogin(){
     document.getElementById('loginBtn').textContent='登出';
     document.getElementById('loginBtn').className='chip chip-admin';
     document.getElementById('uploadBtn').classList.remove('hidden');
+    document.getElementById('clearPhotosBtn').classList.remove('hidden');
     renderCurrent(); showToast('歡迎，管理員 ✅');
   } else {
     document.getElementById('loginErr').classList.remove('hidden');
@@ -860,6 +867,7 @@ function doLogout(){
   document.getElementById('loginBtn').textContent='管理員';
   document.getElementById('loginBtn').className='chip chip-ghost';
   document.getElementById('uploadBtn').classList.add('hidden');
+  document.getElementById('clearPhotosBtn').classList.add('hidden');
   renderCurrent(); showToast('已登出');
 }
 
@@ -1214,346 +1222,243 @@ function saveHotel(){
 // PHOTOS
 // ══════════════════════════════════════════
 function renderPhotos(photos, k){
-  return photos.map((p,pi)=>
-    `<div class="photo-item" onclick="openLightbox('${k}',${pi})">
-       <img src="${p}" loading="lazy">
-       ${admin?`<button class="photo-del" onclick="event.stopPropagation();delPhoto('${k}',${pi})">✕</button>`:''}
-     </div>`
-  ).join('');
+  return photos.map((p,pi)=>{
+    // 相容舊版 base64 和新版 URL 物件
+    const src = typeof p === 'string' ? p : p.url;
+    return `<div class="photo-item" onclick="openLightbox('${k}',${pi})">
+      <img src="${src}" loading="lazy">
+      ${admin?`<button class="photo-del" onclick="event.stopPropagation();delPhoto('${k}',${pi})">✕</button>`:''}
+    </div>`;
+  }).join('');
 }
 
-function handlePhotos(k, input){
-  const files = Array.from(input.files);
-  if(!files.length) return;
-  showToast('上傳中…');
-  let done=0;
-  files.forEach(file=>{
-    // Resize before storing to keep Firebase size manageable
+// ── 壓縮圖片為 Blob ──────────────────────
+function compressImage(file, maxPx=1200, quality=0.82){
+  return new Promise((resolve)=>{
     const reader = new FileReader();
     reader.onload = e => {
       const img = new Image();
       img.onload = () => {
-        const MAX = 800;
         let w=img.width, h=img.height;
-        if(w>MAX||h>MAX){
-          if(w>h){h=Math.round(h*MAX/w);w=MAX;}
-          else{w=Math.round(w*MAX/h);h=MAX;}
+        if(w>maxPx||h>maxPx){
+          if(w>h){h=Math.round(h*maxPx/w);w=maxPx;}
+          else{w=Math.round(w*maxPx/h);h=maxPx;}
         }
-        const canvas = document.createElement('canvas');
-        canvas.width=w; canvas.height=h;
-        canvas.getContext('2d').drawImage(img,0,0,w,h);
-        const b64 = canvas.toDataURL('image/jpeg',0.75);
-        if(!data.days[k].photos) data.days[k].photos=[];
-        data.days[k].photos.push(b64);
-        done++;
-        if(done===files.length){
-          saveData();
-          renderDay(k);
-          showToast(`✅ 已上傳 ${files.length} 張圖片`);
-        }
+        const cv = document.createElement('canvas');
+        cv.width=w; cv.height=h;
+        cv.getContext('2d').drawImage(img,0,0,w,h);
+        cv.toBlob(blob=>resolve(blob), 'image/jpeg', quality);
       };
       img.src = e.target.result;
     };
     reader.readAsDataURL(file);
   });
-  input.value=''; // reset
 }
 
-function delPhoto(k,pi){
+// ── 上傳單張圖片到 Firebase Storage ───────
+async function uploadToStorage(blob, path){
+  const url = `${STORAGE_URL}/o/${encodeURIComponent(path)}?uploadType=media&alt=media&token=public`;
+  const r = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'image/jpeg' },
+    body: blob
+  });
+  if(!r.ok){
+    // Try multipart upload as fallback
+    const uploadUrl = `${STORAGE_URL}/o?name=${encodeURIComponent(path)}`;
+    const r2 = await fetch(uploadUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'image/jpeg' },
+      body: blob
+    });
+    if(!r2.ok) throw new Error('Storage upload failed: HTTP '+r2.status);
+    const j2 = await r2.json();
+    return `${STORAGE_URL}/o/${encodeURIComponent(path)}?alt=media&token=${j2.downloadTokens}`;
+  }
+  const j = await r.json();
+  // Public download URL
+  return `${STORAGE_URL}/o/${encodeURIComponent(path)}?alt=media&token=${j.downloadTokens||''}`;
+}
+
+// ── 主要上傳函式 ───────────────────────────
+async function handlePhotos(k, input){
+  const files = Array.from(input.files);
+  if(!files.length) return;
+
+  showToast(`壓縮並上傳 ${files.length} 張…`);
+  let done=0, failed=0;
+
+  for(const file of files){
+    try{
+      // 1. 壓縮
+      const blob = await compressImage(file, 1200, 0.82);
+      const kb = Math.round(blob.size/1024);
+
+      // 2. 上傳到 Firebase Storage
+      const timestamp = Date.now();
+      const path = `photos/${k}/${timestamp}_${Math.random().toString(36).slice(2)}.jpg`;
+      const downloadUrl = await uploadToStorage(blob, path);
+
+      // 3. 只在 Realtime DB 存 URL（幾個字元）
+      if(!data.days[k].photos) data.days[k].photos=[];
+      data.days[k].photos.push({url: downloadUrl, path});
+      done++;
+      showToast(`上傳 ${done}/${files.length}…`);
+    }catch(e){
+      console.error('upload error:', e);
+      failed++;
+    }
+  }
+
+  if(done>0){
+    await saveData();
+    renderDay(k);
+    showToast(`✅ 上傳完成 ${done} 張${failed>0?' ('+failed+' 張失敗)':''}`);
+  } else {
+    showToast('⚠️ 上傳失敗，請確認 Firebase Storage 已啟用');
+  }
+  input.value='';
+}
+
+async function delPhoto(k,pi){
+  const photo = data.days[k].photos[pi];
+  if(photo && typeof photo === 'object' && photo.path){
+    try{
+      await fetch(`${STORAGE_URL}/o/${encodeURIComponent(photo.path)}`,{method:'DELETE'});
+    }catch(e){}
+  }
   data.days[k].photos.splice(pi,1);
   saveData(); renderDay(k);
 }
 
 function openLightbox(k,pi){
-  const src = data.days[k].photos[pi];
+  const photo = data.days[k].photos[pi];
+  const src = typeof photo === 'string' ? photo : photo.url;
+
   const lb = document.createElement('div');
-  lb.className='lightbox';
-  lb.innerHTML=`
+  lb.className = 'lightbox';
+  lb.innerHTML = `
     <button class="lightbox-close" onclick="this.parentElement.remove()">✕</button>
     <div class="lb-img-wrap" id="lbWrap">
       <img src="${src}" id="lbImg" draggable="false">
     </div>
-    <div class="lb-hint">雙擊放大 · 雙指縮放 · 點外側關閉</div>`;
-  lb.onclick=e=>{ if(e.target===lb) lb.remove(); };
+    <div class="lb-hint">雙擊放大 · 雙指縮放 · 拖曳移動</div>`;
   document.body.appendChild(lb);
 
-  // ── Pinch & pan state ──
+  lb.onclick = e => { if(e.target === lb) lb.remove(); };
+
   const wrap = document.getElementById('lbWrap');
   const img  = document.getElementById('lbImg');
-  let scale=1, minScale=1, maxScale=5;
-  let tx=0, ty=0;
-  let lastDist=0, lastMidX=0, lastMidY=0;
-  let isDragging=false, dragStartX=0, dragStartY=0, dragTx=0, dragTy=0;
 
-  function applyTransform(animate=false){
-    img.style.transition = animate ? 'transform 0.25s ease' : 'none';
-    img.style.transform = `translate(${tx}px,${ty}px) scale(${scale})`;
+  let scale = 1;
+  const MIN = 1, MAX = 6;
+  let tx = 0, ty = 0;          // current translation
+  let ptx = 0, pty = 0;        // translation at gesture start
+
+  // pinch state
+  let pinching = false;
+  let initDist = 0, initScale = 1;
+  let initMidX = 0, initMidY = 0;
+  let initTx   = 0, initTy   = 0;
+
+  // drag state
+  let dragging  = false;
+  let dragSX    = 0, dragSY = 0;
+
+  // double-tap
+  let lastTap = 0;
+
+  function imgRect(){ return img.getBoundingClientRect(); }
+  function wrapRect(){ return wrap.getBoundingClientRect(); }
+
+  function clamp(){
+    if(scale <= 1){ tx = 0; ty = 0; return; }
+    const ir = imgRect();
+    const wr = wrapRect();
+    // How much the scaled image overflows each side
+    const overX = Math.max(0, ir.width  - wr.width)  / 2;
+    const overY = Math.max(0, ir.height - wr.height) / 2;
+    tx = Math.max(-overX, Math.min(overX, tx));
+    ty = Math.max(-overY, Math.min(overY, ty));
   }
 
-  function clampTranslate(){
-    // Allow panning only when zoomed in
-    if(scale <= 1){ tx=0; ty=0; return; }
-    const iw = img.naturalWidth  || img.offsetWidth;
-    const ih = img.naturalHeight || img.offsetHeight;
-    const dw = wrap.offsetWidth;
-    const dh = wrap.offsetHeight;
-    const maxTx = Math.max(0, (iw * scale - dw) / 2);
-    const maxTy = Math.max(0, (ih * scale - dh) / 2);
-    tx = Math.max(-maxTx, Math.min(maxTx, tx));
-    ty = Math.max(-maxTy, Math.min(maxTy, ty));
+  function apply(animated = false){
+    img.style.transition = animated ? 'transform 0.22s ease' : 'none';
+    img.style.transform  = `translate(${tx}px,${ty}px) scale(${scale})`;
   }
 
-  // ── Touch events ──
-  wrap.addEventListener('touchstart', e=>{
-    if(e.touches.length===2){
-      e.preventDefault();
-      const t0=e.touches[0], t1=e.touches[1];
-      lastDist = Math.hypot(t1.clientX-t0.clientX, t1.clientY-t0.clientY);
-      lastMidX = (t0.clientX+t1.clientX)/2;
-      lastMidY = (t0.clientY+t1.clientY)/2;
-    } else if(e.touches.length===1){
-      isDragging=true;
-      dragStartX=e.touches[0].clientX;
-      dragStartY=e.touches[0].clientY;
-      dragTx=tx; dragTy=ty;
-    }
-  },{passive:false});
-
-  wrap.addEventListener('touchmove', e=>{
+  // ── TOUCH ────────────────────────────────
+  wrap.addEventListener('touchstart', e => {
     e.preventDefault();
-    if(e.touches.length===2){
-      const t0=e.touches[0], t1=e.touches[1];
-      const dist = Math.hypot(t1.clientX-t0.clientX, t1.clientY-t0.clientY);
-      const ratio = dist / lastDist;
-      scale = Math.max(minScale, Math.min(maxScale, scale * ratio));
-      lastDist = dist;
-      clampTranslate();
-      applyTransform();
-    } else if(e.touches.length===1 && isDragging && scale>1){
-      tx = dragTx + (e.touches[0].clientX - dragStartX);
-      ty = dragTy + (e.touches[0].clientY - dragStartY);
-      clampTranslate();
-      applyTransform();
-    }
-  },{passive:false});
 
-  wrap.addEventListener('touchend', e=>{
-    isDragging=false;
-    if(scale < 1.05){ scale=1; tx=0; ty=0; applyTransform(true); }
+    if(e.touches.length === 2){
+      // Begin pinch
+      pinching  = true;
+      dragging  = false;
+      const t0  = e.touches[0], t1 = e.touches[1];
+      initDist  = Math.hypot(t1.clientX - t0.clientX, t1.clientY - t0.clientY);
+      initScale = scale;
+      initMidX  = (t0.clientX + t1.clientX) / 2;
+      initMidY  = (t0.clientY + t1.clientY) / 2;
+      initTx    = tx; initTy = ty;
+
+    } else if(e.touches.length === 1){
+      pinching  = false;
+      dragging  = true;
+      dragSX    = e.touches[0].clientX - tx;
+      dragSY    = e.touches[0].clientY - ty;
+
+      // Double-tap detection
+      const now = Date.now();
+      if(now - lastTap < 300){
+        // toggle zoom
+        if(scale > 1){ scale = 1; tx = 0; ty = 0; }
+        else          { scale = 2.5; }
+        clamp(); apply(true);
+        dragging = false;
+      }
+      lastTap = now;
+    }
+  }, { passive: false });
+
+  wrap.addEventListener('touchmove', e => {
+    e.preventDefault();
+
+    if(pinching && e.touches.length === 2){
+      const t0   = e.touches[0], t1 = e.touches[1];
+      const dist = Math.hypot(t1.clientX - t0.clientX, t1.clientY - t0.clientY);
+      scale = Math.max(MIN, Math.min(MAX, initScale * (dist / initDist)));
+
+      // Pan to follow pinch midpoint
+      const midX = (t0.clientX + t1.clientX) / 2;
+      const midY = (t0.clientY + t1.clientY) / 2;
+      tx = initTx + (midX - initMidX);
+      ty = initTy + (midY - initMidY);
+
+      clamp(); apply();
+
+    } else if(dragging && e.touches.length === 1 && scale > 1){
+      tx = e.touches[0].clientX - dragSX;
+      ty = e.touches[0].clientY - dragSY;
+      clamp(); apply();
+    }
+  }, { passive: false });
+
+  wrap.addEventListener('touchend', e => {
+    if(e.touches.length < 2) pinching = false;
+    if(e.touches.length === 0){
+      dragging = false;
+      if(scale < 1.05){ scale = 1; tx = 0; ty = 0; apply(true); }
+    }
   });
 
-  // ── Double-tap to zoom ──
-  let lastTap=0;
-  wrap.addEventListener('touchend', e=>{
-    const now=Date.now();
-    if(now-lastTap < 300){
-      e.preventDefault();
-      if(scale > 1){ scale=1; tx=0; ty=0; }
-      else { scale=2.5; }
-      clampTranslate();
-      applyTransform(true);
-    }
-    lastTap=now;
-  });
-
-  // ── Mouse wheel zoom (desktop) ──
-  wrap.addEventListener('wheel', e=>{
+  // ── MOUSE WHEEL (desktop) ────────────────
+  wrap.addEventListener('wheel', e => {
     e.preventDefault();
-    const delta = e.deltaY > 0 ? 0.85 : 1.15;
-    scale = Math.max(minScale, Math.min(maxScale, scale * delta));
-    clampTranslate();
-    applyTransform();
-  },{passive:false});
+    const factor = e.deltaY < 0 ? 1.15 : 0.87;
+    scale = Math.max(MIN, Math.min(MAX, scale * factor));
+    clamp(); apply();
+  }, { passive: false });
 }
 
-// ══════════════════════════════════════════
-// EXPENSE
-// ══════════════════════════════════════════
-function openExp(k){
-  const m=document.getElementById('expModal');
-  m.classList.remove('hidden');
-  m.onclick=e=>{if(e.target===m)closeExp();};
-  renderExpSheet(k);
-}
-function closeExp(){ document.getElementById('expModal').classList.add('hidden'); renderCurrent(); }
 
-function renderExpSheet(k){
-  const i=parseInt(k.slice(1))-1;
-  const exps=data.exp[k]||[];
-  const tot=exps.reduce((s,e)=>s+(e.amt||0),0);
-  const rows=exps.map((e,ei)=>{
-    const c=EXP_CATS.find(x=>x.id===e.cat)||EXP_CATS[4];
-    return `<div class="exp-row">
-      <div class="exp-dot ${c.cls}"></div>
-      <div><div class="exp-desc">${esc(e.desc||'')}</div><div class="exp-cat-tag">${c.label}</div></div>
-      <div class="exp-amt">¥${(e.amt||0).toLocaleString()}</div>
-      ${admin?`<div style="display:flex;gap:3px">
-        <button class="btn-edit" onclick="editExpPrompt('${k}',${ei})">✏️</button>
-        <button class="btn-del"  onclick="delExp('${k}',${ei})">✕</button>
-      </div>`:''}
-    </div>`;
-  }).join('');
-  const addForm=admin?`<div class="add-exp-form">
-    <h4>＋ 新增花費</h4>
-    <div class="f-row">
-      <div class="f-field"><div class="f-lbl">類別</div>
-        <select class="f-sel" id="ne_cat">${EXP_CATS.map(c=>`<option value="${c.id}">${c.icon} ${c.label}</option>`).join('')}</select>
-      </div>
-      <div class="f-field"><div class="f-lbl">金額 (¥)</div>
-        <input type="number" class="f-inp" id="ne_amt" placeholder="0">
-      </div>
-    </div>
-    <div class="f-row full">
-      <div class="f-field"><div class="f-lbl">說明</div>
-        <input class="f-inp" id="ne_desc" placeholder="例：午餐 · 過橋米線">
-      </div>
-    </div>
-    <button class="btn-confirm-exp" onclick="addExp('${k}')">新增花費</button>
-  </div>`:'';
-  document.getElementById('expSheet').innerHTML=`
-    <h3>💰 D${i+1} · ${fml(gd(i))} 花費</h3>
-    ${tot>0?`<div style="font-family:'DM Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--amber);margin-bottom:12px">¥ ${tot.toLocaleString()}</div>`:''}
-    ${rows||'<div class="empty-msg" style="padding:10px 0">尚無花費記錄</div>'}
-    ${addForm}
-    <button onclick="closeExp()" style="width:100%;margin-top:14px;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:10px;font-family:'Noto Sans TC',sans-serif;font-size:0.82rem;cursor:pointer;color:var(--slate2)">關閉</button>`;
-}
-function addExp(k){
-  const cat=document.getElementById('ne_cat').value;
-  const amt=parseFloat(document.getElementById('ne_amt').value)||0;
-  const desc=document.getElementById('ne_desc').value.trim();
-  if(!amt&&!desc){showToast('請填寫金額或說明');return;}
-  if(!data.exp[k]) data.exp[k]=[];
-  data.exp[k].push({cat,amt,desc});
-  saveData(); renderExpSheet(k);
-}
-function delExp(k,i){ data.exp[k].splice(i,1); saveData(); renderExpSheet(k); }
-
-function editExpPrompt(k,i){
-  const e = data.exp[k][i];
-  const cats = ['transport','hotel','food','ticket','other'];
-  const catLabels = {'transport':'✈️ 交通','hotel':'🏨 住房','food':'🍜 飲食','ticket':'🎟️ 門票','other':'💰 其他'};
-  const desc = prompt('說明：', e.desc||'');
-  if(desc===null) return;
-  const amtStr = prompt('金額（¥）：', e.amt||0);
-  if(amtStr===null) return;
-  const catStr = prompt('類別（transport/hotel/food/ticket/other）：', e.cat||'other');
-  if(catStr===null) return;
-  e.desc = desc;
-  e.amt  = parseFloat(amtStr)||0;
-  e.cat  = cats.includes(catStr) ? catStr : e.cat;
-  saveData(); renderExpSheet(k);
-}
-
-// ══════════════════════════════════════════
-// EXPENSES TAB
-// ══════════════════════════════════════════
-function renderExpenses(){
-  const all=Object.entries(data.exp).flatMap(([k,a])=>a.map(e=>({...e,k})));
-  const tot=all.reduce((s,e)=>s+(e.amt||0),0);
-  const cats=EXP_CATS.map(c=>{
-    const s=all.filter(e=>e.cat===c.id).reduce((x,e)=>x+(e.amt||0),0);
-    return `<div class="exp-cat-box">
-      <div class="exp-cat-ico">${c.icon}</div>
-      <div class="exp-cat-lbl">${c.label}</div>
-      <div class="exp-cat-amt">${s>0?'¥'+s.toLocaleString():'—'}</div>
-    </div>`;
-  }).join('');
-
-  let cards='';
-  for(let i=0;i<DAYS;i++){
-    const k='d'+(i+1); const exps=data.exp[k]||[];
-    if(!exps.length) continue;
-    const dt=exps.reduce((s,e)=>s+(e.amt||0),0); const d=gd(i);
-    const rows=exps.map((e,ei)=>{
-      const c=EXP_CATS.find(x=>x.id===e.cat)||EXP_CATS[4];
-      return `<div class="exp-row">
-        <div class="exp-dot ${c.cls}"></div>
-        <div><div class="exp-desc">${esc(e.desc||'')}</div><div class="exp-cat-tag">${c.label}</div></div>
-        <div class="exp-amt">¥${(e.amt||0).toLocaleString()}</div>
-        ${admin?`<button class="btn-del" onclick="delExpR('${k}',${ei})">✕</button>`:''}
-      </div>`;
-    }).join('');
-    cards+=`<div class="exp-day-card">
-      <div class="exp-day-hd">
-        <div class="exp-day-title">D${i+1} · ${fm(d)} 周${WD[d.getDay()]}</div>
-        <div class="exp-day-tot">¥${dt.toLocaleString()}</div>
-      </div>
-      <div class="exp-entries">${rows}</div>
-    </div>`;
-  }
-
-  document.getElementById('main').innerHTML=`
-    <div class="exp-summary">
-      <div class="exp-total-lbl">TOTAL EXPENSES</div>
-      <div class="exp-total-num">¥${tot>0?tot.toLocaleString():'0'} <span>人民幣</span></div>
-      <div class="exp-cats">${cats}</div>
-    </div>
-
-    <a href="https://docs.google.com/spreadsheets/d/11sY6sLGVYCe4v9_fjvtPb71iTGWEmhaVceoEwpnNd-4/edit?usp=sharing"
-       target="_blank" class="sheets-link-card">
-      <div class="sheets-link-icon">
-        <svg width="28" height="28" viewBox="0 0 48 48" fill="none">
-          <rect width="48" height="48" rx="8" fill="#1e8e3e"/>
-          <rect x="11" y="8" width="26" height="32" rx="2" fill="#fff"/>
-          <rect x="15" y="14" width="18" height="2.5" rx="1" fill="#1e8e3e"/>
-          <rect x="15" y="20" width="18" height="2.5" rx="1" fill="#1e8e3e"/>
-          <rect x="15" y="26" width="12" height="2.5" rx="1" fill="#1e8e3e"/>
-          <rect x="29" y="30" width="8" height="8" rx="4" fill="#fbbc04"/>
-          <path d="M31 34h4M33 32v4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <div class="sheets-link-body">
-        <div class="sheets-link-title">💳 代墊款試算表</div>
-        <div class="sheets-link-sub">點此開啟共用 Google 試算表</div>
-      </div>
-      <div class="sheets-link-arrow">→</div>
-    </a>
-
-    <div class="exp-day-list">
-      ${cards||'<div style="text-align:center;padding:28px;color:var(--muted);font-size:0.8rem">尚無任何花費記錄</div>'}
-    </div>`;
-}
-function delExpR(k,i){ data.exp[k].splice(i,1); saveData(); renderExpenses(); }
-
-// ══════════════════════════════════════════
-// TOAST
-// ══════════════════════════════════════════
-let toastT;
-function showToast(m){
-  const t=document.getElementById('toast');
-  t.textContent=m; t.classList.add('show');
-  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2500);
-}
-
-// ══════════════════════════════════════════
-// UTILS
-// ══════════════════════════════════════════
-function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
-// ══════════════════════════════════════════
-// INIT
-// ══════════════════════════════════════════
-localLoad();
-buildTabs();
-renderCurrent();
-cloudLoad(); // 非同步載入雲端，完成後自動更新
-
-// 全域除錯函式，可在 Console 執行
-window.testFirebase = async function(){
-  console.log('Testing Firebase:', FIREBASE_URL);
-  try{
-    const r = await fetch(FIREBASE_URL+'/tripData.json');
-    const t = await r.text();
-    console.log('GET status:', r.status, '| body:', t.slice(0,200));
-  }catch(e){ console.error('GET error:', e); }
-  try{
-    const r2 = await fetch(FIREBASE_URL+'/test.json',{
-      method:'PUT', headers:{'Content-Type':'application/json'}, body:'"ok"'
-    });
-    const t2 = await r2.text();
-    console.log('PUT status:', r2.status, '| body:', t2);
-  }catch(e){ console.error('PUT error:', e); }
-};
-</script>
-</body>
-</html>
