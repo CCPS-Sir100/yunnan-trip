@@ -516,6 +516,28 @@ body {
 .link-edit-row .f-inp { width: 100%; }
 
 /* ── PHOTOS ───────────────────────────────── */
+.photo-add-area {
+  margin-top: 10px; display: flex; flex-direction: column; gap: 8px;
+}
+.photo-url-row {
+  display: flex; gap: 6px; align-items: center;
+}
+.photo-url-inp {
+  flex: 1; font-size: 0.8rem !important;
+}
+.btn-add-url {
+  background: var(--blue); color: #fff; border: none;
+  padding: 7px 14px; border-radius: 8px; font-size: 0.8rem;
+  font-family: 'Noto Sans TC', sans-serif; font-weight: 600;
+  cursor: pointer; white-space: nowrap; flex-shrink: 0;
+}
+.btn-add-url:hover { background: var(--blue-d); }
+.photo-url-badge {
+  position: absolute; bottom: 4px; left: 4px;
+  font-size: 0.7rem; background: rgba(0,0,0,0.5);
+  border-radius: 4px; padding: 1px 4px; color: #fff;
+  pointer-events: none;
+}
 .photo-grid {
   display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-top: 4px;
 }
@@ -1065,13 +1087,21 @@ function renderDay(k){
         <div class="sec-hd"><div class="sec-icon">🖼️</div><div class="sec-title">參考圖片・地圖截圖</div></div>
         <div class="photo-grid" id="photoGrid_${k}">
           ${renderPhotos(day.photos||[], k)}
-          ${admin?`<label class="photo-upload-btn" for="photoInput_${k}">
-            <span class="pu-icon">＋</span>
-            <span>上傳圖片</span>
-          </label>
-          <input type="file" class="photo-input" id="photoInput_${k}"
-            accept="image/*" multiple onchange="handlePhotos('${k}',this)">`:''}
         </div>
+        ${admin?`
+          <div class="photo-add-area">
+            <label class="photo-upload-btn" for="photoInput_${k}">
+              <span class="pu-icon">📁</span>
+              <span>從相簿上傳</span>
+            </label>
+            <input type="file" class="photo-input" id="photoInput_${k}"
+              accept="image/*" multiple onchange="handlePhotos('${k}',this)">
+            <div class="photo-url-row">
+              <input class="f-inp photo-url-inp" id="photoUrl_${k}"
+                placeholder="或貼上圖片網址 https://...">
+              <button class="btn-add-url" onclick="addPhotoUrl('${k}')">加入</button>
+            </div>
+          </div>`:''}
       </div>
 
       <!-- 花費 -->
@@ -1369,118 +1399,110 @@ function delLink(k,li){
 // PHOTOS
 // ══════════════════════════════════════════
 function renderPhotos(photos, k){
+  if(!photos || !photos.length) return '<div class="empty-msg" style="grid-column:1/-1">尚無圖片</div>';
   return photos.map((p,pi)=>{
-    // 相容舊版 base64 和新版 URL 物件
-    const src = typeof p === 'string' ? p : p.url;
+    const src = typeof p === 'string' ? p : (p.url||'');
+    const isUrl = p && typeof p==='object' && p.type==='url';
     return `<div class="photo-item" onclick="openLightbox('${k}',${pi})">
-      <img src="${src}" loading="lazy">
+      <img src="${src}" loading="lazy" onerror="this.style.opacity='0.3'">
+      ${isUrl?'<div class="photo-url-badge">🔗</div>':''}
       ${admin?`<button class="photo-del" onclick="event.stopPropagation();delPhoto('${k}',${pi})">✕</button>`:''}
     </div>`;
   }).join('');
 }
 
-// ── 壓縮圖片為 Blob ──────────────────────
-function compressImage(file, maxPx=1200, quality=0.82){
-  return new Promise((resolve)=>{
+// ══════════════════════════════════════════
+// PHOTOS
+// ══════════════════════════════════════════
+
+// ── 從相簿上傳（壓縮後存 base64，限小圖）──
+function handlePhotos(k, input){
+  const files = Array.from(input.files);
+  if(!files.length) return;
+
+  // 警告：base64 會存在 Firebase，建議用貼網址方式
+  if(files.length > 3){
+    showToast('⚠️ 建議一次最多上傳 3 張，或改用貼網址');
+  }
+
+  showToast('壓縮中…');
+  let done = 0;
+
+  files.forEach(file => {
     const reader = new FileReader();
     reader.onload = e => {
       const img = new Image();
       img.onload = () => {
-        let w=img.width, h=img.height;
-        if(w>maxPx||h>maxPx){
-          if(w>h){h=Math.round(h*maxPx/w);w=maxPx;}
-          else{w=Math.round(w*maxPx/h);h=maxPx;}
+        // 壓縮到最大 600px、品質 0.6，約 30-60KB/張
+        const MAX = 600;
+        let w = img.width, h = img.height;
+        if(w > MAX || h > MAX){
+          if(w > h){ h = Math.round(h*MAX/w); w = MAX; }
+          else      { w = Math.round(w*MAX/h); h = MAX; }
         }
         const cv = document.createElement('canvas');
-        cv.width=w; cv.height=h;
-        cv.getContext('2d').drawImage(img,0,0,w,h);
-        cv.toBlob(blob=>resolve(blob), 'image/jpeg', quality);
+        cv.width = w; cv.height = h;
+        cv.getContext('2d').drawImage(img, 0, 0, w, h);
+        const b64 = cv.toDataURL('image/jpeg', 0.6);
+        const kb  = Math.round(b64.length * 0.75 / 1024);
+
+        if(!data.days[k].photos) data.days[k].photos = [];
+        // 存成物件格式，type 標記為 base64
+        data.days[k].photos.push({ type:'base64', url: b64 });
+        done++;
+        if(done === files.length){
+          saveData();
+          renderDay(k);
+          showToast(`✅ 已上傳 ${done} 張（約 ${kb*done}KB）`);
+        }
       };
       img.src = e.target.result;
     };
     reader.readAsDataURL(file);
   });
+  input.value = '';
 }
 
-// ── 上傳單張圖片到 Firebase Storage ───────
-async function uploadToStorage(blob, path){
-  const url = `${STORAGE_URL}/o/${encodeURIComponent(path)}?uploadType=media&alt=media&token=public`;
-  const r = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'image/jpeg' },
-    body: blob
-  });
-  if(!r.ok){
-    // Try multipart upload as fallback
-    const uploadUrl = `${STORAGE_URL}/o?name=${encodeURIComponent(path)}`;
-    const r2 = await fetch(uploadUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'image/jpeg' },
-      body: blob
-    });
-    if(!r2.ok) throw new Error('Storage upload failed: HTTP '+r2.status);
-    const j2 = await r2.json();
-    return `${STORAGE_URL}/o/${encodeURIComponent(path)}?alt=media&token=${j2.downloadTokens}`;
-  }
-  const j = await r.json();
-  // Public download URL
-  return `${STORAGE_URL}/o/${encodeURIComponent(path)}?alt=media&token=${j.downloadTokens||''}`;
-}
+// ── 貼網址加入圖片（推薦方式，不佔 Firebase 空間）──
+function addPhotoUrl(k){
+  const inp = document.getElementById('photoUrl_' + k);
+  if(!inp) return;
+  let url = inp.value.trim();
+  if(!url){ showToast('請輸入圖片網址'); return; }
+  if(!url.startsWith('http')) url = 'https://' + url;
 
-// ── 主要上傳函式 ───────────────────────────
-async function handlePhotos(k, input){
-  const files = Array.from(input.files);
-  if(!files.length) return;
-
-  showToast(`壓縮並上傳 ${files.length} 張…`);
-  let done=0, failed=0;
-
-  for(const file of files){
-    try{
-      // 1. 壓縮
-      const blob = await compressImage(file, 1200, 0.82);
-      const kb = Math.round(blob.size/1024);
-
-      // 2. 上傳到 Firebase Storage
-      const timestamp = Date.now();
-      const path = `photos/${k}/${timestamp}_${Math.random().toString(36).slice(2)}.jpg`;
-      const downloadUrl = await uploadToStorage(blob, path);
-
-      // 3. 只在 Realtime DB 存 URL（幾個字元）
-      if(!data.days[k].photos) data.days[k].photos=[];
-      data.days[k].photos.push({url: downloadUrl, path});
-      done++;
-      showToast(`上傳 ${done}/${files.length}…`);
-    }catch(e){
-      console.error('upload error:', e);
-      failed++;
-    }
-  }
-
-  if(done>0){
-    await saveData();
+  // 驗證是否為圖片網址
+  const testImg = new Image();
+  testImg.onload = () => {
+    if(!data.days[k].photos) data.days[k].photos = [];
+    data.days[k].photos.push({ type:'url', url });
+    inp.value = '';
+    saveData();
     renderDay(k);
-    showToast(`✅ 上傳完成 ${done} 張${failed>0?' ('+failed+' 張失敗)':''}`);
-  } else {
-    showToast('⚠️ 上傳失敗，請確認 Firebase Storage 已啟用');
-  }
-  input.value='';
+    showToast('✅ 已加入圖片');
+  };
+  testImg.onerror = () => {
+    // 即使驗證失敗也加入（有些網址有防盜鏈但還是能顯示）
+    if(!data.days[k].photos) data.days[k].photos = [];
+    data.days[k].photos.push({ type:'url', url });
+    inp.value = '';
+    saveData();
+    renderDay(k);
+    showToast('✅ 已加入連結');
+  };
+  testImg.src = url;
 }
-
-async function delPhoto(k,pi){
-  const photo = data.days[k].photos[pi];
-  if(photo && typeof photo === 'object' && photo.path){
-    try{
-      await fetch(`${STORAGE_URL}/o/${encodeURIComponent(photo.path)}`,{method:'DELETE'});
-    }catch(e){}
-  }
+// ══════════════════════════════════════════
+// LIGHTBOX — pinch/pan/zoom
+// ══════════════════════════════════════════
+function delPhoto(k,pi){
   data.days[k].photos.splice(pi,1);
   saveData(); renderDay(k);
 }
 
 function openLightbox(k,pi){
   const photo = data.days[k].photos[pi];
-  const src = typeof photo === 'string' ? photo : photo.url;
+  const src = typeof photo === 'string' ? photo : (photo.url||'');
 
   const lb = document.createElement('div');
   lb.className = 'lightbox';
@@ -1491,7 +1513,6 @@ function openLightbox(k,pi){
     </div>
     <div class="lb-hint">雙擊放大 · 雙指縮放 · 拖曳移動</div>`;
   document.body.appendChild(lb);
-
   lb.onclick = e => { if(e.target === lb) lb.remove(); };
 
   const wrap = document.getElementById('lbWrap');
@@ -1499,70 +1520,51 @@ function openLightbox(k,pi){
 
   let scale = 1;
   const MIN = 1, MAX = 6;
-  let tx = 0, ty = 0;          // current translation
-  let ptx = 0, pty = 0;        // translation at gesture start
+  let tx = 0, ty = 0;
 
-  // pinch state
   let pinching = false;
   let initDist = 0, initScale = 1;
   let initMidX = 0, initMidY = 0;
-  let initTx   = 0, initTy   = 0;
+  let initTx = 0, initTy = 0;
 
-  // drag state
-  let dragging  = false;
-  let dragSX    = 0, dragSY = 0;
-
-  // double-tap
+  let dragging = false;
+  let dragSX = 0, dragSY = 0;
   let lastTap = 0;
-
-  function imgRect(){ return img.getBoundingClientRect(); }
-  function wrapRect(){ return wrap.getBoundingClientRect(); }
 
   function clamp(){
     if(scale <= 1){ tx = 0; ty = 0; return; }
-    const ir = imgRect();
-    const wr = wrapRect();
-    // How much the scaled image overflows each side
+    const ir = img.getBoundingClientRect();
+    const wr = wrap.getBoundingClientRect();
     const overX = Math.max(0, ir.width  - wr.width)  / 2;
     const overY = Math.max(0, ir.height - wr.height) / 2;
     tx = Math.max(-overX, Math.min(overX, tx));
     ty = Math.max(-overY, Math.min(overY, ty));
   }
 
-  function apply(animated = false){
+  function apply(animated=false){
     img.style.transition = animated ? 'transform 0.22s ease' : 'none';
     img.style.transform  = `translate(${tx}px,${ty}px) scale(${scale})`;
   }
 
-  // ── TOUCH ────────────────────────────────
   wrap.addEventListener('touchstart', e => {
     e.preventDefault();
-
     if(e.touches.length === 2){
-      // Begin pinch
-      pinching  = true;
-      dragging  = false;
-      const t0  = e.touches[0], t1 = e.touches[1];
-      initDist  = Math.hypot(t1.clientX - t0.clientX, t1.clientY - t0.clientY);
+      pinching = true; dragging = false;
+      const t0 = e.touches[0], t1 = e.touches[1];
+      initDist  = Math.hypot(t1.clientX-t0.clientX, t1.clientY-t0.clientY);
       initScale = scale;
-      initMidX  = (t0.clientX + t1.clientX) / 2;
-      initMidY  = (t0.clientY + t1.clientY) / 2;
-      initTx    = tx; initTy = ty;
-
+      initMidX  = (t0.clientX+t1.clientX)/2;
+      initMidY  = (t0.clientY+t1.clientY)/2;
+      initTx = tx; initTy = ty;
     } else if(e.touches.length === 1){
-      pinching  = false;
-      dragging  = true;
-      dragSX    = e.touches[0].clientX - tx;
-      dragSY    = e.touches[0].clientY - ty;
-
-      // Double-tap detection
+      pinching = false; dragging = true;
+      dragSX = e.touches[0].clientX - tx;
+      dragSY = e.touches[0].clientY - ty;
       const now = Date.now();
       if(now - lastTap < 300){
-        // toggle zoom
-        if(scale > 1){ scale = 1; tx = 0; ty = 0; }
-        else          { scale = 2.5; }
-        clamp(); apply(true);
-        dragging = false;
+        if(scale > 1){ scale=1; tx=0; ty=0; }
+        else          { scale=2.5; }
+        clamp(); apply(true); dragging=false;
       }
       lastTap = now;
     }
@@ -1570,20 +1572,15 @@ function openLightbox(k,pi){
 
   wrap.addEventListener('touchmove', e => {
     e.preventDefault();
-
     if(pinching && e.touches.length === 2){
-      const t0   = e.touches[0], t1 = e.touches[1];
-      const dist = Math.hypot(t1.clientX - t0.clientX, t1.clientY - t0.clientY);
-      scale = Math.max(MIN, Math.min(MAX, initScale * (dist / initDist)));
-
-      // Pan to follow pinch midpoint
-      const midX = (t0.clientX + t1.clientX) / 2;
-      const midY = (t0.clientY + t1.clientY) / 2;
-      tx = initTx + (midX - initMidX);
-      ty = initTy + (midY - initMidY);
-
+      const t0 = e.touches[0], t1 = e.touches[1];
+      const dist = Math.hypot(t1.clientX-t0.clientX, t1.clientY-t0.clientY);
+      scale = Math.max(MIN, Math.min(MAX, initScale * (dist/initDist)));
+      const midX = (t0.clientX+t1.clientX)/2;
+      const midY = (t0.clientY+t1.clientY)/2;
+      tx = initTx + (midX-initMidX);
+      ty = initTy + (midY-initMidY);
       clamp(); apply();
-
     } else if(dragging && e.touches.length === 1 && scale > 1){
       tx = e.touches[0].clientX - dragSX;
       ty = e.touches[0].clientY - dragSY;
@@ -1595,26 +1592,40 @@ function openLightbox(k,pi){
     if(e.touches.length < 2) pinching = false;
     if(e.touches.length === 0){
       dragging = false;
-      if(scale < 1.05){ scale = 1; tx = 0; ty = 0; apply(true); }
+      if(scale < 1.05){ scale=1; tx=0; ty=0; apply(true); }
     }
   });
 
-  // ── MOUSE WHEEL (desktop) ────────────────
   wrap.addEventListener('wheel', e => {
     e.preventDefault();
-    const factor = e.deltaY < 0 ? 1.15 : 0.87;
-    scale = Math.max(MIN, Math.min(MAX, scale * factor));
+    const f = e.deltaY < 0 ? 1.15 : 0.87;
+    scale = Math.max(MIN, Math.min(MAX, scale*f));
     clamp(); apply();
   }, { passive: false });
 }
-// ══════════════════════════════════════════
-// INIT — 先顯示本機資料，背景同步雲端
-// ══════════════════════════════════════════
-localLoad();          // 立刻從 localStorage 載入
-buildTabs();
-renderCurrent();      // 馬上顯示畫面，不等雲端
 
-// 背景同步（不阻擋畫面）
+// ══════════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════════
+let toastT;
+function showToast(m){
+  const t = document.getElementById('toast');
+  t.textContent = m; t.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(()=>t.classList.remove('show'), 2500);
+}
+
+// ══════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+localLoad();
+buildTabs();
+renderCurrent();
 cloudLoad();
 </script>
 </body>
