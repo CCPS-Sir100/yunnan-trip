@@ -481,7 +481,41 @@ body {
 }
 .toast.show { transform: translateX(-50%) translateY(0); }
 
-/* ── PHOTOS ──────────────────────────────── */
+/* ── LINKS ───────────────────────────────── */
+.link-item {
+  display: flex; align-items: center; gap: 6px;
+  padding: 4px 0; border-bottom: 1px dotted var(--border);
+}
+.link-item:last-child { border-bottom: none; }
+.link-anchor {
+  flex: 1; display: flex; align-items: center; gap: 10px;
+  text-decoration: none; background: var(--sky);
+  border: 1px solid var(--border); border-radius: 11px;
+  padding: 9px 12px; transition: all 0.18s; min-width: 0;
+}
+.link-anchor:hover { background: var(--blue-l); border-color: var(--blue); }
+.link-icon { font-size: 1.2rem; flex-shrink: 0; }
+.link-body { flex: 1; min-width: 0; }
+.link-title {
+  font-size: 0.88rem; font-weight: 600; color: var(--slate);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.link-domain {
+  font-family: 'DM Mono', monospace; font-size: 0.66rem;
+  color: var(--muted); margin-top: 2px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.link-arrow { font-size: 1rem; color: var(--blue); flex-shrink: 0; }
+.link-btns { display: flex; flex-direction: column; gap: 3px; flex-shrink: 0; }
+.link-editing {
+  flex-direction: column; align-items: stretch;
+  background: var(--blue-l); border: 1.5px dashed var(--blue);
+  border-radius: 11px; padding: 10px; gap: 0;
+}
+.link-edit-row { margin-bottom: 7px; }
+.link-edit-row .f-inp { width: 100%; }
+
+/* ── PHOTOS ───────────────────────────────── */
 .photo-grid {
   display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-top: 4px;
 }
@@ -693,7 +727,7 @@ let data = mkData();
 function mkData(){
   const d={days:{},exp:{}};
   for(let i=1;i<=DAYS;i++){
-    d.days['d'+i]={segs:[],hotel:'',hotelDet:'',acts:[],photos:[]};
+    d.days['d'+i]={segs:[],hotel:'',hotelDet:'',acts:[],photos:[],links:[]};
     d.exp['d'+i]=[];
   }
   return d;
@@ -719,6 +753,7 @@ function merge(remote){
         hotelDet: rd.hotelDet || rd.hotelDetail || '',
         acts:     rd.acts || rd.activities || [],
         photos:   rd.photos || [],
+        links:    rd.links || [],
       };
     }
     if(remote.exp?.[k])       base.exp[k]=remote.exp[k];
@@ -1018,6 +1053,13 @@ function renderDay(k){
         </div>
       </div>
 
+      <!-- 攻略連結 -->
+      <div class="sec">
+        <div class="sec-hd"><div class="sec-icon">🔗</div><div class="sec-title">攻略連結・小紅書</div></div>
+        <div id="linkList_${k}">${renderLinks(day.links||[], k)}</div>
+        ${admin ? `<button class="btn-add" style="margin-top:8px" onclick="addLink('${k}')">＋ 新增連結</button>` : ''}
+      </div>
+
       <!-- 參考圖片 -->
       <div class="sec">
         <div class="sec-hd"><div class="sec-icon">🖼️</div><div class="sec-title">參考圖片・地圖截圖</div></div>
@@ -1216,6 +1258,111 @@ function saveHotel(){
   data.days[hotelKey].hotel=document.getElementById('hotelName').value.trim();
   data.days[hotelKey].hotelDet=document.getElementById('hotelDetail').value.trim();
   saveData(); closeHotelModal(); renderDay(hotelKey);
+}
+
+// ══════════════════════════════════════════
+// LINKS
+// ══════════════════════════════════════════
+const LINK_ICONS = {
+  'xiaohongshu': '📕', 'xhs': '📕', 'rednote': '📕',
+  'youtube':     '▶️', 'youtu.be': '▶️',
+  'google':      '🔍', 'maps.google': '🗺️', 'goo.gl': '🗺️',
+  'tripadvisor': '🦉',
+  'booking':     '🏨', 'agoda': '🏨', 'airbnb': '🏠',
+  'default':     '🔗'
+};
+
+function getLinkIcon(url){
+  const lower = url.toLowerCase();
+  for(const [key, icon] of Object.entries(LINK_ICONS)){
+    if(key !== 'default' && lower.includes(key)) return icon;
+  }
+  return LINK_ICONS.default;
+}
+
+function getLinkDomain(url){
+  try{
+    return new URL(url.startsWith('http') ? url : 'https://'+url).hostname.replace('www.','');
+  }catch(e){ return url.slice(0,30); }
+}
+
+function renderLinks(links, k){
+  if(!links.length) return '<div class="empty-msg">尚無連結</div>';
+  return links.map((lk, li) => {
+    const icon   = getLinkIcon(lk.url||'');
+    const domain = getLinkDomain(lk.url||'');
+    const title  = lk.title || domain;
+    if(admin && lk._editing){
+      return `<div class="link-item link-editing" id="le_${k}_${li}">
+        <div class="link-edit-row">
+          <input class="f-inp" id="li_url_${k}_${li}" value="${esc(lk.url||'')}" placeholder="https://...">
+        </div>
+        <div class="link-edit-row">
+          <input class="f-inp" id="li_ttl_${k}_${li}" value="${esc(lk.title||'')}" placeholder="備註名稱（選填）">
+        </div>
+        <div style="display:flex;gap:7px;margin-top:5px">
+          <button class="btn-confirm" style="flex:1;padding:7px" onclick="saveLink('${k}',${li})">✓ 儲存</button>
+          <button class="btn-confirm grey" style="flex:0 0 auto;padding:7px" onclick="cancelLinkEdit('${k}',${li})">取消</button>
+        </div>
+      </div>`;
+    }
+    return `<div class="link-item">
+      <a href="${esc(lk.url||'#')}" target="_blank" rel="noopener" class="link-anchor">
+        <span class="link-icon">${icon}</span>
+        <div class="link-body">
+          <div class="link-title">${esc(title)}</div>
+          <div class="link-domain">${esc(domain)}</div>
+        </div>
+        <span class="link-arrow">↗</span>
+      </a>
+      ${admin ? `<div class="link-btns">
+        <button class="btn-edit" onclick="editLink('${k}',${li})">✏️</button>
+        <button class="btn-del"  onclick="delLink('${k}',${li})">✕</button>
+      </div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function addLink(k){
+  if(!data.days[k].links) data.days[k].links=[];
+  data.days[k].links.push({url:'', title:'', _editing:true});
+  renderDay(k);
+  setTimeout(()=>{
+    const inp = document.getElementById(`li_url_${k}_${data.days[k].links.length-1}`);
+    if(inp){ inp.focus(); inp.scrollIntoView({block:'nearest',behavior:'smooth'}); }
+  },50);
+}
+
+function editLink(k,li){
+  data.days[k].links[li]._editing = true;
+  renderDay(k);
+  setTimeout(()=>{
+    const inp = document.getElementById(`li_url_${k}_${li}`);
+    if(inp) inp.focus();
+  },50);
+}
+
+function cancelLinkEdit(k,li){
+  const lk = data.days[k].links[li];
+  if(!lk.url) data.days[k].links.splice(li,1); // remove empty
+  else delete lk._editing;
+  renderDay(k);
+}
+
+function saveLink(k,li){
+  const url = document.getElementById(`li_url_${k}_${li}`)?.value.trim()||'';
+  const ttl = document.getElementById(`li_ttl_${k}_${li}`)?.value.trim()||'';
+  if(!url){ showToast('請輸入網址'); return; }
+  const lk = data.days[k].links[li];
+  lk.url   = url.startsWith('http') ? url : 'https://'+url;
+  lk.title = ttl;
+  delete lk._editing;
+  saveData(); renderDay(k);
+}
+
+function delLink(k,li){
+  data.days[k].links.splice(li,1);
+  saveData(); renderDay(k);
 }
 
 // ══════════════════════════════════════════
