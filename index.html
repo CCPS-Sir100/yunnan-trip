@@ -1607,5 +1607,15 @@ function openLightbox(k,pi){
     clamp(); apply();
   }, { passive: false });
 }
+// ══════════════════════════════════════════
+// INIT — 先顯示本機資料，背景同步雲端
+// ══════════════════════════════════════════
+localLoad();          // 立刻從 localStorage 載入
+buildTabs();
+renderCurrent();      // 馬上顯示畫面，不等雲端
 
-
+// 背景同步（不阻擋畫面）
+cloudLoad();
+</script>
+</body>
+</html>
